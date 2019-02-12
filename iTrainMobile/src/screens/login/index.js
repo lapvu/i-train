@@ -1,46 +1,75 @@
 import React from "react";
 import {
   Container,
-  Header,
-  Title,
   Content,
-  Footer,
-  FooterTab,
+  Form,
+  Item,
+  Input,
   Button,
-  Left,
-  Right,
-  Body,
-  Icon,
   Text
 } from "native-base";
+import colors from "../../styles/colors";
+import { Dimensions, StyleSheet } from "react-native";
 class LoginScreen extends React.Component {
+  static navigationOptions = {
+    headerStyle: {
+      backgroundColor: colors.blue,
+      elevation: 0
+    },
+    headerTintColor: "#fff"
+  };
   render() {
+    const { width } = Dimensions.get("window");
     return (
-      <Container>
-        <Header>
-          <Left>
-            <Button transparent>
-              <Icon name="menu" />
+      <Container
+        style={{
+          backgroundColor: colors.blue,
+          alignItems: "center"
+        }}
+      >
+        <Content
+          contentContainerStyle={{
+            justifyContent: "center",
+            flex: 1
+          }}
+        >
+          <Form
+            style={{
+              width: width - 50
+            }}
+          >
+            <Item regular style={styles.item}>
+              <Input
+                placeholder="Username"
+                style={styles.input}
+                placeholderTextColor={colors.holderColor}
+              />
+            </Item>
+            <Item regular style={styles.item}>
+              <Input
+                placeholder="Password"
+                secureTextEntry={true}
+                style={styles.input}
+                placeholderTextColor={colors.holderColor}
+              />
+            </Item>
+            <Button bordered light block>
+              <Text>Login</Text>
             </Button>
-          </Left>
-          <Body>
-            <Title>Header</Title>
-          </Body>
-          <Right />
-        </Header>
-        <Content>
-          <Text>This is Content Section</Text>
+          </Form>
         </Content>
-        <Footer>
-          <FooterTab>
-            <Button full>
-              <Text>Footer</Text>
-            </Button>
-          </FooterTab>
-        </Footer>
       </Container>
     );
   }
 }
-
+const styles = StyleSheet.create({
+  input: {
+    color: colors.white,
+    backgroundColor: "rgba(255,255,255,0.2)"
+  },
+  item: {
+    marginBottom: 15,
+    borderColor: colors.transparent
+  }
+});
 export default LoginScreen;
