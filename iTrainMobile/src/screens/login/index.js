@@ -10,21 +10,23 @@ import {
 } from "native-base";
 import colors from "../../styles/colors";
 import { Dimensions, StyleSheet } from "react-native";
+import LinearGradient from "react-native-linear-gradient";
 class LoginScreen extends React.Component {
   static navigationOptions = {
     headerStyle: {
-      backgroundColor: colors.blue,
+      backgroundColor: colors.gradient[0],
       elevation: 0
     },
-    headerTintColor: "#fff"
+    headerTintColor: colors.white
   };
   render() {
     const { width } = Dimensions.get("window");
     return (
-      <Container
+      <LinearGradient
+        colors={colors.gradient}
         style={{
-          backgroundColor: colors.blue,
-          alignItems: "center"
+          alignItems: "center",
+          flex: 1
         }}
       >
         <Content
@@ -38,37 +40,40 @@ class LoginScreen extends React.Component {
               width: width - 50
             }}
           >
-            <Item regular style={styles.item}>
+            <Item rounded style={styles.item}>
               <Input
-                placeholder="Username"
+                placeholder="số điện thoại"
                 style={styles.input}
                 placeholderTextColor={colors.holderColor}
               />
             </Item>
-            <Item regular style={styles.item}>
+            <Item rounded style={styles.item}>
               <Input
-                placeholder="Password"
+                placeholder="mật khẩu"
                 secureTextEntry={true}
                 style={styles.input}
                 placeholderTextColor={colors.holderColor}
               />
             </Item>
-            <Button bordered light block>
-              <Text>Login</Text>
+            <Button rounded bordered light block>
+              <Text>ĐĂNG NHẬP</Text>
             </Button>
           </Form>
         </Content>
-      </Container>
+      </LinearGradient>
     );
   }
 }
 const styles = StyleSheet.create({
   input: {
     color: colors.white,
-    backgroundColor: "rgba(255,255,255,0.2)"
+    backgroundColor: colors.inputColor,
+    paddingLeft: 20,
+    paddingRight: 20,
+    borderRadius: 35
   },
   item: {
-    marginBottom: 15,
+    marginBottom: 20,
     borderColor: colors.transparent
   }
 });

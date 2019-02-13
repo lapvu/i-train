@@ -2,11 +2,10 @@
   "name": "iTrainServer",
   "version": "1.0.0",
   "description": "train tickets booking",
-  "main": "index.js",
   "author": "lapvu",
   "license": "MIT",
   "scripts": {
-    "start": "nodemon index.js"
+    "start": "nodemon src/index.js"
   },
   "devDependencies": {
     "nodemon": "^1.18.10"
