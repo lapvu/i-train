@@ -1,16 +1,9 @@
 import React from "react";
-import {
-  Container,
-  Content,
-  Form,
-  Item,
-  Input,
-  Button,
-  Text
-} from "native-base";
+import { Content, Form, Item, Input, Button, Text } from "native-base";
 import colors from "../../styles/colors";
 import { Dimensions, StyleSheet } from "react-native";
 import LinearGradient from "react-native-linear-gradient";
+import MyInput from "../../components/Input";
 class LoginScreen extends React.Component {
   static navigationOptions = {
     headerStyle: {
@@ -22,39 +15,15 @@ class LoginScreen extends React.Component {
   render() {
     const { width } = Dimensions.get("window");
     return (
-      <LinearGradient
-        colors={colors.gradient}
-        style={{
-          alignItems: "center",
-          flex: 1
-        }}
-      >
-        <Content
-          contentContainerStyle={{
-            justifyContent: "center",
-            flex: 1
-          }}
-        >
+      <LinearGradient colors={colors.gradient} style={styles.container}>
+        <Content contentContainerStyle={styles.content}>
           <Form
             style={{
               width: width - 50
             }}
           >
-            <Item rounded style={styles.item}>
-              <Input
-                placeholder="số điện thoại"
-                style={styles.input}
-                placeholderTextColor={colors.holderColor}
-              />
-            </Item>
-            <Item rounded style={styles.item}>
-              <Input
-                placeholder="mật khẩu"
-                secureTextEntry={true}
-                style={styles.input}
-                placeholderTextColor={colors.holderColor}
-              />
-            </Item>
+            <MyInput placeholder="số điện thoại" />
+            <MyInput placeholder="mật khẩu" secureTextEntry={true} />
             <Button rounded bordered light block>
               <Text>ĐĂNG NHẬP</Text>
             </Button>
@@ -65,16 +34,13 @@ class LoginScreen extends React.Component {
   }
 }
 const styles = StyleSheet.create({
-  input: {
-    color: colors.white,
-    backgroundColor: colors.inputColor,
-    paddingLeft: 20,
-    paddingRight: 20,
-    borderRadius: 35
+  container: {
+    alignItems: "center",
+    flex: 1
   },
-  item: {
-    marginBottom: 20,
-    borderColor: colors.transparent
+  content: {
+    justifyContent: "center",
+    flex: 1
   }
 });
 export default LoginScreen;
