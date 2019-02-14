@@ -1,6 +1,6 @@
 import React from "react";
-import { Content, Button, Spinner, Text } from "native-base";
-import { Dimensions, StyleSheet } from "react-native";
+import { Content, Button, Text, Icon } from "native-base";
+import { Dimensions, StyleSheet, View } from "react-native";
 import LinearGradient from "react-native-linear-gradient";
 import colors from "../../styles/colors";
 import SvgUri from "react-native-svg-uri";
@@ -9,7 +9,7 @@ class WellcomeScreen extends React.Component {
     header: null
   };
   render() {
-    const { width } = Dimensions.get("window");
+    const { width, height } = Dimensions.get("window");
     return (
       <LinearGradient colors={colors.gradient} style={styles.container}>
         <Content contentContainerStyle={styles.content}>
@@ -55,15 +55,35 @@ class WellcomeScreen extends React.Component {
           >
             <Text style={{ color: colors.black }}>ĐĂNG KÝ</Text>
           </Button>
-          <Button
-            rounded
-            block
+          <View
             style={{
-              width: width - 100
+              width: width - 100,
+              flexDirection: "row",
+              justifyContent: "space-between"
             }}
           >
-            <Spinner />
-          </Button>
+            <Button
+              rounded
+              block
+              style={{
+                flex: 1,
+                width: "45%"
+              }}
+            >
+              <Icon type="FontAwesome" name="facebook-f" />
+            </Button>
+            <Button
+              rounded
+              block
+              style={{
+                flex: 1,
+                width: "45%",
+                backgroundColor: "#DC4E42"
+              }}
+            >
+              <Icon type="FontAwesome" name="google" />
+            </Button>
+          </View>
         </Content>
       </LinearGradient>
     );
@@ -74,6 +94,6 @@ const styles = StyleSheet.create({
     alignItems: "center",
     flex: 1
   },
-  content: { alignItems: "center", justifyContent: "center", flex: 1 }
+  content: { justifyContent: "center", alignItems: "center", flex: 1 }
 });
 export default WellcomeScreen;

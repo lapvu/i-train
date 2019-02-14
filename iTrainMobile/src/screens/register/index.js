@@ -31,11 +31,11 @@ class RegisterScreen extends React.Component {
         onSubmit={this._handleSubmit}
         validationSchema={Yup.object().shape({
           phoneNumber: Yup.number()
-            .required("Bạn phải nhập số điện thoại")
-            .typeError("Số điện thoại không đúng"),
-          fullName: Yup.string().required(),
+            .required("Bạn cần nhập số điện thoại")
+            .typeError("Số điện thoại không đúng định dạng"),
+          fullName: Yup.string().required("Bạn cần nhập họ tên"),
           password: Yup.string()
-            .required()
+            .required("Bạn cần nhập mật khẩu")
             .min(8),
           confirmPassword: Yup.string().oneOf(
             [Yup.ref("password", null)],
