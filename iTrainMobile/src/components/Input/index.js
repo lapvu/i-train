@@ -1,5 +1,5 @@
 import React from "react";
-import { Item, Input } from "native-base";
+import { Item, Input, Text, Icon } from "native-base";
 import { StyleSheet } from "react-native";
 import colors from "../../styles/colors";
 const styles = StyleSheet.create({
@@ -11,25 +11,47 @@ const styles = StyleSheet.create({
     borderRadius: 35
   },
   item: {
-    marginBottom: 20,
     borderColor: colors.transparent
+  },
+  itemError: {},
+  errorMessage: {
+    color: "red",
+    marginBottom: 5,
+    paddingHorizontal: 20
   }
 });
 export default class MyInput extends React.Component {
   _handleChange = value => {
     this.props.onChange(this.props.name, value);
   };
+  _handleTouch = () => {
+    this.props.onTouch(this.props.name);
+  };
   render() {
-    const { ...rest } = this.props;
+    const { error, ...rest } = this.props;
     return (
-      <Item rounded success style={styles.item}>
-        <Input
-          style={styles.input}
-          placeholderTextColor={colors.holderColor}
-          {...rest}
-          onChangeText={this._handleChange}
-        />
-      </Item>
+      <React.Fragment>
+        <Item
+          rounded
+          error={error && true}
+          style={error ? styles.itemError : styles.item}
+        >
+          <Input
+            style={styles.input}
+            placeholderTextColor={colors.holderColor}
+            {...rest}
+            onChangeText={this._handleChange}
+            onBlur={this._handleTouch}
+          />
+          {error && (
+            <Icon
+              name="close-circle"
+              style={{ position: "absolute", right: 5 }}
+            />
+          )}
+        </Item>
+        <Text style={styles.errorMessage}>{error}</Text>
+      </React.Fragment>
     );
   }
 }

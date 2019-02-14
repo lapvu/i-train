@@ -5,7 +5,8 @@ import colors from "../../styles/colors";
 import LinearGradient from "react-native-linear-gradient";
 import MyInput from "../../components/Input";
 import MyButton from "../../components/button";
-import { Formik, validateYupSchema } from "formik";
+import { Formik } from "formik";
+import * as Yup from "yup";
 class RegisterScreen extends React.Component {
   static navigationOptions = {
     headerStyle: {
@@ -28,12 +29,27 @@ class RegisterScreen extends React.Component {
           confirmPassword: ""
         }}
         onSubmit={this._handleSubmit}
+        validationSchema={Yup.object().shape({
+          phoneNumber: Yup.number()
+            .required("Bạn phải nhập số điện thoại")
+            .typeError("Số điện thoại không đúng"),
+          fullName: Yup.string().required(),
+          password: Yup.string()
+            .required()
+            .min(8),
+          confirmPassword: Yup.string().oneOf(
+            [Yup.ref("password", null)],
+            "Mật khẩu không khớp"
+          )
+        })}
         render={({
           values,
           handleSubmit,
           isSubmitting,
           setFieldValue,
-          errors
+          errors,
+          touched,
+          setFieldTouched
         }) => (
           <React.Fragment>
             <LinearGradient colors={colors.gradient} style={styles.container}>
@@ -44,12 +60,16 @@ class RegisterScreen extends React.Component {
                     name="phoneNumber"
                     values={values.phoneNumber}
                     onChange={setFieldValue}
+                    error={touched.phoneNumber && errors.phoneNumber}
+                    onTouch={setFieldTouched}
                   />
                   <MyInput
                     placeholder="họ tên"
                     name="fullName"
                     values={values.fullName}
                     onChange={setFieldValue}
+                    error={touched.fullName && errors.fullName}
+                    onTouch={setFieldTouched}
                   />
                   <MyInput
                     placeholder="mật khẩu"
@@ -57,6 +77,8 @@ class RegisterScreen extends React.Component {
                     name="password"
                     values={values.password}
                     onChange={setFieldValue}
+                    error={touched.password && errors.password}
+                    onTouch={setFieldTouched}
                   />
                   <MyInput
                     placeholder="xác nhận mật khẩu"
@@ -64,8 +86,14 @@ class RegisterScreen extends React.Component {
                     name="confirmPassword"
                     values={values.confirmPassword}
                     onChange={setFieldValue}
+                    error={touched.confirmPassword && errors.confirmPassword}
+                    onTouch={setFieldTouched}
                   />
-                  <MyButton title="ĐĂNG KÝ" onPress={handleSubmit} />
+                  <MyButton
+                    title="ĐĂNG KÝ"
+                    onPress={handleSubmit}
+                    isLoading={isSubmitting}
+                  />
                 </Form>
               </Content>
             </LinearGradient>
