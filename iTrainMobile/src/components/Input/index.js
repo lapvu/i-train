@@ -39,9 +39,9 @@ export default class MyInput extends React.Component {
           <Input
             style={styles.input}
             placeholderTextColor={colors.holderColor}
-            {...rest}
             onChangeText={this._handleChange}
             onBlur={this._handleTouch}
+            {...rest}
           />
           {error && (
             <Icon
