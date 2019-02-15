@@ -1,10 +1,10 @@
 import React from "react";
 import { Dimensions, StyleSheet, Alert } from "react-native";
 import { Content, Form } from "native-base";
-import colors from "../../styles/colors";
+import colors from "../../../styles/colors";
 import LinearGradient from "react-native-linear-gradient";
-import MyInput from "../../components/Input";
-import MyButton from "../../components/button";
+import MyInput from "../../../components/Input";
+import MyButton from "../../../components/button";
 import { Formik } from "formik";
 import * as Yup from "yup";
 class RegisterScreen extends React.Component {

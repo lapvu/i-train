@@ -2,7 +2,7 @@ import React from "react";
 import { Content, Button, Text, Icon } from "native-base";
 import { Dimensions, StyleSheet, View } from "react-native";
 import LinearGradient from "react-native-linear-gradient";
-import colors from "../../styles/colors";
+import colors from "../../../styles/colors";
 import SvgUri from "react-native-svg-uri";
 class WellcomeScreen extends React.Component {
   static navigationOptions = {
@@ -16,7 +16,7 @@ class WellcomeScreen extends React.Component {
           <SvgUri
             width="60"
             height="60"
-            source={require("../../assets/imgs/train.svg")}
+            source={require("../../../assets/imgs/train.svg")}
           />
           <Text
             style={{

@@ -1,0 +1,42 @@
+{
+  "project_info": {
+    "project_number": "374157436872",
+    "firebase_url": "https://i-train-8f38c.firebaseio.com",
+    "project_id": "i-train-8f38c",
+    "storage_bucket": "i-train-8f38c.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:374157436872:android:0db689cfdaebec61",
+        "android_client_info": {
+          "package_name": "com.itrainmobile"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "374157436872-0h5nhp2d3438har4dc4vo24h14m4pe7n.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCaZR0XEXaWYgkxA3YEki3ykFWkrNrfEDk"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
