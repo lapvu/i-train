@@ -4,6 +4,7 @@ import { Dimensions, StyleSheet, View } from "react-native";
 import LinearGradient from "react-native-linear-gradient";
 import colors from "../../../styles/colors";
 import SvgUri from "react-native-svg-uri";
+import { googleLogin,facebookLogin } from "../../../utils";
 class WellcomeScreen extends React.Component {
   static navigationOptions = {
     header: null
@@ -69,6 +70,7 @@ class WellcomeScreen extends React.Component {
                 flex: 1,
                 width: "45%"
               }}
+              onPress={() => facebookLogin()}
             >
               <Icon type="FontAwesome" name="facebook-f" />
             </Button>
@@ -80,6 +82,7 @@ class WellcomeScreen extends React.Component {
                 width: "45%",
                 backgroundColor: "#DC4E42"
               }}
+              onPress={() => googleLogin()}
             >
               <Icon type="FontAwesome" name="google" />
             </Button>

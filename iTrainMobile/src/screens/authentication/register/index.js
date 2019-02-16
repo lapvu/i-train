@@ -1,6 +1,6 @@
 import React from "react";
-import { Dimensions, StyleSheet, Alert } from "react-native";
-import { Content, Form } from "native-base";
+import { Dimensions, StyleSheet } from "react-native";
+import { Content, Form, Toast } from "native-base";
 import colors from "../../../styles/colors";
 import LinearGradient from "react-native-linear-gradient";
 import MyInput from "../../../components/Input";
@@ -24,28 +24,66 @@ class RegisterScreen extends React.Component {
       phoneNumber: "",
       fullName: "",
       password: "",
-      confirmPassword: ""
+      confirmPassword: "",
+      showToast: false
     };
   }
   _handleSubmitOne = (values, actions) => {
-    this.setState({
-      email: values.email,
-      password: values.password,
-      confirmPassword: values.confirmPassword,
-      step: 2
-    });
-    console.log(this.state);
-    // firebase
-    //   .auth()
-    //   .createUserWithEmailAndPassword(values.email, values.password)
-    //   .then(res => {
-    //     actions.setSubmitting(false);
-    //   })
-    //   .catch(e => {
-    //     console.log(e);
-    //   });
+    firebase
+      .auth()
+      .fetchSignInMethodsForEmail(values.email)
+      .then(res => {
+        if (res.length === 0) {
+          this.setState({
+            email: values.email,
+            password: values.password,
+            confirmPassword: values.confirmPassword,
+            step: 2
+          });
+        } else {
+          actions.setFieldError("email", "Email này đã tồn tại !");
+          actions.setSubmitting(false);
+        }
+      })
+      .catch(e => {
+        console.log(e);
+      });
   };
-  _handleSubmitTwo = (values, actions) => {};
+  _handleSubmitTwo = (values, actions) => {
+    firebase
+      .auth()
+      .createUserWithEmailAndPassword(this.state.email, this.state.password)
+      .then(res => {
+        return firebase
+          .firestore()
+          .collection("users")
+          .doc(res.user.uid)
+          .set({
+            fullName: values.fullName,
+            phoneNumber: values.phoneNumber
+          });
+      })
+      .then(() => {
+        return firebase
+          .auth()
+          .signInWithEmailAndPassword(this.state.email, this.state.password);
+      })
+      .then(() => {
+        actions.setSubmitting(false);
+        this.props.navigation.navigate("Main");
+      })
+      .catch(e => {
+        console.log(e);
+      });
+  };
+  _prevStep = async () => {
+    await this.setState({
+      step: 1,
+      email: "",
+      password: "",
+      confirmPassword: ""
+    });
+  };
 
   render() {
     const { width } = Dimensions.get("window");
@@ -167,7 +205,7 @@ class RegisterScreen extends React.Component {
                     />
                     <MyButton
                       title="QUAY LẠi"
-                      onPress={() => this.setState({ step: 1 })}
+                      onPress={this._prevStep.bind(this)}
                     />
                   </React.Fragment>
                 )}
