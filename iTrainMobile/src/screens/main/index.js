@@ -1,8 +1,8 @@
-import React from "react";
-import { Text } from "react-native";
-
-export default class MainScreen extends React.Component {
-  render() {
-    return <Text>Main</Text>;
-  }
-}
+import { createBottomTabNavigator, createAppContainer } from "react-navigation";
+import HomeScreen from "./home";
+import SettingsScreen from "./settings";
+const Main = createBottomTabNavigator({
+  Home: HomeScreen,
+  Settings: SettingsScreen
+});
+export default createAppContainer(Main);

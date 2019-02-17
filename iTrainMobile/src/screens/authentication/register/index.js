@@ -1,13 +1,15 @@
 import React from "react";
 import { Dimensions, StyleSheet } from "react-native";
-import { Content, Form, Toast } from "native-base";
+import { Content, Form, DatePicker } from "native-base";
 import colors from "../../../styles/colors";
 import LinearGradient from "react-native-linear-gradient";
 import MyInput from "../../../components/Input";
 import MyButton from "../../../components/button";
+import MyDatePicker from "../../../components/datePicker";
 import { Formik } from "formik";
 import * as Yup from "yup";
 import firebase from "react-native-firebase";
+import MyPickerInput from "../../../components/pickerInput";
 class RegisterScreen extends React.Component {
   static navigationOptions = {
     headerStyle: {
@@ -25,9 +27,20 @@ class RegisterScreen extends React.Component {
       fullName: "",
       password: "",
       confirmPassword: "",
-      showToast: false
+      showToast: false,
+      dateOfBirth: new Date(),
+      gender: ""
     };
+    this.setDate = this.setDate.bind(this);
   }
+  setDate = newDate => {
+    this.setState({ dateOfBirth: newDate });
+  };
+  onValueChangePicker = value => {
+    this.setState({
+      gender: value
+    });
+  };
   _handleSubmitOne = (values, actions) => {
     firebase
       .auth()
@@ -50,6 +63,13 @@ class RegisterScreen extends React.Component {
       });
   };
   _handleSubmitTwo = (values, actions) => {
+    this.setState({
+      step: 3,
+      fullName: values.fullName,
+      phoneNumber: values.phoneNumber
+    });
+  };
+  _handleSubmitThree = (values, actions) => {
     firebase
       .auth()
       .createUserWithEmailAndPassword(this.state.email, this.state.password)
@@ -78,7 +98,7 @@ class RegisterScreen extends React.Component {
   };
   _prevStep = async () => {
     await this.setState({
-      step: 1,
+      step: this.state.step - 1,
       email: "",
       password: "",
       confirmPassword: ""
@@ -196,6 +216,48 @@ class RegisterScreen extends React.Component {
                       onChange={setFieldValue}
                       error={touched.fullName && errors.fullName}
                       onTouch={setFieldTouched}
+                    />
+                    <MyButton
+                      title="TIẾP THEO"
+                      onPress={handleSubmit}
+                      isLoading={isSubmitting}
+                      style={{ marginBottom: 10 }}
+                    />
+                    <MyButton
+                      title="QUAY LẠi"
+                      onPress={this._prevStep.bind(this)}
+                    />
+                  </React.Fragment>
+                )}
+              />
+            )}
+            {this.state.step === 3 && (
+              <Formik
+                initialValues={{
+                  dateOfBirth: this.state.dateOfBirth,
+                  gender: this.state.gender
+                }}
+                onSubmit={this._handleSubmitThree}
+                validationSchema={Yup.object().shape({
+                  dateOfBirth: Yup.date()
+                    .required("Bạn cần nhập số điện thoại")
+                    .typeError("Số điện thoại không đúng định dạng"),
+                  gender: Yup.string().required("Bạn cần nhập họ tên")
+                })}
+                render={({
+                  values,
+                  errors,
+                  setFieldValue,
+                  setFieldTouched,
+                  touched,
+                  isSubmitting,
+                  handleSubmit
+                }) => (
+                  <React.Fragment>
+                    <MyDatePicker onDateChange={this.setDate} />
+                    <MyPickerInput
+                      selectedValue={this.state.gender}
+                      onValueChange={this.onValueChangePicker.bind(this)}
                     />
                     <MyButton
                       title="ĐĂNG KÝ"
