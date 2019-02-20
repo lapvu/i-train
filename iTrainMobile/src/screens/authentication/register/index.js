@@ -29,7 +29,7 @@ class RegisterScreen extends React.Component {
       confirmPassword: "",
       showToast: false,
       dateOfBirth: new Date(),
-      gender: ""
+      gender: undefined
     };
     this.setDate = this.setDate.bind(this);
   }
@@ -247,17 +247,24 @@ class RegisterScreen extends React.Component {
                 render={({
                   values,
                   errors,
-                  setFieldValue,
-                  setFieldTouched,
+                  actions,
                   touched,
                   isSubmitting,
-                  handleSubmit
+                  handleSubmit,
+                  setFieldTouched,
+                  setFieldValue
                 }) => (
                   <React.Fragment>
                     <MyDatePicker onDateChange={this.setDate} />
                     <MyPickerInput
-                      selectedValue={this.state.gender}
-                      onValueChange={this.onValueChangePicker.bind(this)}
+                      error={touched.gender && errors.gender}
+                      actions={actions}
+                      gender={this.state.gender}
+                      onValueChangePicker={this.onValueChangePicker.bind(this)}
+                      onTouch={setFieldTouched}
+                      onChange={setFieldValue}
+                      name="gender"
+                      values={this.state.gender}
                     />
                     <MyButton
                       title="ĐĂNG KÝ"
