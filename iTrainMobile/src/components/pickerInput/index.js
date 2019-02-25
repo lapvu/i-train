@@ -17,7 +17,7 @@ const styles = StyleSheet.create({
   itemError: {
     paddingLeft: 20,
     paddingRight: 20,
-    paddingTop: 13,
+    paddingTop: 14,
     paddingBottom: 13,
     borderRadius: 35
   },

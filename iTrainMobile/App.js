@@ -9,9 +9,15 @@ import WellcomeScreen from "./src/screens/authentication/wellcome";
 import AuthLoadingScreen from "./src/screens/authentication/authLoading";
 import MainScreen from "./src/screens/main";
 
-const AppStack = createStackNavigator({
-  Main: MainScreen
-});
+const AppStack = createStackNavigator(
+  {
+    Main: MainScreen
+  },
+  {
+    header: null,
+    headerMode: "none"
+  }
+);
 const AuthStack = createStackNavigator({
   Wellcome: WellcomeScreen,
   Login: LoginScreen,

@@ -4,7 +4,7 @@ import { Dimensions, StyleSheet, View } from "react-native";
 import LinearGradient from "react-native-linear-gradient";
 import colors from "../../../styles/colors";
 import SvgUri from "react-native-svg-uri";
-import { googleLogin,facebookLogin } from "../../../utils";
+import { googleLogin, facebookLogin } from "../../../utils";
 class WellcomeScreen extends React.Component {
   static navigationOptions = {
     header: null
@@ -33,7 +33,6 @@ class WellcomeScreen extends React.Component {
         </Content>
         <Content contentContainerStyle={styles.content}>
           <Button
-            rounded
             block
             style={{
               width: width - 100,
@@ -45,7 +44,6 @@ class WellcomeScreen extends React.Component {
             <Text style={{ color: colors.black }}>ĐĂNG NHẬP</Text>
           </Button>
           <Button
-            rounded
             block
             style={{
               width: width - 100,
@@ -64,7 +62,6 @@ class WellcomeScreen extends React.Component {
             }}
           >
             <Button
-              rounded
               block
               style={{
                 flex: 1,
@@ -75,7 +72,6 @@ class WellcomeScreen extends React.Component {
               <Icon type="FontAwesome" name="facebook-f" />
             </Button>
             <Button
-              rounded
               block
               style={{
                 flex: 1,

@@ -5,7 +5,7 @@ export default class MyButton extends React.Component {
   render() {
     const { isLoading, title, ...rest } = this.props;
     return (
-      <Button rounded bordered light block disabled={isLoading} {...rest}>
+      <Button bordered light block disabled={isLoading} {...rest}>
         {isLoading ? <Spinner /> : <Text>{title}</Text>}
       </Button>
     );

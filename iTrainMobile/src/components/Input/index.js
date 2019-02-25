@@ -6,18 +6,19 @@ const styles = StyleSheet.create({
   input: {
     color: colors.white,
     backgroundColor: colors.inputColor,
-    paddingLeft: 20,
-    paddingRight: 20,
-    borderRadius: 35
+    paddingLeft: 10,
+    paddingRight: 10
   },
   item: {
-    borderColor: colors.transparent
+    borderColor: colors.transparent,
+    marginLeft: 0
   },
-  itemError: {},
+  itemError: {
+    marginLeft: 0
+  },
   errorMessage: {
     color: "red",
-    marginBottom: 5,
-    paddingHorizontal: 20
+    marginBottom: 5
   }
 });
 export default class MyInput extends React.Component {
@@ -32,7 +33,6 @@ export default class MyInput extends React.Component {
     return (
       <React.Fragment>
         <Item
-          rounded
           error={error && true}
           style={error ? styles.itemError : styles.item}
         >
