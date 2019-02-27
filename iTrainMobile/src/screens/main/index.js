@@ -1,12 +1,25 @@
-import { createBottomTabNavigator, createAppContainer } from "react-navigation";
+import {
+  createBottomTabNavigator,
+  createAppContainer,
+  createStackNavigator
+} from "react-navigation";
 import HomeScreen from "./home";
+import PassengerScreen from "./other/passenger";
+import SearchStationScreen from "./other/search";
 import SettingsScreen from "./settings";
 import HistoryScreen from "./history";
 import { Icon } from "native-base";
 import React from "react";
+
+const HomeStack = createStackNavigator({
+  Home: HomeScreen,
+  Search: SearchStationScreen,
+  Passenger: PassengerScreen
+});
+
 const Main = createBottomTabNavigator(
   {
-    Home: HomeScreen,
+    Home: HomeStack,
     History: HistoryScreen,
     Settings: SettingsScreen
   },
