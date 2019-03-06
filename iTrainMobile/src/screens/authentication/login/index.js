@@ -47,7 +47,7 @@ class LoginScreen extends React.Component {
             .required("Bạn cần nhập email"),
           password: Yup.string()
             .required("Bạn cần nhập mật khẩu")
-            .min(8)
+            .min(8, "Mật khẩu cần có 8 ký tự trở lên")
         })}
         render={({
           errors,
@@ -109,7 +109,6 @@ const styles = StyleSheet.create({
   },
   error: {
     color: "red",
-    paddingHorizontal: 20,
     marginBottom: 10
   }
 });

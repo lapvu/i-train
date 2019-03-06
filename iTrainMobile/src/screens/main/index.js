@@ -8,15 +8,28 @@ import PassengerScreen from "./other/passenger";
 import SearchStationScreen from "./other/search";
 import SettingsScreen from "./settings";
 import HistoryScreen from "./history";
+import CalendarScreen from "./other/calendar";
 import { Icon } from "native-base";
 import React from "react";
 
 const HomeStack = createStackNavigator({
   Home: HomeScreen,
   Search: SearchStationScreen,
-  Passenger: PassengerScreen
+  Passenger: PassengerScreen,
+  Calendar: CalendarScreen
 });
-
+HomeStack.navigationOptions = ({ navigation }) => {
+  let { routeName } = navigation.state.routes[navigation.state.index];
+  let navigationOptions = {};
+  if (
+    routeName === "Search" ||
+    routeName === "Passenger" ||
+    routeName === "Calendar"
+  ) {
+    navigationOptions.tabBarVisible = false;
+  }
+  return navigationOptions;
+};
 const Main = createBottomTabNavigator(
   {
     Home: HomeStack,
