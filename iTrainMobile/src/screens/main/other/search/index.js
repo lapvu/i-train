@@ -65,6 +65,10 @@ export default class SearchStationScreen extends React.Component {
       this.setState({ items: [] });
     }
   };
+  handleSetStation = (station, go) => {
+    this.props.screenProps.setStation(station, go);
+    this.props.navigation.navigate("Home");
+  };
   render() {
     const { navigation } = this.props;
     const { width, height } = Dimensions.get("window");
@@ -93,13 +97,7 @@ export default class SearchStationScreen extends React.Component {
                 <ListItem
                   style={{ marginLeft: 10 }}
                   key={i}
-                  onPress={() => {
-                    this.props.navigation.navigate("Home", {
-                      name: e.name,
-                      id: e.id,
-                      state: name
-                    });
-                  }}
+                  onPress={this.handleSetStation.bind(this, e, name)}
                 >
                   <Left>
                     <Text style={{ color: colors.white }}>{e.name}</Text>

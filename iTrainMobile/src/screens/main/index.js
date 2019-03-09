@@ -67,4 +67,53 @@ const Main = createBottomTabNavigator(
     }
   }
 );
-export default createAppContainer(Main);
+const MainContaier = createAppContainer(Main);
+
+export default class MainScreen extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      from: "",
+      to: "",
+      dateStart: "",
+      dateEnd: ""
+    };
+  }
+
+  setStation = (station, type) => {
+    if (type === "from") {
+      this.setState({ from: station.name });
+    } else {
+      this.setState({ to: station.name });
+    }
+  };
+  swapStation = () => {
+    this.setState({
+      from: this.state.to,
+      to: this.state.from
+    });
+  };
+  setDate = (date, type) => {
+    if (type === "dateStart") {
+      this.setState({
+        dateStart: date
+      });
+    } else {
+      this.setState({
+        dateEnd: date
+      });
+    }
+  };
+  render() {
+    return (
+      <MainContaier
+        screenProps={{
+          ...this.state,
+          setStation: this.setStation,
+          swapStation: this.swapStation,
+          setDate: this.setDate
+        }}
+      />
+    );
+  }
+}

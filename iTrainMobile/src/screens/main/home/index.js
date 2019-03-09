@@ -1,5 +1,11 @@
 import React from "react";
-import { Text, View, Dimensions, StyleSheet } from "react-native";
+import {
+  Text,
+  View,
+  Dimensions,
+  StyleSheet,
+  TouchableHighlight
+} from "react-native";
 import { Card, CheckBox, CardItem, Button } from "native-base";
 import Icon from "react-native-vector-icons/AntDesign";
 import LinearGradient from "react-native-linear-gradient";
@@ -18,8 +24,6 @@ class HomeScreen extends React.Component {
   render() {
     const { width, height } = Dimensions.get("window");
     const { navigation } = this.props;
-    const state = navigation.getParam("state", "");
-    const name = navigation.getParam("name", "");
     return (
       <LinearGradient colors={colors.gradient} style={styles.container}>
         <View
@@ -43,7 +47,7 @@ class HomeScreen extends React.Component {
             >
               <Icon name="enviromento" style={styles.iconMap} />
               <Text style={styles.text}>
-                {state === "from" ? name : "Ga đi"}
+                {this.props.screenProps.from || "Ga đi"}
               </Text>
             </CardItem>
             <CardItem
@@ -54,12 +58,15 @@ class HomeScreen extends React.Component {
             >
               <Icon name="enviromento" style={styles.iconMap} />
               <Text style={styles.text}>
-                {state === "to" ? name : "Ga đến"}
+                {this.props.screenProps.to || "Ga đến"}
               </Text>
             </CardItem>
-            <View style={styles.swapContainer}>
+            <Button
+              style={styles.swapContainer}
+              onPress={() => this.props.screenProps.swapStation()}
+            >
               <Icon name="swap" style={styles.swapIcon} />
-            </View>
+            </Button>
           </Card>
         </View>
         <View
@@ -104,88 +111,97 @@ class HomeScreen extends React.Component {
                   flexDirection: "row"
                 }}
               >
-                <View
-                  style={{
-                    flex: 1
-                  }}
+                <TouchableHighlight
+                  style={{ flex: 1 }}
+                  onPress={() =>
+                    this.props.navigation.navigate("Calendar", {
+                      type: "dateStart",
+                      currentDate: this.props.screenProps.dateStart.dateString
+                    })
+                  }
                 >
-                  <View
-                    style={
-                      this.state.return
-                        ? {
-                            flexDirection: "row",
-                            justifyContent: "flex-start"
-                          }
-                        : { flexDirection: "row", justifyContent: "center" }
-                    }
-                  >
-                    <Text
-                      style={styles.text}
-                      onPress={() => this.props.navigation.navigate("Calendar")}
-                    >
-                      Ngày đi
-                    </Text>
-                  </View>
-                  <View
-                    style={{
-                      flexDirection: "row",
-                      justifyContent: "flex-start",
-                      marginTop: 10
-                    }}
-                  >
+                  <View>
                     <View
                       style={
                         this.state.return
                           ? {
-                              flex: 1,
-                              alignItems: "flex-start"
+                              flexDirection: "row",
+                              justifyContent: "flex-start"
                             }
-                          : {
-                              flex: 1,
-                              alignItems: "flex-end"
-                            }
+                          : { flexDirection: "row", justifyContent: "center" }
                       }
                     >
-                      <Text
+                      <Text style={styles.text}>Ngày đi</Text>
+                    </View>
+                    <View
+                      style={{
+                        flexDirection: "row",
+                        justifyContent: "flex-start",
+                        marginTop: 10
+                      }}
+                    >
+                      <View
                         style={
                           this.state.return
                             ? {
-                                fontSize: 36,
-                                fontWeight: "500",
-                                color: colors.blue
+                                flex: 1,
+                                alignItems: "flex-start"
                               }
                             : {
-                                fontSize: 36,
-                                fontWeight: "500",
-                                color: colors.blue,
-                                marginRight: 5
+                                flex: 1,
+                                alignItems: "flex-end"
                               }
                         }
                       >
-                        28
-                      </Text>
-                    </View>
-                    <View
-                      style={
-                        this.state.return
-                          ? {
-                              flex: 1,
-                              flexDirection: "column",
-                              alignItems: "flex-start"
-                            }
-                          : {
-                              flex: 1,
-                              flexDirection: "column",
-                              alignItems: "flex-start",
-                              marginLeft: 5
-                            }
-                      }
-                    >
-                      <Text style={styles.text}>TH 2</Text>
-                      <Text style={styles.text}>2019</Text>
+                        <Text
+                          style={
+                            this.state.return
+                              ? {
+                                  fontSize: 36,
+                                  fontWeight: "500",
+                                  color: colors.blue
+                                }
+                              : {
+                                  fontSize: 36,
+                                  fontWeight: "500",
+                                  color: colors.blue,
+                                  marginRight: 5
+                                }
+                          }
+                        >
+                          {this.props.screenProps.dateStart.day ||
+                            new Date().getDate()}
+                        </Text>
+                      </View>
+                      <View
+                        style={
+                          this.state.return
+                            ? {
+                                flex: 1,
+                                flexDirection: "column",
+                                alignItems: "flex-start"
+                              }
+                            : {
+                                flex: 1,
+                                flexDirection: "column",
+                                alignItems: "flex-start",
+                                marginLeft: 5
+                              }
+                        }
+                      >
+                        <Text style={styles.text}>
+                          TH{" "}
+                          {this.props.screenProps.dateStart.month ||
+                            new Date().getMonth()}
+                        </Text>
+                        <Text style={styles.text}>
+                          {this.props.screenProps.dateStart.year ||
+                            new Date().getFullYear()}
+                        </Text>
+                      </View>
                     </View>
                   </View>
-                </View>
+                </TouchableHighlight>
                 <View
                   style={
                     this.state.return
@@ -202,54 +218,69 @@ class HomeScreen extends React.Component {
                   <Icon name="calendar" style={styles.userIcon} />
                 </View>
                 {this.state.return && (
-                  <View
-                    style={{
-                      flex: 1
-                    }}
+                  <TouchableHighlight
+                    style={{ flex: 1 }}
+                    onPress={() =>
+                      this.props.navigation.navigate("Calendar", {
+                        type: "dateEnd",
+                        currentDate: this.props.screenProps.dateEnd.dateString
+                      })
+                    }
                   >
-                    <View
-                      style={{
-                        flexDirection: "row",
-                        justifyContent: "flex-end"
-                      }}
-                    >
-                      <Text style={styles.text}>Ngày về</Text>
-                    </View>
-                    <View
-                      style={{
-                        flexDirection: "row",
-                        justifyContent: "flex-end",
-                        marginTop: 10
-                      }}
-                    >
+                    <View>
                       <View
                         style={{
-                          flex: 1,
-                          alignItems: "flex-end"
+                          flexDirection: "row",
+                          justifyContent: "flex-end"
                         }}
                       >
-                        <Text
+                        <Text style={styles.text}>Ngày về</Text>
+                      </View>
+                      <View
+                        style={{
+                          flexDirection: "row",
+                          justifyContent: "flex-end",
+                          marginTop: 10
+                        }}
+                      >
+                        <View
                           style={{
-                            fontSize: 36,
-                            fontWeight: "500",
-                            color: colors.blue
+                            flex: 1,
+                            alignItems: "flex-end"
                           }}
                         >
-                          28
-                        </Text>
-                      </View>
-                      <View
-                        style={{
-                          flex: 1,
-                          flexDirection: "column",
-                          alignItems: "flex-end"
-                        }}
-                      >
-                        <Text style={styles.text}>TH 2</Text>
-                        <Text style={styles.text}>2019</Text>
+                          <Text
+                            style={{
+                              fontSize: 36,
+                              fontWeight: "500",
+                              color: colors.blue
+                            }}
+                          >
+                            {this.props.screenProps.dateEnd.day ||
+                              new Date().getDate()}
+                          </Text>
+                        </View>
+                        <View
+                          style={{
+                            flex: 1,
+                            flexDirection: "column",
+                            alignItems: "flex-end"
+                          }}
+                        >
+                          <Text style={styles.text}>
+                            TH{" "}
+                            {this.props.screenProps.dateEnd.month ||
+                              new Date().getMonth()}
+                          </Text>
+                          <Text style={styles.text}>
+                            {" "}
+                            {this.props.screenProps.dateEnd.year ||
+                              new Date().getFullYear()}
+                          </Text>
+                        </View>
                       </View>
                     </View>
-                  </View>
+                  </TouchableHighlight>
                 )}
               </View>
             </CardItem>
