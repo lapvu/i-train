@@ -76,7 +76,8 @@ export default class MainScreen extends React.Component {
       from: "",
       to: "",
       dateStart: "",
-      dateEnd: ""
+      dateEnd: "",
+      passenger: {}
     };
   }
 
@@ -104,6 +105,9 @@ export default class MainScreen extends React.Component {
       });
     }
   };
+  setPassenger = value => {
+    this.setState({ passenger: value });
+  };
   render() {
     return (
       <MainContaier
@@ -111,7 +115,8 @@ export default class MainScreen extends React.Component {
           ...this.state,
           setStation: this.setStation,
           swapStation: this.swapStation,
-          setDate: this.setDate
+          setDate: this.setDate,
+          setPassenger: this.setPassenger
         }}
       />
     );

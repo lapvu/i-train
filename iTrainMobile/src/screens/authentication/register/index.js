@@ -8,7 +8,7 @@ import MyButton from "../../../components/button";
 import { Formik } from "formik";
 import * as Yup from "yup";
 import firebase from "react-native-firebase";
-
+import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 class RegisterScreen extends React.Component {
   static navigationOptions = {
     headerStyle: {
@@ -98,85 +98,90 @@ class RegisterScreen extends React.Component {
     const { width } = Dimensions.get("window");
     return (
       <LinearGradient colors={colors.gradient} style={styles.container}>
-        <Content contentContainerStyle={styles.content}>
-          <Form style={{ width: width - 50 }}>
-            {/* {this.state.step === 1 && ( */}
-            <Formik
-              enableReinitialize={true}
-              initialValues={{
-                email: "",
-                fullName: "",
-                password: "",
-                confirmPassword: ""
-              }}
-              onSubmit={this._handleSubmit}
-              validationSchema={Yup.object().shape({
-                email: Yup.string()
-                  .email("Email không đúng định dạng")
-                  .required("Bạn cần nhập email"),
-                password: Yup.string()
-                  .required("Bạn cần nhập mật khẩu")
-                  .min(8, "Mật khẩu cần có 8 ký tự trở lên"),
-                confirmPassword: Yup.string().oneOf(
-                  [Yup.ref("password", null)],
-                  "Mật khẩu không khớp"
-                ),
-                fullName: Yup.string().required("Bạn cần nhập họ tên")
-              })}
-              render={({
-                values,
-                errors,
-                setFieldValue,
-                setFieldTouched,
-                touched,
-                isSubmitting,
-                handleSubmit
-              }) => (
-                <React.Fragment>
-                  <MyInput
-                    placeholder="email"
-                    name="email"
-                    values={values.email}
-                    onChange={setFieldValue}
-                    error={touched.email && errors.email}
-                    onTouch={setFieldTouched}
-                  />
-                  <MyInput
-                    placeholder="Họ tên"
-                    name="fullName"
-                    values={values.fullName}
-                    onChange={setFieldValue}
-                    error={touched.fullName && errors.fullName}
-                    onTouch={setFieldTouched}
-                  />
-                  <MyInput
-                    placeholder="mật khẩu"
-                    secureTextEntry={true}
-                    name="password"
-                    values={values.password}
-                    onChange={setFieldValue}
-                    error={touched.password && errors.password}
-                    onTouch={setFieldTouched}
-                  />
-                  <MyInput
-                    placeholder="xác nhận mật khẩu"
-                    secureTextEntry={true}
-                    name="confirmPassword"
-                    values={values.confirmPassword}
-                    onChange={setFieldValue}
-                    error={touched.confirmPassword && errors.confirmPassword}
-                    onTouch={setFieldTouched}
-                  />
-                  <MyButton
-                    title="ĐĂNG KÝ"
-                    onPress={handleSubmit}
-                    isLoading={isSubmitting}
-                  />
-                </React.Fragment>
-              )}
-            />
-            {/* )} */}
-            {/* {this.state.step === 2 && (
+        <KeyboardAwareScrollView
+          resetScrollToCoords={{ x: 0, y: 0 }}
+          contentContainerStyle={styles.content}
+          scrollEnabled={true}
+        >
+          <Content contentContainerStyle={styles.content}>
+            <Form style={{ width: width - 50 }}>
+              {/* {this.state.step === 1 && ( */}
+              <Formik
+                enableReinitialize={true}
+                initialValues={{
+                  email: "",
+                  fullName: "",
+                  password: "",
+                  confirmPassword: ""
+                }}
+                onSubmit={this._handleSubmit}
+                validationSchema={Yup.object().shape({
+                  email: Yup.string()
+                    .email("Email không đúng định dạng")
+                    .required("Bạn cần nhập email"),
+                  password: Yup.string()
+                    .required("Bạn cần nhập mật khẩu")
+                    .min(8, "Mật khẩu cần có 8 ký tự trở lên"),
+                  confirmPassword: Yup.string().oneOf(
+                    [Yup.ref("password", null)],
+                    "Mật khẩu không khớp"
+                  ),
+                  fullName: Yup.string().required("Bạn cần nhập họ tên")
+                })}
+                render={({
+                  values,
+                  errors,
+                  setFieldValue,
+                  setFieldTouched,
+                  touched,
+                  isSubmitting,
+                  handleSubmit
+                }) => (
+                  <React.Fragment>
+                    <MyInput
+                      placeholder="email"
+                      name="email"
+                      values={values.email}
+                      onChange={setFieldValue}
+                      error={touched.email && errors.email}
+                      onTouch={setFieldTouched}
+                    />
+                    <MyInput
+                      placeholder="Họ tên"
+                      name="fullName"
+                      values={values.fullName}
+                      onChange={setFieldValue}
+                      error={touched.fullName && errors.fullName}
+                      onTouch={setFieldTouched}
+                    />
+                    <MyInput
+                      placeholder="mật khẩu"
+                      secureTextEntry={true}
+                      name="password"
+                      values={values.password}
+                      onChange={setFieldValue}
+                      error={touched.password && errors.password}
+                      onTouch={setFieldTouched}
+                    />
+                    <MyInput
+                      placeholder="xác nhận mật khẩu"
+                      secureTextEntry={true}
+                      name="confirmPassword"
+                      values={values.confirmPassword}
+                      onChange={setFieldValue}
+                      error={touched.confirmPassword && errors.confirmPassword}
+                      onTouch={setFieldTouched}
+                    />
+                    <MyButton
+                      title="ĐĂNG KÝ"
+                      onPress={handleSubmit}
+                      isLoading={isSubmitting}
+                    />
+                  </React.Fragment>
+                )}
+              />
+              {/* )} */}
+              {/* {this.state.step === 2 && (
               <Formik
                 enableReinitialize={true}
                 initialValues={{
@@ -230,7 +235,7 @@ class RegisterScreen extends React.Component {
                 )}
               />
             )} */}
-            {/* {this.state.step === 3 && (
+              {/* {this.state.step === 3 && (
               <Formik
                 initialValues={{
                   dateOfBirth: this.state.dateOfBirth,
@@ -286,8 +291,9 @@ class RegisterScreen extends React.Component {
                 )}
               />
             )} */}
-          </Form>
-        </Content>
+            </Form>
+          </Content>
+        </KeyboardAwareScrollView>
       </LinearGradient>
     );
   }

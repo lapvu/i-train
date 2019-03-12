@@ -1,6 +1,6 @@
 import React from "react";
 import { H1, Text, Button } from "native-base";
-import { StyleSheet, View, Dimensions } from "react-native";
+import { StyleSheet, View, Dimensions, ToastAndroid } from "react-native";
 import colors from "../../../../styles/colors";
 import LinearGradient from "react-native-linear-gradient";
 import NumericInput from "react-native-numeric-input";
@@ -32,6 +32,20 @@ export default class PassengerScreen extends React.Component {
     },
     headerTintColor: colors.white
   };
+  constructor(props) {
+    super(props);
+    this.state = {
+      adults: 0,
+      children: 0,
+      students: 0,
+      oldPerson: 0
+    };
+  }
+  componentDidMount() {
+    this.setState((state, props) => {
+      return props.screenProps.passenger;
+    });
+  }
   render() {
     const { width, height } = Dimensions.get("window");
     return (
@@ -44,7 +58,9 @@ export default class PassengerScreen extends React.Component {
             </View>
             <View style={styles.contentrRight}>
               <NumericInput
-                onChange={value => console.log(value)}
+                initValue={this.state.adults}
+                value={this.state.adults}
+                onChange={value => this.setState({ adults: value })}
                 totalWidth={100}
                 totalHeight={30}
                 iconSize={25}
@@ -72,7 +88,9 @@ export default class PassengerScreen extends React.Component {
             </View>
             <View style={styles.contentrRight}>
               <NumericInput
-                onChange={value => console.log(value)}
+                initValue={this.state.children}
+                value={this.state.children}
+                onChange={value => this.setState({ children: value })}
                 totalWidth={100}
                 totalHeight={30}
                 iconSize={25}
@@ -99,7 +117,9 @@ export default class PassengerScreen extends React.Component {
             </View>
             <View style={styles.contentrRight}>
               <NumericInput
-                onChange={value => console.log(value)}
+                initValue={this.state.students}
+                value={this.state.students}
+                onChange={value => this.setState({ students: value })}
                 totalWidth={100}
                 totalHeight={30}
                 iconSize={25}
@@ -127,7 +147,9 @@ export default class PassengerScreen extends React.Component {
             </View>
             <View style={styles.contentrRight}>
               <NumericInput
-                onChange={value => console.log(value)}
+                initValue={this.state.oldPerson}
+                value={this.state.oldPerson}
+                onChange={value => this.setState({ oldPerson: value })}
                 totalWidth={100}
                 totalHeight={30}
                 iconSize={25}
@@ -163,6 +185,18 @@ export default class PassengerScreen extends React.Component {
               justifyContent: "center"
             }}
             light
+            onPress={() => {
+              const { adults, children, students, oldPerson } = this.state;
+              if (!adults && !children && !students && !oldPerson) {
+                ToastAndroid.show(
+                  "Bạn cần phải chọn số lượng hành khách",
+                  ToastAndroid.SHORT
+                );
+              } else {
+                this.props.screenProps.setPassenger(this.state);
+                this.props.navigation.navigate("Home");
+              }
+            }}
           >
             <Text> Lưu </Text>
           </Button>

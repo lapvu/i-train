@@ -7,6 +7,6 @@ export default {
   transparent: "transparent",
   holderColor: "rgba(255,255,255,0.7)",
   inputColor: "rgba(255,255,255,0.2)",
-  gradient: ["#00c6ff", "#0072ff"],
+  gradient: ["#7b4397", "#dc2430"],
   blur:"rgba(0,0,0,0.4)"
 };
