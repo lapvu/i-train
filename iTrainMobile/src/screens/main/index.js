@@ -9,6 +9,8 @@ import SearchStationScreen from "./other/search";
 import SettingsScreen from "./settings";
 import HistoryScreen from "./history";
 import CalendarScreen from "./other/calendar";
+import TrainListScreen from "./home/trainList";
+import CoachListScreen from "./home/toaList";
 import { Icon } from "native-base";
 import React from "react";
 
@@ -16,7 +18,9 @@ const HomeStack = createStackNavigator({
   Home: HomeScreen,
   Search: SearchStationScreen,
   Passenger: PassengerScreen,
-  Calendar: CalendarScreen
+  Calendar: CalendarScreen,
+  TrainList: TrainListScreen,
+  CoachList: CoachListScreen
 });
 HomeStack.navigationOptions = ({ navigation }) => {
   let { routeName } = navigation.state.routes[navigation.state.index];
@@ -24,7 +28,9 @@ HomeStack.navigationOptions = ({ navigation }) => {
   if (
     routeName === "Search" ||
     routeName === "Passenger" ||
-    routeName === "Calendar"
+    routeName === "Calendar" ||
+    routeName === "CoachList" ||
+    routeName === "TrainList"
   ) {
     navigationOptions.tabBarVisible = false;
   }
@@ -75,7 +81,7 @@ export default class MainScreen extends React.Component {
     this.state = {
       from: "",
       to: "",
-      dateStart: "",
+      dateStart: new Date(),
       dateEnd: "",
       passenger: {}
     };
@@ -108,6 +114,7 @@ export default class MainScreen extends React.Component {
   setPassenger = value => {
     this.setState({ passenger: value });
   };
+
   render() {
     return (
       <MainContaier

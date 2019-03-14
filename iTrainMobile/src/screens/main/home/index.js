@@ -4,7 +4,8 @@ import {
   View,
   Dimensions,
   StyleSheet,
-  TouchableHighlight
+  TouchableHighlight,
+  ToastAndroid
 } from "react-native";
 import { Card, CheckBox, CardItem, Button } from "native-base";
 import Icon from "react-native-vector-icons/AntDesign";
@@ -302,6 +303,29 @@ class HomeScreen extends React.Component {
             block
             style={{
               backgroundColor: colors.white
+            }}
+            onPress={() => {
+              const {
+                from,
+                to,
+                passenger,
+                dateEnd,
+                dateStart
+              } = this.props.screenProps;
+              // if (
+              //   !from ||
+              //   !to ||
+              //   !passenger ||
+              //   (!dateStart && this.state.oneWay) ||
+              //   ((!dateStart || !dateEnd) && this.state.return)
+              // ) {
+              //   ToastAndroid.show(
+              //     "Bạn cần chọn đầy đủ các trường",
+              //     ToastAndroid.SHORT
+              //   );
+              // } else {
+              this.props.navigation.navigate("TrainList");
+              // }
             }}
           >
             <Text style={{ fontSize: 18, paddingTop: 20, paddingBottom: 20 }}>
