@@ -10,7 +10,8 @@ import SettingsScreen from "./settings";
 import HistoryScreen from "./history";
 import CalendarScreen from "./other/calendar";
 import TrainListScreen from "./home/trainList";
-import CoachListScreen from "./home/toaList";
+import CoachListScreen from "./home/coachList";
+import SeatListScreen from "./home/seatList";
 import { Icon } from "native-base";
 import React from "react";
 
@@ -20,7 +21,8 @@ const HomeStack = createStackNavigator({
   Passenger: PassengerScreen,
   Calendar: CalendarScreen,
   TrainList: TrainListScreen,
-  CoachList: CoachListScreen
+  CoachList: CoachListScreen,
+  SeatList: SeatListScreen
 });
 HomeStack.navigationOptions = ({ navigation }) => {
   let { routeName } = navigation.state.routes[navigation.state.index];
@@ -30,7 +32,8 @@ HomeStack.navigationOptions = ({ navigation }) => {
     routeName === "Passenger" ||
     routeName === "Calendar" ||
     routeName === "CoachList" ||
-    routeName === "TrainList"
+    routeName === "TrainList" ||
+    routeName === "SeatList"
   ) {
     navigationOptions.tabBarVisible = false;
   }
