@@ -70,7 +70,7 @@ export default class SearchStationScreen extends React.Component {
     this.props.navigation.navigate("Home");
   };
   render() {
-    const { navigation } = this.props;
+    const { navigation, screenProps } = this.props;
     const { width, height } = Dimensions.get("window");
     const name = navigation.getParam("name", "");
     return (
@@ -89,6 +89,7 @@ export default class SearchStationScreen extends React.Component {
               }}
               placeholderTextColor={colors.holderColor}
               onChangeText={this.filterList.bind(this)}
+              // value={name === "from" ? screenProps.from : screenProps.to}
             />
           </Item>
           <List>

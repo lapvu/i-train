@@ -4,6 +4,7 @@ import { Card, CardItem, Body, Button } from "native-base";
 import colors from "../../../../styles/colors";
 import Icon from "react-native-vector-icons/AntDesign";
 import LinearGradient from "react-native-linear-gradient";
+
 const styles = StyleSheet.create({
   container: {
     alignItems: "center",
@@ -57,6 +58,31 @@ const styles = StyleSheet.create({
     alignItems: "flex-end"
   }
 });
+
+const mockupTrain = [
+  {
+    name: "SP2",
+    timeGo: "9:30 pm",
+    timeArrival: "5:30 am",
+    totalTime: "7h13'",
+    selected: false
+  },
+  {
+    name: "SP3",
+    timeGo: "9:30 pm",
+    timeArrival: "5:30 am",
+    totalTime: "7h13'",
+    selected: false
+  },
+  {
+    name: "SP4",
+    timeGo: "9:30 pm",
+    timeArrival: "5:30 am",
+    totalTime: "7h13'",
+    selected: false
+  }
+];
+
 export default class TrainListScreen extends React.Component {
   static navigationOptions = {
     title: "Danh sách chiều đi",
@@ -65,6 +91,23 @@ export default class TrainListScreen extends React.Component {
       elevation: 0
     },
     headerTintColor: colors.white
+  };
+  constructor(props) {
+    super(props);
+    this.state = {
+      initValue: mockupTrain
+    };
+  }
+  setSelect = index => {
+    let stateCopy = Object.assign({}, this.state);
+    stateCopy.initValue.forEach((e, i) => {
+      if (i === index) {
+        e.selected = !e.selected;
+      } else {
+        e.selected = false;
+      }
+    });
+    this.setState({ stateCopy });
   };
   render() {
     const { width, height } = Dimensions.get("window");
@@ -80,34 +123,50 @@ export default class TrainListScreen extends React.Component {
           <Text style={styles.text2}>{this.props.screenProps.to}</Text>
         </View>
         <View style={{ flex: 10, width: width - 40 }}>
-          <Card style={{ marginTop: 10 }}>
-            <CardItem button onPress={() => {}}>
-              <Body>
-                <View style={{ flexDirection: "row" }}>
-                  <View style={styles.content1}>
-                    <Icon name="clockcircleo" style={{ marginRight: 8 }} />
-                    <Text>3:00</Text>
-                  </View>
-                  <View style={styles.content2}>
-                    <Image
-                      source={require("../../../../assets/imgs/trains.png")}
-                      style={styles.img2}
-                    />
-                    <Text>aaaa</Text>
-                  </View>
-                </View>
-                <View style={styles.content3}>
-                  <View style={styles.content1}>
-                    <Icon name="clockcircleo" style={{ marginRight: 8 }} />
-                    <Text>3:00</Text>
-                  </View>
-                  <View style={styles.content4}>
-                    <Text>3:00</Text>
-                  </View>
-                </View>
-              </Body>
-            </CardItem>
-          </Card>
+          {this.state.initValue.map((e, index) => {
+            return (
+              <Card style={{ marginTop: 10 }} key={index}>
+                <CardItem
+                  button
+                  onPress={() => this.setSelect(index)}
+                  style={
+                    e.selected
+                      ? {
+                          backgroundColor: "pink",
+                          borderColor: "red",
+                          borderWidth: 0.5
+                        }
+                      : {}
+                  }
+                >
+                  <Body>
+                    <View style={{ flexDirection: "row" }}>
+                      <View style={styles.content1}>
+                        <Icon name="clockcircleo" style={{ marginRight: 8 }} />
+                        <Text>{e.timeGo}</Text>
+                      </View>
+                      <View style={styles.content2}>
+                        <Image
+                          source={require("../../../../assets/imgs/trains.png")}
+                          style={styles.img2}
+                        />
+                        <Text>{e.name}</Text>
+                      </View>
+                    </View>
+                    <View style={styles.content3}>
+                      <View style={styles.content1}>
+                        <Icon name="clockcircleo" style={{ marginRight: 8 }} />
+                        <Text>{e.timeArrival}</Text>
+                      </View>
+                      <View style={styles.content4}>
+                        <Text>{e.totalTime}</Text>
+                      </View>
+                    </View>
+                  </Body>
+                </CardItem>
+              </Card>
+            );
+          })}
         </View>
         <View
           style={{
