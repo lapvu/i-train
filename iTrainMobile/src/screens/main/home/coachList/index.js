@@ -53,6 +53,41 @@ const styles = StyleSheet.create({
     alignItems: "flex-end"
   }
 });
+
+const mockupCoach = [
+  {
+    name: "Toa số 1",
+    type: "Giường nằm điều hòa 4 chỗ"
+  },
+  {
+    name: "Toa số 2",
+    type: "Giường nằm điều hòa 4 chỗ"
+  },
+  {
+    name: "Toa số 3",
+    type: "Giường nằm điều hòa 4 chỗ"
+  },
+  {
+    name: "Toa số 4",
+    type: "Giường nằm điều hòa 4 chỗ"
+  },
+  {
+    name: "Toa số 5",
+    type: "Giường nằm điều hòa 4 chỗ"
+  },
+  {
+    name: "Toa số 6",
+    type: "Giường nằm điều hòa 4 chỗ"
+  },
+  {
+    name: "Toa số 7",
+    type: "Giường nằm điều hòa 4 chỗ"
+  },
+  {
+    name: "Toa số 8",
+    type: "Giường nằm điều hòa 4 chỗ"
+  }
+];
 export default class CoachListScreen extends React.Component {
   static navigationOptions = {
     title: "Chọn toa",
@@ -66,7 +101,7 @@ export default class CoachListScreen extends React.Component {
     const { width, height } = Dimensions.get("window");
     return (
       <LinearGradient colors={colors.gradient} style={styles.container}>
-        <View style={{ flex: 1, width: width - 40 }}>
+        <View style={{ flex: 1, width: width }}>
           <Card>
             <CardItem>
               <Body>
@@ -98,30 +133,23 @@ export default class CoachListScreen extends React.Component {
         </View>
         <View style={{ flex: 6, width: width - 40 }}>
           <Card>
-            <CardItem
-              bordered
-              button
-              onPress={() => this.props.navigation.navigate("SeatList")}
-            >
-              <Image
-                source={require("../../../../assets/imgs/door.png")}
-                style={{ height: 15, width: 15, marginRight: 5 }}
-              />
-              <Text style={{ fontWeight: "bold" }}>Toa số 1 </Text>
-              <Text style={{ color: "gray" }}>(Giường nằm điều hòa)</Text>
-            </CardItem>
-            <CardItem
-              bordered
-              button
-              onPress={() => this.props.navigation.navigate("SeatList")}
-            >
-              <Image
-                source={require("../../../../assets/imgs/door.png")}
-                style={{ height: 15, width: 15, marginRight: 5 }}
-              />
-              <Text style={{ fontWeight: "bold" }}>Toa số 1 </Text>
-              <Text style={{ color: "gray" }}>(Giường nằm điều hòa)</Text>
-            </CardItem>
+            {mockupCoach.map((e, i) => {
+              return (
+                <CardItem
+                  bordered
+                  button
+                  onPress={() => this.props.navigation.navigate("SeatList")}
+                  key={i}
+                >
+                  <Image
+                    source={require("../../../../assets/imgs/door.png")}
+                    style={{ height: 15, width: 15, marginRight: 5 }}
+                  />
+                  <Text style={{ fontWeight: "bold" }}>{e.name}</Text>
+                  <Text style={{ color: "gray" }}> ({e.type})</Text>
+                </CardItem>
+              );
+            })}
           </Card>
         </View>
       </LinearGradient>

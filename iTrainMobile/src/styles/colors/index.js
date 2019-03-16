@@ -8,5 +8,8 @@ export default {
   holderColor: "rgba(255,255,255,0.7)",
   inputColor: "rgba(255,255,255,0.2)",
   gradient: ["#7b4397", "#dc2430"],
-  blur:"rgba(0,0,0,0.4)"
+  blur:"rgba(0,0,0,0.4)",
+  seatColor1:"#f94c43",
+  seatColor2:"#59ff2b",
+  seatColor3:"#ffae3d"
 };

@@ -312,20 +312,20 @@ class HomeScreen extends React.Component {
                 dateEnd,
                 dateStart
               } = this.props.screenProps;
-              // if (
-              //   !from ||
-              //   !to ||
-              //   !passenger ||
-              //   (!dateStart && this.state.oneWay) ||
-              //   ((!dateStart || !dateEnd) && this.state.return)
-              // ) {
-              //   ToastAndroid.show(
-              //     "Bạn cần chọn đầy đủ các trường",
-              //     ToastAndroid.SHORT
-              //   );
-              // } else {
-              this.props.navigation.navigate("TrainList");
-              // }
+              if (
+                !from ||
+                !to ||
+                !passenger ||
+                (!dateStart && this.state.oneWay) ||
+                ((!dateStart || !dateEnd) && this.state.return)
+              ) {
+                ToastAndroid.show(
+                  "Bạn cần chọn đầy đủ các trường",
+                  ToastAndroid.SHORT
+                );
+              } else {
+                this.props.navigation.navigate("TrainList");
+              }
             }}
           >
             <Text style={{ fontSize: 18, paddingTop: 20, paddingBottom: 20 }}>
