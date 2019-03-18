@@ -23,6 +23,7 @@ import com.facebook.reactnative.androidsdk.FBSDKPackage;
 import com.facebook.appevents.AppEventsLogger;
 import java.util.Arrays;
 import java.util.List;
+import org.pgsqlite.SQLitePluginPackage;
 
 public class MainApplication extends Application implements ReactApplication {
   private static CallbackManager mCallbackManager = CallbackManager.Factory.create();
@@ -49,7 +50,8 @@ public class MainApplication extends Application implements ReactApplication {
             new RNGestureHandlerPackage(),
             new RNFirebaseDatabasePackage(),
             new RNFirebaseFirestorePackage(),
-            new FBSDKPackage(mCallbackManager)
+            new FBSDKPackage(mCallbackManager),
+            new SQLitePluginPackage()
       );
     }
 

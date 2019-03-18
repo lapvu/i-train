@@ -82,6 +82,7 @@
 		27201626EE4E44719BD53471 /* libRCTFBSDK.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 3FCD441651D44576BB089E04 /* libRCTFBSDK.a */; };
 		0E4F125260244FFDA4E42FAF /* libRNGoogleSignin.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 8A34FB491D424EF1866E2CC1 /* libRNGoogleSignin.a */; };
 		DD14000043F048EEA25842FA /* libRCTBEEPickerManager.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 7A7975D4F2C54C54A91294D2 /* libRCTBEEPickerManager.a */; };
+		FC172EC9C6FC4006ADF8D264 /* libSQLite.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 22DBA7FDE45E42EA879D9B2E /* libSQLite.a */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -440,6 +441,8 @@
 		8A34FB491D424EF1866E2CC1 /* libRNGoogleSignin.a */ = {isa = PBXFileReference; name = "libRNGoogleSignin.a"; path = "libRNGoogleSignin.a"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = archive.ar; explicitFileType = undefined; includeInIndex = 0; };
 		94BBCD3FA7574EF6BE021818 /* RCTBEEPickerManager.xcodeproj */ = {isa = PBXFileReference; name = "RCTBEEPickerManager.xcodeproj"; path = "../node_modules/react-native-picker/ios/RCTBEEPickerManager.xcodeproj"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = wrapper.pb-project; explicitFileType = undefined; includeInIndex = 0; };
 		7A7975D4F2C54C54A91294D2 /* libRCTBEEPickerManager.a */ = {isa = PBXFileReference; name = "libRCTBEEPickerManager.a"; path = "libRCTBEEPickerManager.a"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = archive.ar; explicitFileType = undefined; includeInIndex = 0; };
+		55B470095CBB47EC910E939F /* SQLite.xcodeproj */ = {isa = PBXFileReference; name = "SQLite.xcodeproj"; path = "../node_modules/react-native-sqlite-storage/src/ios/SQLite.xcodeproj"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = wrapper.pb-project; explicitFileType = undefined; includeInIndex = 0; };
+		22DBA7FDE45E42EA879D9B2E /* libSQLite.a */ = {isa = PBXFileReference; name = "libSQLite.a"; path = "libSQLite.a"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = archive.ar; explicitFileType = undefined; includeInIndex = 0; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -476,6 +479,7 @@
 				27201626EE4E44719BD53471 /* libRCTFBSDK.a in Frameworks */,
 				0E4F125260244FFDA4E42FAF /* libRNGoogleSignin.a in Frameworks */,
 				DD14000043F048EEA25842FA /* libRCTBEEPickerManager.a in Frameworks */,
+				FC172EC9C6FC4006ADF8D264 /* libSQLite.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -675,6 +679,7 @@
 				1158FC34353E494AB8939A4D /* RCTFBSDK.xcodeproj */,
 				A4091EE8CA3D4386B3C55443 /* RNGoogleSignin.xcodeproj */,
 				94BBCD3FA7574EF6BE021818 /* RCTBEEPickerManager.xcodeproj */,
+				55B470095CBB47EC910E939F /* SQLite.xcodeproj */,
 			);
 			name = Libraries;
 			sourceTree = "<group>";
@@ -1387,6 +1392,7 @@
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 				);
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
@@ -1398,6 +1404,7 @@
 					"$(SRCROOT)\..\node_modules\react-native-fbsdk\ios\RCTFBSDK/**",
 					"$(SRCROOT)\..\node_modules\react-native-google-signin\ios\RNGoogleSignin",
 					"$(SRCROOT)\..\node_modules\react-native-picker\ios\RCTBEEPickerManager",
+					"$(SRCROOT)\..\node_modules\react-native-sqlite-storage\src\ios",
 				);
 			};
 			name = Debug;
@@ -1429,6 +1436,7 @@
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 				);
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
@@ -1440,6 +1448,7 @@
 					"$(SRCROOT)\..\node_modules\react-native-fbsdk\ios\RCTFBSDK/**",
 					"$(SRCROOT)\..\node_modules\react-native-google-signin\ios\RNGoogleSignin",
 					"$(SRCROOT)\..\node_modules\react-native-picker\ios\RCTBEEPickerManager",
+					"$(SRCROOT)\..\node_modules\react-native-sqlite-storage\src\ios",
 				);
 			};
 			name = Release;
@@ -1470,6 +1479,7 @@
 					"$(SRCROOT)\..\node_modules\react-native-fbsdk\ios\RCTFBSDK/**",
 					"$(SRCROOT)\..\node_modules\react-native-google-signin\ios\RNGoogleSignin",
 					"$(SRCROOT)\..\node_modules\react-native-picker\ios\RCTBEEPickerManager",
+					"$(SRCROOT)\..\node_modules\react-native-sqlite-storage\src\ios",
 				);
 			};
 			name = Debug;
@@ -1499,6 +1509,7 @@
 					"$(SRCROOT)\..\node_modules\react-native-fbsdk\ios\RCTFBSDK/**",
 					"$(SRCROOT)\..\node_modules\react-native-google-signin\ios\RNGoogleSignin",
 					"$(SRCROOT)\..\node_modules\react-native-picker\ios\RCTBEEPickerManager",
+					"$(SRCROOT)\..\node_modules\react-native-sqlite-storage\src\ios",
 				);
 			};
 			name = Release;
@@ -1538,6 +1549,7 @@
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 				);
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
@@ -1549,6 +1561,7 @@
 					"$(SRCROOT)\..\node_modules\react-native-fbsdk\ios\RCTFBSDK/**",
 					"$(SRCROOT)\..\node_modules\react-native-google-signin\ios\RNGoogleSignin",
 					"$(SRCROOT)\..\node_modules\react-native-picker\ios\RCTBEEPickerManager",
+					"$(SRCROOT)\..\node_modules\react-native-sqlite-storage\src\ios",
 				);
 			};
 			name = Debug;
@@ -1588,6 +1601,7 @@
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 				);
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
@@ -1599,6 +1613,7 @@
 					"$(SRCROOT)\..\node_modules\react-native-fbsdk\ios\RCTFBSDK/**",
 					"$(SRCROOT)\..\node_modules\react-native-google-signin\ios\RNGoogleSignin",
 					"$(SRCROOT)\..\node_modules\react-native-picker\ios\RCTBEEPickerManager",
+					"$(SRCROOT)\..\node_modules\react-native-sqlite-storage\src\ios",
 				);
 			};
 			name = Release;
@@ -1637,6 +1652,7 @@
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 				);
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
@@ -1648,6 +1664,7 @@
 					"$(SRCROOT)\..\node_modules\react-native-fbsdk\ios\RCTFBSDK/**",
 					"$(SRCROOT)\..\node_modules\react-native-google-signin\ios\RNGoogleSignin",
 					"$(SRCROOT)\..\node_modules\react-native-picker\ios\RCTBEEPickerManager",
+					"$(SRCROOT)\..\node_modules\react-native-sqlite-storage\src\ios",
 				);
 			};
 			name = Debug;
@@ -1686,6 +1703,7 @@
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 				);
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
@@ -1697,6 +1715,7 @@
 					"$(SRCROOT)\..\node_modules\react-native-fbsdk\ios\RCTFBSDK/**",
 					"$(SRCROOT)\..\node_modules\react-native-google-signin\ios\RNGoogleSignin",
 					"$(SRCROOT)\..\node_modules\react-native-picker\ios\RCTBEEPickerManager",
+					"$(SRCROOT)\..\node_modules\react-native-sqlite-storage\src\ios",
 				);
 			};
 			name = Release;

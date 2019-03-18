@@ -92,9 +92,9 @@ export default class MainScreen extends React.Component {
 
   setStation = (station, type) => {
     if (type === "from") {
-      this.setState({ from: station.name });
+      this.setState({ from: station.short_name });
     } else {
-      this.setState({ to: station.name });
+      this.setState({ to: station.short_name });
     }
   };
   swapStation = () => {

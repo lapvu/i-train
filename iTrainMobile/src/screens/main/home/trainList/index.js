@@ -134,9 +134,12 @@ export default class TrainListScreen extends React.Component {
                       ? {
                           backgroundColor: "pink",
                           borderColor: "red",
-                          borderWidth: 0.5
+                          borderWidth: 1
                         }
-                      : {}
+                      : {
+                          borderColor: "transparent",
+                          borderWidth: 1
+                        }
                   }
                 >
                   <Body>
