@@ -11,6 +11,7 @@ import { Card, CheckBox, CardItem, Button } from "native-base";
 import Icon from "react-native-vector-icons/AntDesign";
 import LinearGradient from "react-native-linear-gradient";
 import colors from "../../../styles/colors";
+
 class HomeScreen extends React.Component {
   static navigationOptions = {
     header: null
@@ -22,6 +23,7 @@ class HomeScreen extends React.Component {
       return: false
     };
   }
+
   render() {
     const { width, height } = Dimensions.get("window");
     const { navigation } = this.props;
@@ -48,7 +50,7 @@ class HomeScreen extends React.Component {
             >
               <Icon name="enviromento" style={styles.iconMap} />
               <Text style={styles.text}>
-                {this.props.screenProps.from || "Ga đi"}
+                {this.props.screenProps.from.TenGa || "Ga đi"}
               </Text>
             </CardItem>
             <CardItem
@@ -59,7 +61,7 @@ class HomeScreen extends React.Component {
             >
               <Icon name="enviromento" style={styles.iconMap} />
               <Text style={styles.text}>
-                {this.props.screenProps.to || "Ga đến"}
+                {this.props.screenProps.to.TenGa || "Ga đến"}
               </Text>
             </CardItem>
             <Button
@@ -312,20 +314,20 @@ class HomeScreen extends React.Component {
                 dateEnd,
                 dateStart
               } = this.props.screenProps;
-              if (
-                !from ||
-                !to ||
-                !passenger ||
-                (!dateStart && this.state.oneWay) ||
-                ((!dateStart || !dateEnd) && this.state.return)
-              ) {
-                ToastAndroid.show(
-                  "Bạn cần chọn đầy đủ các trường",
-                  ToastAndroid.SHORT
-                );
-              } else {
-                this.props.navigation.navigate("TrainList");
-              }
+              // if (
+              //   !from ||
+              //   !to ||
+              //   !passenger ||
+              //   (!dateStart && this.state.oneWay) ||
+              //   ((!dateStart || !dateEnd) && this.state.return)
+              // ) {
+              //   ToastAndroid.show(
+              //     "Bạn cần chọn đầy đủ các trường",
+              //     ToastAndroid.SHORT
+              //   );
+              // } else {
+              this.props.navigation.navigate("TrainList", this.state);
+              // }
             }}
           >
             <Text style={{ fontSize: 18, paddingTop: 20, paddingBottom: 20 }}>

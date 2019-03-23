@@ -141,7 +141,7 @@ export default class SeatListScreen extends React.Component {
           })}
         </View>
         <View style={{ flex: 9, alignItems: "center" }}>
-          <View style={{ flex: 1, width: width - 40,flexDirection:"row" }}>
+          <View style={{ flex: 1, width: width - 40, flexDirection: "row" }}>
             {mockupSeat.map((e, i) => {
               return (
                 <View
@@ -180,8 +180,8 @@ export default class SeatListScreen extends React.Component {
                     return (
                       <Text
                         style={{
-                          height: 32,
-                          width: "35%",
+                          height: 30,
+                          width: "30%",
                           borderWidth: 0.5,
                           borderRadius: 5,
                           borderColor: colors.black,
@@ -196,7 +196,7 @@ export default class SeatListScreen extends React.Component {
                           textAlign: "center",
                           textAlignVertical: "center",
                           marginHorizontal: 5,
-                          marginTop: 15
+                          marginTop: 8
                         }}
                         key={index}
                       >

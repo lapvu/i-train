@@ -12,16 +12,7 @@ import {
 import { StyleSheet, View, Dimensions } from "react-native";
 import colors from "../../../../styles/colors";
 import LinearGradient from "react-native-linear-gradient";
-var SQLite = require("react-native-sqlite-storage");
-var db = SQLite.openDatabase(
-  { name: "itrain", createFromLocation: "~db/itrain.db" },
-  () => {
-    console.log("ok");
-  },
-  err => {
-    console.log(err);
-  }
-);
+
 const styles = StyleSheet.create({
   container: {
     flex: 1,
@@ -31,7 +22,6 @@ const styles = StyleSheet.create({
     color: colors.white
   }
 });
-
 
 export default class SearchStationScreen extends React.Component {
   static navigationOptions = {
@@ -44,44 +34,51 @@ export default class SearchStationScreen extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
+      init: [],
       items: []
     };
   }
-  getData = txt => {
-    let station = [];
-    return new Promise((resolve, reject) => {
-      db.transaction(
-        tx => {
-          tx.executeSql(
-            `SELECT * FROM stations where short_name like '%${txt}%' limit 10;`,
-            [],
-            (tx, rs) => {
-              for (let i = 0; i <= rs.rows.length; i++) {
-                station.push(rs.rows.item(i));
-                resolve(station);
-              }
-            }
-          );
-        },
-        error => {
-          reject(error.message);
-        }
-      );
-    });
-  };
+  componentDidMount() {
+    return fetch("https://k.vnticketonline.vn/api/GTGV/LoadDmGa", {
+      method: "GET",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json"
+      }
+    })
+      .then(res => res.json())
+      .then(res => {
+        this.setState({
+          init: res
+        });
+      })
+      .catch(e => {
+        console.log(e);
+      });
+  }
   filterList = txt => {
     if (txt) {
-      this.getData(txt)
-        .then(data => this.setState({ items: data }))
-        .catch(err => console.log(err));
+      let keyword = txt.toLowerCase();
+      filtered = this.state.init.filter(e => {
+        let YKeys = e.SKeys.toLowerCase();
+        let ZKeys = e.TenGa.toLowerCase();
+        if (YKeys && ZKeys) {
+          return YKeys.indexOf(keyword) > -1 || ZKeys.indexOf(keyword) > -1;
+        }
+      });
+      this.setState({
+        items: filtered
+      });
     } else {
-      this.setState({ items: [] });
+      this.setState({
+        items: []
+      });
     }
   };
   handleSetStation = (station, go) => {
     if (
-      station.short_name != this.props.screenProps.from &&
-      station.short_name != this.props.screenProps.to
+      station.TenGa != this.props.screenProps.from.TenGa &&
+      station.TenGa != this.props.screenProps.to.TenGa
     ) {
       this.props.screenProps.setStation(station, go);
       this.props.navigation.navigate("Home");
@@ -119,9 +116,7 @@ export default class SearchStationScreen extends React.Component {
                     onPress={this.handleSetStation.bind(this, e, name)}
                   >
                     <Left>
-                      <Text style={{ color: colors.white }}>
-                        {e.short_name}
-                      </Text>
+                      <Text style={{ color: colors.white }}>{e.TenGa}</Text>
                     </Left>
                     <Right>
                       <Icon

@@ -64,8 +64,18 @@ export default class CalendarScreen extends React.Component {
         current={"2019-03-10"}
         minDate={dateNow}
         onDayPress={day => {
-          this.props.screenProps.setDate(day, type);
-          this.props.navigation.navigate("Home");
+          if (type === "dateEnd") {
+            if (
+              Date.parse(this.props.screenProps.dateStart.dateString) <
+              Date.parse(day.dateString)
+            ) {
+              this.props.screenProps.setDate(day, type);
+              this.props.navigation.navigate("Home");
+            }
+          } else {
+            this.props.screenProps.setDate(day, type);
+            this.props.navigation.navigate("Home");
+          }
         }}
       />
     );

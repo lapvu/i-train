@@ -22,7 +22,6 @@
     "react-native-google-signin": "^1.1.0",
     "react-native-linear-gradient": "^2.5.3",
     "react-native-numeric-input": "^1.6.5",
-    "react-native-sqlite-storage": "^3.3.10",
     "react-native-svg": "^9.2.4",
     "react-native-svg-uri": "^1.2.3",
     "react-native-vector-icons": "^6.2.0",

@@ -3,11 +3,16 @@ import { Content, Button, Text, Icon } from "native-base";
 import { Dimensions, StyleSheet, View, Image } from "react-native";
 import LinearGradient from "react-native-linear-gradient";
 import colors from "../../../styles/colors";
-import { googleLogin, facebookLogin } from "../../../utils";
+import { googleLogin, facebookLogin } from "../../../services";
+
 class WellcomeScreen extends React.Component {
   static navigationOptions = {
     header: null
   };
+  constructor(props) {
+    super(props);
+  }
+
   render() {
     const { width, height } = Dimensions.get("window");
     return (

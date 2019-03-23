@@ -10,7 +10,7 @@ import SettingsScreen from "./settings";
 import HistoryScreen from "./history";
 import CalendarScreen from "./other/calendar";
 import TrainListScreen from "./home/trainList";
-import CoachListScreen from "./home/coachList";
+import CarriageListScreen from "./home/carriageList";
 import SeatListScreen from "./home/seatList";
 import { Icon } from "native-base";
 import React from "react";
@@ -21,7 +21,7 @@ const HomeStack = createStackNavigator({
   Passenger: PassengerScreen,
   Calendar: CalendarScreen,
   TrainList: TrainListScreen,
-  CoachList: CoachListScreen,
+  CarriageList: CarriageListScreen,
   SeatList: SeatListScreen
 });
 HomeStack.navigationOptions = ({ navigation }) => {
@@ -31,7 +31,7 @@ HomeStack.navigationOptions = ({ navigation }) => {
     routeName === "Search" ||
     routeName === "Passenger" ||
     routeName === "Calendar" ||
-    routeName === "CoachList" ||
+    routeName === "CarriageList" ||
     routeName === "TrainList" ||
     routeName === "SeatList"
   ) {
@@ -84,17 +84,21 @@ export default class MainScreen extends React.Component {
     this.state = {
       from: "",
       to: "",
-      dateStart: new Date(),
-      dateEnd: "",
-      passenger: {}
+      dateStart: {
+        dateString: new Date().toISOString().slice(0, 10)
+      },
+      dateEnd: {
+        dateString: new Date().toISOString().slice(0, 10)
+      },
+      passenger: null
     };
   }
 
   setStation = (station, type) => {
     if (type === "from") {
-      this.setState({ from: station.short_name });
+      this.setState({ from: station });
     } else {
-      this.setState({ to: station.short_name });
+      this.setState({ to: station });
     }
   };
   swapStation = () => {

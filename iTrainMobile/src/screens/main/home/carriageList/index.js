@@ -4,10 +4,13 @@ import colors from "../../../../styles/colors";
 import LinearGradient from "react-native-linear-gradient";
 import { Card, CardItem, Right, Body } from "native-base";
 import Icon from "react-native-vector-icons/AntDesign";
+import Loader from "../../../../components/loader";
+import { getDuration } from "../../../../helpers";
 const styles = StyleSheet.create({
   container: {
     alignItems: "center",
-    flex: 1
+    flex: 1,
+    backgroundColor: "#dddddd"
   },
   content: {
     flex: 1,
@@ -88,7 +91,7 @@ const mockupCoach = [
     type: "Giường nằm điều hòa 4 chỗ"
   }
 ];
-export default class CoachListScreen extends React.Component {
+export default class CarriageListScreen extends React.Component {
   static navigationOptions = {
     title: "Chọn toa",
     headerStyle: {
@@ -97,39 +100,79 @@ export default class CoachListScreen extends React.Component {
     },
     headerTintColor: colors.white
   };
+  constructor(props) {
+    super(props);
+    this.state = {
+      initValue: null,
+      isLoading: false
+    };
+  }
+  componentDidMount() {
+    this.setState({
+      isLoading: true
+    });
+    const id = this.props.navigation.getParam("tauId", "");
+    const url = `https://k.vnticketonline.vn/api/GTGV/LoadOneTau?tauId=${id}`;
+    fetch(url, {
+      method: "GET",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json"
+      }
+    })
+      .then(res => res.json())
+      .then(res => {
+        this.setState({
+          initValue: res,
+          isLoading: false
+        });
+      })
+      .catch(e => {
+        this.setState({
+          isLoading: false
+        });
+        console.log(e);
+      });
+  }
   render() {
     const { width, height } = Dimensions.get("window");
+    const { isLoading, initValue } = this.state;
     return (
-      <LinearGradient colors={colors.gradient} style={styles.container}>
+      <View style={styles.container}>
         <View style={{ flex: 1, width: width }}>
-          <Card>
-            <CardItem>
-              <Body>
-                <View style={{ flexDirection: "row" }}>
-                  <View style={styles.content1}>
-                    <Icon name="clockcircleo" style={{ marginRight: 10 }} />
-                    <Text>3:00</Text>
+          {isLoading && <Loader />}
+          {initValue && (
+            <Card>
+              <CardItem>
+                <Body>
+                  <View style={{ flexDirection: "row" }}>
+                    <View style={styles.content1}>
+                      <Icon name="clockcircleo" style={{ marginRight: 10 }} />
+                      <Text>{initValue.GioDi}</Text>
+                    </View>
+                    <View style={styles.content2}>
+                      <Image
+                        source={require("../../../../assets/imgs/trains.png")}
+                        style={styles.img2}
+                      />
+                      <Text>{initValue.MacTau}</Text>
+                    </View>
                   </View>
-                  <View style={styles.content2}>
-                    <Image
-                      source={require("../../../../assets/imgs/trains.png")}
-                      style={styles.img2}
-                    />
-                    <Text>aaaa</Text>
+                  <View style={styles.content3}>
+                    <View style={styles.content1}>
+                      <Icon name="clockcircleo" style={{ marginRight: 10 }} />
+                      <Text>{initValue.GioDen}</Text>
+                    </View>
+                    <View style={styles.content4}>
+                      <Text>
+                        {getDuration(initValue.GioDi, initValue.GioDen)}
+                      </Text>
+                    </View>
                   </View>
-                </View>
-                <View style={styles.content3}>
-                  <View style={styles.content1}>
-                    <Icon name="clockcircleo" style={{ marginRight: 10 }} />
-                    <Text>3:00</Text>
-                  </View>
-                  <View style={styles.content4}>
-                    <Text>3:00</Text>
-                  </View>
-                </View>
-              </Body>
-            </CardItem>
-          </Card>
+                </Body>
+              </CardItem>
+            </Card>
+          )}
         </View>
         <View style={{ flex: 6, width: width - 40 }}>
           <Card>
@@ -152,7 +195,7 @@ export default class CoachListScreen extends React.Component {
             })}
           </Card>
         </View>
-      </LinearGradient>
+      </View>
     );
   }
 }
