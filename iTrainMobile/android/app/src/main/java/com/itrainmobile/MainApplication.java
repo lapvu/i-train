@@ -17,6 +17,7 @@ import com.facebook.soloader.SoLoader;
 import io.invertase.firebase.auth.RNFirebaseAuthPackage; 
 import io.invertase.firebase.database.RNFirebaseDatabasePackage;
 import io.invertase.firebase.firestore.RNFirebaseFirestorePackage;
+import io.invertase.firebase.functions.RNFirebaseFunctionsPackage;
 import com.facebook.CallbackManager;
 import com.facebook.FacebookSdk;
 import com.facebook.reactnative.androidsdk.FBSDKPackage;
@@ -49,6 +50,7 @@ public class MainApplication extends Application implements ReactApplication {
             new RNGestureHandlerPackage(),
             new RNFirebaseDatabasePackage(),
             new RNFirebaseFirestorePackage(),
+            new RNFirebaseFunctionsPackage(),
             new FBSDKPackage(mCallbackManager)
       );
     }

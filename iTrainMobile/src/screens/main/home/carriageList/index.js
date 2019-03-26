@@ -1,11 +1,11 @@
 import React from "react";
 import { Text, StyleSheet, View, Dimensions, Image } from "react-native";
 import colors from "../../../../styles/colors";
-import LinearGradient from "react-native-linear-gradient";
-import { Card, CardItem, Right, Body } from "native-base";
+import { Card, CardItem, Body } from "native-base";
 import Icon from "react-native-vector-icons/AntDesign";
 import Loader from "../../../../components/loader";
 import { getDuration } from "../../../../helpers";
+import firebase from "react-native-firebase";
 const styles = StyleSheet.create({
   container: {
     alignItems: "center",
@@ -111,6 +111,12 @@ export default class CarriageListScreen extends React.Component {
     this.setState({
       isLoading: true
     });
+    const createCarriage = firebase.functions().httpsCallable("createCarriage");
+    createCarriage()
+      .then(res => {
+        console.log(res.data());
+      })
+      .catch(e => console.log(e));
     const id = this.props.navigation.getParam("tauId", "");
     const url = `https://k.vnticketonline.vn/api/GTGV/LoadOneTau?tauId=${id}`;
     fetch(url, {
