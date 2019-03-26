@@ -12,6 +12,7 @@ import Icon from "react-native-vector-icons/AntDesign";
 import LinearGradient from "react-native-linear-gradient";
 import colors from "../../../styles/colors";
 
+
 class HomeScreen extends React.Component {
   static navigationOptions = {
     header: null

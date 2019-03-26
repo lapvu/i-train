@@ -7,24 +7,23 @@ module.exports = {
     date = mm + "/" + dd + "/" + yyyy;
     return date;
   },
-  getDuration: (a1, a2) => {
+  getDuration: (a1, a2, a3, a4) => {
     let a11 = a1.split(":");
     let a22 = a2.split(":");
+    let a33 = new Date(a3);
+    let a44 = new Date(a4);
     let a;
-    if (parseInt(a11[0]) > parseInt(a22[0])) {
+    let totalTimeGO = parseInt(a11[0]) * 60 + parseInt(a11[1]);
+    let totalTimeAr = parseInt(a22[0]) * 60 + parseInt(a22[1]);
+    let totalTimeDay = (a44.getDate()-a33.getDate())*24*60; 
+    if (a33.getDate() != a44.getDate()) {
+      a = totalTimeDay - totalTimeGO + totalTimeAr  
+    } 
+    else {
       a = Math.abs(
-        1440 -
-          (parseInt(a11[0]) * 60 + parseInt(a11[1])) +
-          (parseInt(a22[0]) * 60 + parseInt(a22[1]))
-      );
-    } else {
-      a = Math.abs(
-        parseInt(a11[0]) * 60 +
-          parseInt(a11[1]) -
-          (parseInt(a22[0]) * 60 + parseInt(a22[1]))
+          totalTimeGO - totalTimeAr
       );
     }
-
     if (a > 0) {
       let b = 1440,
         c = Math.floor(a / b),
@@ -43,3 +42,4 @@ module.exports = {
     }
   }
 };
+

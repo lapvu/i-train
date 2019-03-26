@@ -100,7 +100,7 @@ export default class CarriageListScreen extends React.Component {
     },
     headerTintColor: colors.white
   };
-  constructor(props) {
+  constructor(props) {  
     super(props);
     this.state = {
       initValue: null,

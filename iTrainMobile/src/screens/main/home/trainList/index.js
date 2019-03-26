@@ -163,7 +163,7 @@ export default class TrainListScreen extends React.Component {
                           </Text>
                         </View>
                         <View style={styles.content4}>
-                          <Text>{getDuration(e.GioDi, e.GioDen)}</Text>
+                          <Text>{getDuration(e.GioDi, e.GioDen, e.NgayDi, e.NgayDen)}</Text>
                         </View>
                       </View>
                     </Body>
