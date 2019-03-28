@@ -2,7 +2,7 @@ import React from "React";
 import { Text } from "native-base";
 import colors from "../../../../styles/colors";
 import { View, StyleSheet, Dimensions } from "react-native";
-
+import firebase from "react-native-firebase";
 const styles = StyleSheet.create({
   container: {
     flex: 1,
@@ -108,6 +108,38 @@ export default class SeatListScreen extends React.Component {
     },
     headerTintColor: colors.white
   };
+  constructor(props) {
+    super(props);
+  }
+  loadData = async agrs => {
+    console.log("aaa");
+    let url =
+      "https://us-central1-i-train-8f38c.cloudfunctions.net/createSeats";
+    try {
+      const res = await fetch(url, {
+        method: "POST",
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify(agrs)
+      });
+      const data = await res.json();
+    } catch (e) {
+      console.log(e);
+    }
+  };
+  componentDidMount() {
+    const data = this.props.navigation.state.params;
+    const db = firebase
+      .database()
+      .ref()
+      .child("seats");
+    db.on("value", snap => {
+      console.log(snap.val());
+    });
+    // this.loadData(data);
+  }
   render() {
     const { height, width } = Dimensions.get("window");
     return (

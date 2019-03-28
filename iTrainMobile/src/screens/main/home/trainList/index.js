@@ -26,66 +26,52 @@ export default class TrainListScreen extends React.Component {
     this.state = {
       go: [],
       back: [],
-      isLoading: false,
-      idTrainSelected: ""
+      isLoading: false
     };
   }
-  getData = async (date, from, to, param) => {
-    let url;
-    if (param) {
-      url = `https://k.vnticketonline.vn/api/GTGV/LoadDmTau?maGaDen=${
-        from.MaGa
-      }&maGaDi=${to.MaGa}&ngayDi=${date.dateString}`;
-    } else {
-      url = `https://k.vnticketonline.vn/api/GTGV/LoadDmTau?maGaDen=${
-        to.MaGa
-      }&maGaDi=${from.MaGa}&ngayDi=${date.dateString}`;
-    }
 
-    const res = await fetch(url, {
-      method: "GET",
-      headers: {
-        Accept: "application/json",
-        "Content-Type": "application/json"
-      }
-    });
-    const data = await res.json();
-    return data;
-  };
   loadData = async () => {
     this.setState({
       isLoading: true
     });
     const { dateStart, dateEnd, from, to } = this.props.screenProps;
     const oneWay = this.props.navigation.getParam("oneWay", "");
-    if (oneWay) {
-      try {
-        const data = await this.getData(dateStart, from, to, 1);
+    let url = "https://dsvn.vn/api/banveweb/SearchTauByGaDiGaDenNgayXP";
+    let body = {
+      "1": from.MaGa,
+      "2": to.MaGa,
+      "3": dateStart.dateString,
+      "4": dateEnd.dateString,
+      "5": oneWay,
+      "6": ""
+    };
+    try {
+      const res = await fetch(url, {
+        method: "POST",
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify(body)
+      });
+      const data = await res.json();
+      if (oneWay) {
         this.setState({
-          go: data,
-          isLoading: false
+          isLoading: false,
+          go: data.TauDis
         });
-      } catch (e) {
-        console.log(e);
+      } else {
         this.setState({
-          isLoading: false
+          isLoading: false,
+          go: data.TauDis,
+          back: data.TauVes
         });
       }
-    } else {
-      try {
-        const data1 = await this.getData(dateStart, from, to, 1);
-        const data2 = await this.getData(dateEnd, from, to, 0);
-        this.setState({
-          go: data1,
-          back: data2,
-          isLoading: false
-        });
-      } catch (e) {
-        console.log(e);
-        this.setState({
-          isLoading: false
-        });
-      }
+    } catch (e) {
+      console.log(e);
+      this.setState({
+        isLoading: false
+      });
     }
   };
   componentDidMount() {
@@ -128,9 +114,7 @@ export default class TrainListScreen extends React.Component {
                   <CardItem
                     button
                     onPress={() =>
-                      this.props.navigation.navigate("CarriageList", {
-                        tauId: e.Id
-                      })
+                      this.props.navigation.navigate("CarriageList", e)
                     }
                   >
                     <Body>
@@ -163,7 +147,14 @@ export default class TrainListScreen extends React.Component {
                           </Text>
                         </View>
                         <View style={styles.content4}>
-                          <Text>{getDuration(e.GioDi, e.GioDen, e.NgayDi, e.NgayDen)}</Text>
+                          <Text>
+                            {getDuration(
+                              e.GioDi,
+                              e.GioDen,
+                              e.NgayDi,
+                              e.NgayDen
+                            )}
+                          </Text>
                         </View>
                       </View>
                     </Body>
@@ -202,9 +193,7 @@ export default class TrainListScreen extends React.Component {
                   <CardItem
                     button
                     onPress={() =>
-                      this.props.navigation.navigate("CarriageList", {
-                        tauId: e.Id
-                      })
+                      this.props.navigation.navigate("CarriageList", e)
                     }
                   >
                     <Body>
@@ -237,7 +226,14 @@ export default class TrainListScreen extends React.Component {
                           </Text>
                         </View>
                         <View style={styles.content4}>
-                          <Text>{getDuration(e.GioDi, e.GioDen)}</Text>
+                          <Text>
+                            {getDuration(
+                              e.GioDi,
+                              e.GioDen,
+                              e.NgayDi,
+                              e.NgayDen
+                            )}
+                          </Text>
                         </View>
                       </View>
                     </Body>

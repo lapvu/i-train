@@ -5,7 +5,7 @@ import { Card, CardItem, Body } from "native-base";
 import Icon from "react-native-vector-icons/AntDesign";
 import Loader from "../../../../components/loader";
 import { getDuration } from "../../../../helpers";
-import firebase from "react-native-firebase";
+
 const styles = StyleSheet.create({
   container: {
     alignItems: "center",
@@ -57,40 +57,6 @@ const styles = StyleSheet.create({
   }
 });
 
-const mockupCoach = [
-  {
-    name: "Toa số 1",
-    type: "Giường nằm điều hòa 4 chỗ"
-  },
-  {
-    name: "Toa số 2",
-    type: "Giường nằm điều hòa 4 chỗ"
-  },
-  {
-    name: "Toa số 3",
-    type: "Giường nằm điều hòa 4 chỗ"
-  },
-  {
-    name: "Toa số 4",
-    type: "Giường nằm điều hòa 4 chỗ"
-  },
-  {
-    name: "Toa số 5",
-    type: "Giường nằm điều hòa 4 chỗ"
-  },
-  {
-    name: "Toa số 6",
-    type: "Giường nằm điều hòa 4 chỗ"
-  },
-  {
-    name: "Toa số 7",
-    type: "Giường nằm điều hòa 4 chỗ"
-  },
-  {
-    name: "Toa số 8",
-    type: "Giường nằm điều hòa 4 chỗ"
-  }
-];
 export default class CarriageListScreen extends React.Component {
   static navigationOptions = {
     title: "Chọn toa",
@@ -100,78 +66,55 @@ export default class CarriageListScreen extends React.Component {
     },
     headerTintColor: colors.white
   };
-  constructor(props) {  
+  constructor(props) {
     super(props);
     this.state = {
-      initValue: null,
-      isLoading: false
+      data: null
     };
   }
+
   componentDidMount() {
+    const data = this.props.navigation.state.params;
     this.setState({
-      isLoading: true
+      data: data
     });
-    const createCarriage = firebase.functions().httpsCallable("createCarriage");
-    createCarriage()
-      .then(res => {
-        console.log(res.data());
-      })
-      .catch(e => console.log(e));
-    const id = this.props.navigation.getParam("tauId", "");
-    const url = `https://k.vnticketonline.vn/api/GTGV/LoadOneTau?tauId=${id}`;
-    fetch(url, {
-      method: "GET",
-      headers: {
-        Accept: "application/json",
-        "Content-Type": "application/json"
-      }
-    })
-      .then(res => res.json())
-      .then(res => {
-        this.setState({
-          initValue: res,
-          isLoading: false
-        });
-      })
-      .catch(e => {
-        this.setState({
-          isLoading: false
-        });
-        console.log(e);
-      });
   }
   render() {
     const { width, height } = Dimensions.get("window");
-    const { isLoading, initValue } = this.state;
+    const { data } = this.state;
     return (
       <View style={styles.container}>
         <View style={{ flex: 1, width: width }}>
-          {isLoading && <Loader />}
-          {initValue && (
+          {data && (
             <Card>
               <CardItem>
                 <Body>
                   <View style={{ flexDirection: "row" }}>
                     <View style={styles.content1}>
                       <Icon name="clockcircleo" style={{ marginRight: 10 }} />
-                      <Text>{initValue.GioDi}</Text>
+                      <Text>{data.GioDi}</Text>
                     </View>
                     <View style={styles.content2}>
                       <Image
                         source={require("../../../../assets/imgs/trains.png")}
                         style={styles.img2}
                       />
-                      <Text>{initValue.MacTau}</Text>
+                      <Text>{data.MacTau}</Text>
                     </View>
                   </View>
                   <View style={styles.content3}>
                     <View style={styles.content1}>
                       <Icon name="clockcircleo" style={{ marginRight: 10 }} />
-                      <Text>{initValue.GioDen}</Text>
+                      <Text>{data.GioDen}</Text>
                     </View>
                     <View style={styles.content4}>
                       <Text>
-                        {getDuration(initValue.GioDi, initValue.GioDen)}
+                        {getDuration(
+                          data.GioDi,
+                          data.GioDen,
+                          data.NgayDi,
+                          data.NgayDen
+                        )}
                       </Text>
                     </View>
                   </View>
@@ -182,23 +125,26 @@ export default class CarriageListScreen extends React.Component {
         </View>
         <View style={{ flex: 6, width: width - 40 }}>
           <Card>
-            {mockupCoach.map((e, i) => {
-              return (
-                <CardItem
-                  bordered
-                  button
-                  onPress={() => this.props.navigation.navigate("SeatList")}
-                  key={i}
-                >
-                  <Image
-                    source={require("../../../../assets/imgs/door.png")}
-                    style={{ height: 15, width: 15, marginRight: 5 }}
-                  />
-                  <Text style={{ fontWeight: "bold" }}>{e.name}</Text>
-                  <Text style={{ color: "gray" }}> ({e.type})</Text>
-                </CardItem>
-              );
-            })}
+            {data &&
+              data.ToaXes.map((e, i) => {
+                return (
+                  <CardItem
+                    bordered
+                    button
+                    onPress={() =>
+                      this.props.navigation.navigate("SeatList", e)
+                    }
+                    key={i}
+                  >
+                    <Image
+                      source={require("../../../../assets/imgs/door.png")}
+                      style={{ height: 15, width: 15, marginRight: 5 }}
+                    />
+                    <Text style={{ fontWeight: "bold" }}>Toa Số {e.ToaSo}</Text>
+                    <Text style={{ color: "gray" }}> ({e.ToaXeDienGiai})</Text>
+                  </CardItem>
+                );
+              })}
           </Card>
         </View>
       </View>
