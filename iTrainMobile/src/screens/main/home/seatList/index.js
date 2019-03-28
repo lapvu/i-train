@@ -99,6 +99,10 @@ const faq = [
     color: colors.seatColor3
   }
 ];
+const db = firebase
+  .database()
+  .ref()
+  .child("seats");
 export default class SeatListScreen extends React.Component {
   static navigationOptions = {
     title: "Chọn ghế",
@@ -110,9 +114,11 @@ export default class SeatListScreen extends React.Component {
   };
   constructor(props) {
     super(props);
+    this.state = {
+      seats: []
+    };
   }
   loadData = async agrs => {
-    console.log("aaa");
     let url =
       "https://us-central1-i-train-8f38c.cloudfunctions.net/createSeats";
     try {
@@ -131,14 +137,20 @@ export default class SeatListScreen extends React.Component {
   };
   componentDidMount() {
     const data = this.props.navigation.state.params;
-    const db = firebase
-      .database()
-      .ref()
-      .child("seats");
-    db.on("value", snap => {
-      console.log(snap.val());
+    db.child(data.Id).once("value", snap => {
+      if (!snap.val()) {
+        this.loadData(data);
+      } else {
+        console.log(snap.val());
+        let seatList = snap.val().filter(el => {
+          return el != null;
+        });
+        this.setState({ seats: seatList });
+      }
     });
-    // this.loadData(data);
+  }
+  componentWillUnmount() {
+    db.off();
   }
   render() {
     const { height, width } = Dimensions.get("window");
@@ -174,7 +186,7 @@ export default class SeatListScreen extends React.Component {
         </View>
         <View style={{ flex: 9, alignItems: "center" }}>
           <View style={{ flex: 1, width: width - 40, flexDirection: "row" }}>
-            {mockupSeat.map((e, i) => {
+            {this.state.seats.map((e, i) => {
               return (
                 <View
                   style={{
@@ -196,7 +208,7 @@ export default class SeatListScreen extends React.Component {
               width: width - 40
             }}
           >
-            {mockupSeat.map((e, i) => {
+            {this.state.seats.map((e, i) => {
               return (
                 <View
                   style={{
@@ -218,11 +230,11 @@ export default class SeatListScreen extends React.Component {
                           borderRadius: 5,
                           borderColor: colors.black,
                           backgroundColor:
-                            data.status === 0
+                            data.Status === 0
                               ? colors.white
-                              : data.status === 1
+                              : data.Status === 1
                               ? colors.seatColor1
-                              : data.status === 2
+                              : data.Status === 2
                               ? colors.seatColor2
                               : colors.seatColor3,
                           textAlign: "center",
@@ -232,7 +244,7 @@ export default class SeatListScreen extends React.Component {
                         }}
                         key={index}
                       >
-                        {data.num}
+                        {data.ChoSo}
                       </Text>
                     );
                   })}
