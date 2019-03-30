@@ -24,6 +24,8 @@ export default class TrainListScreen extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
+      notifiGo: 0,
+      notifiBack: 0,
       go: [],
       back: [],
       isLoading: false
@@ -55,17 +57,34 @@ export default class TrainListScreen extends React.Component {
         body: JSON.stringify(body)
       });
       const data = await res.json();
+      console.log(data);
       if (oneWay) {
+        if(data.TauDis.length ==0){
+          this.setState({
+            isLoading: false,
+            notifiGo: 1
+          })
+        }
+        else{
+          this.setState({
+            isLoading: false,
+            go: data.TauDis
+          })}
+      }else {
         this.setState({
           isLoading: false,
-          go: data.TauDis
-        });
-      } else {
-        this.setState({
-          isLoading: false,
+          notifiBack: 2,
           go: data.TauDis,
           back: data.TauVes
-        });
+        })
+        if(data.TauDis.length ==0){
+          this.setState({
+            notifiGo: 1,
+        })}
+        if(data.TauVes.length ==0){
+          this.setState({
+            notifiBack: 1
+        })}
       }
     } catch (e) {
       console.log(e);
@@ -73,16 +92,17 @@ export default class TrainListScreen extends React.Component {
         isLoading: false
       });
     }
+    console.log(this.state.notifiGo);
+    console.log(this.state.notifiBack);
   };
   componentDidMount() {
     this.loadData();
   }
-
   render() {
     const { width, height } = Dimensions.get("window");
-    const { isLoading, go, back } = this.state;
+    const { notifiGo, notifiBack, isLoading, go, back } = this.state;
     return (
-      <View style={styles.container}>
+       <View style={styles.container}>
         <View style={{ flex: 10 }}>
           <ScrollView contentContainerStyle={{ alignItems: "center" }}>
             <View
@@ -162,7 +182,20 @@ export default class TrainListScreen extends React.Component {
                 </Card>
               );
             })}
-            {back.length != 0 && (
+            {this.state.notifiGo == 1 && (
+              <View style={{width: width - 40}}>
+                <Card >
+                  <CardItem>
+                    <Body>
+                      <Text >
+                        Không tìm thấy chuyến tàu nào từ {this.props.screenProps.from.TenGa} đến {this.props.screenProps.to.TenGa}
+                      </Text>
+                    </Body>
+                  </CardItem>
+                </Card>
+              </View>
+            )}
+            {this.state.notifiBack > 0 && (
               <View
                 style={{
                   paddingHorizontal: 20,
@@ -185,6 +218,19 @@ export default class TrainListScreen extends React.Component {
                 <Text style={styles.text2}>
                   {this.props.screenProps.from.TenGa}
                 </Text>
+              </View>
+            )}
+            {this.state.notifiBack == 1 && (
+              <View style={{width: width - 40}}>
+                <Card >
+                  <CardItem>
+                    <Body>
+                      <Text >
+                        Không tìm thấy chuyến tàu nào từ {this.props.screenProps.to.TenGa} đến {this.props.screenProps.from.TenGa}
+                      </Text>
+                    </Body>
+                  </CardItem>
+                </Card>
               </View>
             )}
             {back.map((e, index) => {

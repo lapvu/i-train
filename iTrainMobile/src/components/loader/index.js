@@ -14,6 +14,7 @@ const Loader = () => {
     >
       <View
         style={{
+          marginTop: 20,
           backgroundColor: colors.white,
           alignItems: "center",
           justifyContent: "center",
