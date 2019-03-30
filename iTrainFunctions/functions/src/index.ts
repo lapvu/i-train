@@ -4,13 +4,21 @@ import { genSeats } from "./data";
 admin.initializeApp();
 
 exports.createSeats = functions.https.onRequest((req, res) => {
-  const { ToaXeDienGiai, Id, DMTauVatLyId, ToaSo } = req.body;
-  let data = genSeats(ToaXeDienGiai, DMTauVatLyId, ToaSo);
-  const ref = admin.database().ref("seats/" + DMTauVatLyId + "/" + Id);
-  try {
-    ref.set(data);
-    res.send(data);
-  } catch (e) {
-    res.send(e);
-  }
+  const { ToaXes, DMTauVatLyId } = req.body;
+  const ref = admin
+    .database()
+    .ref("seats")
+    .child(DMTauVatLyId);
+  ref.on("value", (snap: any) => {
+    if (!snap.val()) {
+      ToaXes.forEach((e: any) => {
+        let data = genSeats(e.ToaXeDienGiai, e.DMTauVatLyId, e.ToaSo);
+        try {
+          ref.child(e.Id).set(data);
+        } catch (e) {
+          res.send(e);
+        }
+      });
+    }
+  });
 });

@@ -5,7 +5,6 @@ import { Card, CardItem, Body } from "native-base";
 import Icon from "react-native-vector-icons/AntDesign";
 import Loader from "../../../../components/loader";
 import { getDuration } from "../../../../helpers";
-
 const styles = StyleSheet.create({
   container: {
     alignItems: "center",
@@ -72,9 +71,26 @@ export default class CarriageListScreen extends React.Component {
       data: null
     };
   }
-
+  createData = async agrs => {
+    let url =
+      "https://us-central1-i-train-8f38c.cloudfunctions.net/createSeats";
+    try {
+      const res = await fetch(url, {
+        method: "POST",
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify(agrs)
+      });
+      const data = await res.json();
+    } catch (e) {
+      console.log(e);
+    }
+  };
   componentDidMount() {
     const data = this.props.navigation.state.params;
+    this.createData(data);
     this.setState({
       data: data
     });

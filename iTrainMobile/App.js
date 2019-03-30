@@ -8,7 +8,7 @@ import RegisterScreen from "./src/screens/authentication/register";
 import WellcomeScreen from "./src/screens/authentication/wellcome";
 import AuthLoadingScreen from "./src/screens/authentication/authLoading";
 import MainScreen from "./src/screens/main";
-
+import React from "react";
 const AppStack = createStackNavigator(
   {
     Main: MainScreen
@@ -24,7 +24,7 @@ const AuthStack = createStackNavigator({
   Register: RegisterScreen
 });
 
-export default createAppContainer(
+const AppContainer = createAppContainer(
   createSwitchNavigator(
     {
       AuthLoading: AuthLoadingScreen,
@@ -36,3 +36,4 @@ export default createAppContainer(
     }
   )
 );
+export default () => <AppContainer />;

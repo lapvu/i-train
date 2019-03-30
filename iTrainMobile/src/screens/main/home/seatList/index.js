@@ -3,6 +3,9 @@ import { Text } from "native-base";
 import colors from "../../../../styles/colors";
 import { View, StyleSheet, Dimensions, ScrollView } from "react-native";
 import firebase from "react-native-firebase";
+import Modal from "react-native-modal";
+import Loader from "../../../../components/loader";
+
 const styles = StyleSheet.create({
   container: {
     flex: 1,
@@ -10,7 +13,6 @@ const styles = StyleSheet.create({
     backgroundColor: colors.white
   }
 });
-
 const faq = [
   {
     name: "Chỗ trống",
@@ -29,10 +31,7 @@ const faq = [
     color: colors.seatColor3
   }
 ];
-const db = firebase
-  .database()
-  .ref()
-  .child("seats");
+
 export default class SeatListScreen extends React.Component {
   static navigationOptions = {
     title: "Chọn ghế",
@@ -45,44 +44,52 @@ export default class SeatListScreen extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      seats: []
+      seats: [],
+      isModalVisible: false,
+      isLoading: false
     };
+    this.ref = firebase
+      .database()
+      .ref()
+      .child("seats");
   }
-  loadData = async agrs => {
-    let url =
-      "https://us-central1-i-train-8f38c.cloudfunctions.net/createSeats";
-    try {
-      const res = await fetch(url, {
-        method: "POST",
-        headers: {
-          Accept: "application/json",
-          "Content-Type": "application/json"
-        },
-        body: JSON.stringify(agrs)
-      });
-      const data = await res.json();
-    } catch (e) {
-      console.log(e);
+  toggleModal = index => {
+    const data = this.props.navigation.state.params;
+    let stateCopy = this.state.seats;
+    stateCopy.forEach((e, i) => {
+      if (i === index) {
+        e.Status = 2;
+      }
+    });
+    if (stateCopy) {
+      this.ref
+        .child(data.DMTauVatLyId)
+        .child(data.Id)
+        .set(stateCopy);
+      this.setState({ isModalVisible: !this.state.isModalVisible });
     }
   };
+  hideModal = () =>
+    this.setState({ isModalVisible: !this.state.isModalVisible });
   componentDidMount() {
+    this.setState({
+      isLoading: true
+    });
     const data = this.props.navigation.state.params;
-    db.child(data.DMTauVatLyId)
+    this.ref
+      .child(data.DMTauVatLyId)
       .child(data.Id)
       .on("value", snap => {
-        if (!snap.val()) {
-          this.loadData(data);
-        } else {
-          console.log(snap.val());
+        if (snap.val()) {
           let seatList = snap.val().filter(el => {
             return el != null;
           });
-          this.setState({ seats: seatList });
+          this.setState({ seats: seatList, isLoading: false });
         }
       });
   }
   componentWillUnmount() {
-    db.off();
+    this.ref.off();
   }
   render() {
     const { height, width } = Dimensions.get("window");
@@ -193,63 +200,98 @@ export default class SeatListScreen extends React.Component {
               </React.Fragment>
             )}
           </View>
-          <View
-            style={{
-              flex: 10,
-              backgroundColor: colors.white
-            }}
-          >
-            <ScrollView
-              contentContainerStyle={{
-                flexDirection: "row",
-                width: width - 40,
-                flexWrap: "wrap",
-                padding: 5,
-                justifyContent: "center"
+          {this.state.isLoading ? (
+            <Loader />
+          ) : (
+            <View
+              style={{
+                flex: 10,
+                backgroundColor: colors.white
               }}
             >
-              {this.state.seats.map((data, index) => {
-                return (
+              <ScrollView
+                contentContainerStyle={{
+                  flexDirection: "row",
+                  width: width - 40,
+                  flexWrap: "wrap",
+                  padding: 5,
+                  justifyContent: "center"
+                }}
+              >
+                {this.state.seats.map((data, index) => {
+                  return (
+                    <Text
+                      onPress={this.toggleModal.bind(this, index)}
+                      style={{
+                        height: 30,
+                        width:
+                          loaiToa === "Giường nằm khoang 4 điều hòa" ||
+                          loaiToa === "Ngồi mềm điều hòa"
+                            ? "20%"
+                            : "14%",
+                        borderWidth: 0.5,
+                        borderRadius: 5,
+                        borderColor:
+                          data.loai === "T1"
+                            ? "purple"
+                            : data.loai === "T2"
+                            ? "#dd5600"
+                            : data.loai === "T3"
+                            ? "blue"
+                            : colors.black,
+                        backgroundColor:
+                          data.Status === 0
+                            ? colors.white
+                            : data.Status === 1
+                            ? colors.seatColor1
+                            : data.Status === 2
+                            ? colors.seatColor2
+                            : colors.seatColor3,
+                        textAlign: "center",
+                        textAlignVertical: "center",
+                        marginHorizontal: 5,
+                        marginTop: 10
+                      }}
+                      key={index}
+                    >
+                      {data.ChoSo}
+                    </Text>
+                  );
+                })}
+              </ScrollView>
+            </View>
+          )}
+
+          <View style={{ flex: 3 }}>
+            <Modal isVisible={this.state.isModalVisible}>
+              <View
+                style={{
+                  width: width - 40,
+                  height: 300,
+                  backgroundColor: colors.white
+                }}
+              >
+                <View style={{ flex: 4 }}>
+                  <Text>Hello!</Text>
+                </View>
+                <View
+                  style={{
+                    alignItems: "center",
+                    justifyContent: "center",
+
+                    flex: 1
+                  }}
+                >
                   <Text
-                    style={{
-                      height: 30,
-                      width:
-                        loaiToa === "Giường nằm khoang 4 điều hòa" ||
-                        loaiToa === "Ngồi mềm điều hòa"
-                          ? "20%"
-                          : "14%",
-                      borderWidth: 0.5,
-                      borderRadius: 5,
-                      borderColor:
-                        data.loai === "T1"
-                          ? "purple"
-                          : data.loai === "T2"
-                          ? "#dd5600"
-                          : data.loai === "T3"
-                          ? "blue"
-                          : colors.black,
-                      backgroundColor:
-                        data.Status === 0
-                          ? colors.white
-                          : data.Status === 1
-                          ? colors.seatColor1
-                          : data.Status === 2
-                          ? colors.seatColor2
-                          : colors.seatColor3,
-                      textAlign: "center",
-                      textAlignVertical: "center",
-                      marginHorizontal: 5,
-                      marginTop: 10
-                    }}
-                    key={index}
+                    onPress={this.hideModal}
+                    style={{ padding: 6, backgroundColor: colors.green }}
                   >
-                    {data.ChoSo}
+                    Tiếp tục
                   </Text>
-                );
-              })}
-            </ScrollView>
+                </View>
+              </View>
+            </Modal>
           </View>
-          <View style={{ flex: 3 }} />
         </View>
       </View>
     );
