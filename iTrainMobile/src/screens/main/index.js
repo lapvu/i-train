@@ -4,7 +4,6 @@ import {
   createStackNavigator
 } from "react-navigation";
 import HomeScreen from "./home";
-import PassengerScreen from "./other/passenger";
 import SearchStationScreen from "./other/search";
 import SettingsScreen from "./settings";
 import HistoryScreen from "./history";
@@ -18,7 +17,6 @@ import React from "react";
 const HomeStack = createStackNavigator({
   Home: HomeScreen,
   Search: SearchStationScreen,
-  Passenger: PassengerScreen,
   Calendar: CalendarScreen,
   TrainList: TrainListScreen,
   CarriageList: CarriageListScreen,
@@ -29,7 +27,6 @@ HomeStack.navigationOptions = ({ navigation }) => {
   let navigationOptions = {};
   if (
     routeName === "Search" ||
-    routeName === "Passenger" ||
     routeName === "Calendar" ||
     routeName === "CarriageList" ||
     routeName === "TrainList" ||
@@ -89,8 +86,7 @@ export default class MainScreen extends React.Component {
       },
       dateEnd: {
         dateString: new Date().toISOString().slice(0, 10)
-      },
-      passenger: null
+      }
     };
   }
 
@@ -118,9 +114,6 @@ export default class MainScreen extends React.Component {
       });
     }
   };
-  setPassenger = value => {
-    this.setState({ passenger: value });
-  };
 
   render() {
     return (
@@ -129,8 +122,7 @@ export default class MainScreen extends React.Component {
           ...this.state,
           setStation: this.setStation,
           swapStation: this.swapStation,
-          setDate: this.setDate,
-          setPassenger: this.setPassenger
+          setDate: this.setDate
         }}
       />
     );

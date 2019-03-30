@@ -12,7 +12,6 @@ import Icon from "react-native-vector-icons/AntDesign";
 import LinearGradient from "react-native-linear-gradient";
 import colors from "../../../styles/colors";
 
-
 class HomeScreen extends React.Component {
   static navigationOptions = {
     header: null
@@ -24,7 +23,6 @@ class HomeScreen extends React.Component {
       return: false
     };
   }
-
   render() {
     const { width, height } = Dimensions.get("window");
     const { navigation } = this.props;
@@ -289,19 +287,7 @@ class HomeScreen extends React.Component {
               </View>
             </CardItem>
           </Card>
-          <View>
-            <Card style={{ marginBottom: 30 }}>
-              <CardItem
-                button
-                onPress={() => this.props.navigation.navigate("Passenger")}
-              >
-                <Icon name="user" style={styles.userIcon} />
-                <Text style={{ fontSize: 18, paddingHorizontal: 10 }}>
-                  Hành khách
-                </Text>
-              </CardItem>
-            </Card>
-          </View>
+
           <Button
             block
             style={{

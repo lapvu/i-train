@@ -9,7 +9,7 @@ import {
   Right,
   Icon
 } from "native-base";
-import { StyleSheet, View, Dimensions } from "react-native";
+import { StyleSheet, View, Dimensions, AsyncStorage } from "react-native";
 import colors from "../../../../styles/colors";
 import LinearGradient from "react-native-linear-gradient";
 
@@ -38,8 +38,8 @@ export default class SearchStationScreen extends React.Component {
       items: []
     };
   }
-  componentDidMount() {
-    return fetch("https://k.vnticketonline.vn/api/GTGV/LoadDmGa", {
+  getStations = () => {
+    fetch("https://k.vnticketonline.vn/api/GTGV/LoadDmGa", {
       method: "GET",
       headers: {
         Accept: "application/json",
@@ -48,6 +48,7 @@ export default class SearchStationScreen extends React.Component {
     })
       .then(res => res.json())
       .then(res => {
+        AsyncStorage.setItem("stations", JSON.stringify(res));
         this.setState({
           init: res
         });
@@ -55,6 +56,23 @@ export default class SearchStationScreen extends React.Component {
       .catch(e => {
         console.log(e);
       });
+  };
+  loadStations = async () => {
+    try {
+      const data = await AsyncStorage.getItem("stations");
+      if (!data) {
+        this.getStations();
+      } else {
+        this.setState({
+          init: JSON.parse(data)
+        });
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+  componentDidMount() {
+    this.loadStations();
   }
   filterList = txt => {
     if (txt) {
