@@ -57,7 +57,6 @@ export default class TrainListScreen extends React.Component {
         body: JSON.stringify(body)
       });
       const data = await res.json();
-      console.log(data);
       if (oneWay) {
         if(data.TauDis.length ==0){
           this.setState({
@@ -92,8 +91,6 @@ export default class TrainListScreen extends React.Component {
         isLoading: false
       });
     }
-    console.log(this.state.notifiGo);
-    console.log(this.state.notifiBack);
   };
   componentDidMount() {
     this.loadData();
