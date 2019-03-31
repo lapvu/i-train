@@ -1,10 +1,17 @@
 import React from "react";
-import { Text, StyleSheet, View, Dimensions, Image } from "react-native";
+import {
+  Text,
+  StyleSheet,
+  View,
+  Dimensions,
+  Image,
+  ScrollView
+} from "react-native";
 import colors from "../../../../styles/colors";
 import { Card, CardItem, Body } from "native-base";
 import Icon from "react-native-vector-icons/AntDesign";
-import Loader from "../../../../components/loader";
 import { getDuration } from "../../../../helpers";
+import ShoppingCart from "../../../../components/shoppingCart";
 const styles = StyleSheet.create({
   container: {
     alignItems: "center",
@@ -89,7 +96,7 @@ export default class CarriageListScreen extends React.Component {
     }
   };
   componentDidMount() {
-    const data = this.props.navigation.state.params;
+    const data = this.props.navigation.state.params.data;
     this.createData(data);
     this.setState({
       data: data
@@ -141,28 +148,44 @@ export default class CarriageListScreen extends React.Component {
         </View>
         <View style={{ flex: 6, width: width - 40 }}>
           <Card>
-            {data &&
-              data.ToaXes.map((e, i) => {
-                return (
-                  <CardItem
-                    bordered
-                    button
-                    onPress={() =>
-                      this.props.navigation.navigate("SeatList", e)
-                    }
-                    key={i}
-                  >
-                    <Image
-                      source={require("../../../../assets/imgs/door.png")}
-                      style={{ height: 15, width: 15, marginRight: 5 }}
-                    />
-                    <Text style={{ fontWeight: "bold" }}>Toa Số {e.ToaSo}</Text>
-                    <Text style={{ color: "gray" }}> ({e.ToaXeDienGiai})</Text>
-                  </CardItem>
-                );
-              })}
+            <ScrollView>
+              {data &&
+                data.ToaXes.map((e, i) => {
+                  return (
+                    <CardItem
+                      bordered
+                      button
+                      onPress={() =>
+                        this.props.navigation.navigate("SeatList", {
+                          data: e,
+                          way: this.props.navigation.state.params.way,
+                          info: this.state.data
+                        })
+                      }
+                      key={i}
+                    >
+                      <Image
+                        source={require("../../../../assets/imgs/door.png")}
+                        style={{ height: 15, width: 15, marginRight: 5 }}
+                      />
+                      <Text style={{ fontWeight: "bold" }}>
+                        Toa Số {e.ToaSo}
+                      </Text>
+                      <Text style={{ color: "gray" }}>
+                        {" "}
+                        ({e.ToaXeDienGiai})
+                      </Text>
+                    </CardItem>
+                  );
+                })}
+            </ScrollView>
           </Card>
         </View>
+        <View style={{ flex: 1 }} />
+        {(this.props.screenProps.shoppingCart.go.length != 0 ||
+          this.props.screenProps.shoppingCart.back.length != 0) && (
+          <ShoppingCart items={this.props.screenProps} />
+        )}
       </View>
     );
   }

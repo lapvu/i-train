@@ -12,6 +12,7 @@ import colors from "../../../../styles/colors";
 import Icon from "react-native-vector-icons/AntDesign";
 import { getDuration, formatDate } from "../../../../helpers";
 import Loader from "../../../../components/loader";
+import ShoppingCart from "../../../../components/shoppingCart";
 export default class TrainListScreen extends React.Component {
   static navigationOptions = {
     title: "Danh sách chiều đi",
@@ -24,8 +25,6 @@ export default class TrainListScreen extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      notifiGo: 0,
-      notifiBack: 0,
       go: [],
       back: [],
       isLoading: false
@@ -58,32 +57,16 @@ export default class TrainListScreen extends React.Component {
       });
       const data = await res.json();
       if (oneWay) {
-        if(data.TauDis.length ==0){
-          this.setState({
-            isLoading: false,
-            notifiGo: 1
-          })
-        }
-        else{
-          this.setState({
-            isLoading: false,
-            go: data.TauDis
-          })}
-      }else {
         this.setState({
           isLoading: false,
-          notifiBack: 2,
+          go: data.TauDis
+        });
+      } else {
+        this.setState({
+          isLoading: false,
           go: data.TauDis,
           back: data.TauVes
-        })
-        if(data.TauDis.length ==0){
-          this.setState({
-            notifiGo: 1,
-        })}
-        if(data.TauVes.length ==0){
-          this.setState({
-            notifiBack: 1
-        })}
+        });
       }
     } catch (e) {
       console.log(e);
@@ -97,9 +80,10 @@ export default class TrainListScreen extends React.Component {
   }
   render() {
     const { width, height } = Dimensions.get("window");
-    const { notifiGo, notifiBack, isLoading, go, back } = this.state;
+    const { isLoading, go, back } = this.state;
+    const oneWay = this.props.navigation.getParam("oneWay", "");
     return (
-       <View style={styles.container}>
+      <View style={styles.container}>
         <View style={{ flex: 10 }}>
           <ScrollView contentContainerStyle={{ alignItems: "center" }}>
             <View
@@ -131,7 +115,10 @@ export default class TrainListScreen extends React.Component {
                   <CardItem
                     button
                     onPress={() =>
-                      this.props.navigation.navigate("CarriageList", e)
+                      this.props.navigation.navigate("CarriageList", {
+                        data: e,
+                        way: true
+                      })
                     }
                   >
                     <Body>
@@ -179,20 +166,22 @@ export default class TrainListScreen extends React.Component {
                 </Card>
               );
             })}
-            {this.state.notifiGo == 1 && (
-              <View style={{width: width - 40}}>
-                <Card >
+            {!isLoading && go.length === 0 && (
+              <View style={{ width: width - 40 }}>
+                <Card>
                   <CardItem>
                     <Body>
-                      <Text >
-                        Không tìm thấy chuyến tàu nào từ {this.props.screenProps.from.TenGa} đến {this.props.screenProps.to.TenGa}
+                      <Text>
+                        Không tìm thấy chuyến tàu nào từ{" "}
+                        {this.props.screenProps.from.TenGa} đến{" "}
+                        {this.props.screenProps.to.TenGa}
                       </Text>
                     </Body>
                   </CardItem>
                 </Card>
               </View>
             )}
-            {this.state.notifiBack > 0 && (
+            {!oneWay && (
               <View
                 style={{
                   paddingHorizontal: 20,
@@ -217,93 +206,94 @@ export default class TrainListScreen extends React.Component {
                 </Text>
               </View>
             )}
-            {this.state.notifiBack == 1 && (
-              <View style={{width: width - 40}}>
-                <Card >
+            {!isLoading && !oneWay && back.length === 0 && (
+              <View style={{ width: width - 40 }}>
+                <Card>
                   <CardItem>
                     <Body>
-                      <Text >
-                        Không tìm thấy chuyến tàu nào từ {this.props.screenProps.to.TenGa} đến {this.props.screenProps.from.TenGa}
+                      <Text>
+                        Không tìm thấy chuyến tàu nào từ{" "}
+                        {this.props.screenProps.to.TenGa} đến{" "}
+                        {this.props.screenProps.from.TenGa}
                       </Text>
                     </Body>
                   </CardItem>
                 </Card>
               </View>
             )}
-            {back.map((e, index) => {
-              return (
-                <Card style={{ marginTop: 10, width: width - 40 }} key={index}>
-                  <CardItem
-                    button
-                    onPress={() =>
-                      this.props.navigation.navigate("CarriageList", e)
-                    }
+            {!isLoading &&
+              back.map((e, index) => {
+                return (
+                  <Card
+                    style={{ marginTop: 10, width: width - 40 }}
+                    key={index}
                   >
-                    <Body>
-                      <View style={{ flexDirection: "row" }}>
-                        <View style={styles.content1}>
-                          <Icon
-                            name="clockcircleo"
-                            style={{ marginRight: 8 }}
-                          />
-                          <Text>
-                            {e.GioDi} ({formatDate(e.NgayDi)})
-                          </Text>
+                    <CardItem
+                      button
+                      onPress={() =>
+                        this.props.navigation.navigate("CarriageList", {
+                          data: e,
+                          way: false
+                        })
+                      }
+                    >
+                      <Body>
+                        <View style={{ flexDirection: "row" }}>
+                          <View style={styles.content1}>
+                            <Icon
+                              name="clockcircleo"
+                              style={{ marginRight: 8 }}
+                            />
+                            <Text>
+                              {e.GioDi} ({formatDate(e.NgayDi)})
+                            </Text>
+                          </View>
+                          <View style={styles.content2}>
+                            <Image
+                              source={require("../../../../assets/imgs/trains.png")}
+                              style={styles.img2}
+                            />
+                            <Text>{e.MacTau}</Text>
+                          </View>
                         </View>
-                        <View style={styles.content2}>
-                          <Image
-                            source={require("../../../../assets/imgs/trains.png")}
-                            style={styles.img2}
-                          />
-                          <Text>{e.MacTau}</Text>
+                        <View style={styles.content3}>
+                          <View style={styles.content1}>
+                            <Icon
+                              name="clockcircleo"
+                              style={{ marginRight: 8 }}
+                            />
+                            <Text>
+                              {e.GioDen} ({formatDate(e.NgayDen)})
+                            </Text>
+                          </View>
+                          <View style={styles.content4}>
+                            <Text>
+                              {getDuration(
+                                e.GioDi,
+                                e.GioDen,
+                                e.NgayDi,
+                                e.NgayDen
+                              )}
+                            </Text>
+                          </View>
                         </View>
-                      </View>
-                      <View style={styles.content3}>
-                        <View style={styles.content1}>
-                          <Icon
-                            name="clockcircleo"
-                            style={{ marginRight: 8 }}
-                          />
-                          <Text>
-                            {e.GioDen} ({formatDate(e.NgayDen)})
-                          </Text>
-                        </View>
-                        <View style={styles.content4}>
-                          <Text>
-                            {getDuration(
-                              e.GioDi,
-                              e.GioDen,
-                              e.NgayDi,
-                              e.NgayDen
-                            )}
-                          </Text>
-                        </View>
-                      </View>
-                    </Body>
-                  </CardItem>
-                </Card>
-              );
-            })}
+                      </Body>
+                    </CardItem>
+                  </Card>
+                );
+              })}
           </ScrollView>
         </View>
         <View
           style={{
-            alignItems: "center",
-            justifyContent: "center",
-            flex: 2
+            flex: 2,
+            width: width
           }}
         >
-          <Button
-            style={{
-              width: width - 40,
-              alignItems: "center",
-              justifyContent: "center"
-            }}
-            light
-            onPress={() => this.props.navigation.navigate("CarriageList")}
-          >
-            <Text>Tiếp tục</Text>
-          </Button>
+          {(this.props.screenProps.shoppingCart.go.length != 0 ||
+            this.props.screenProps.shoppingCart.back.length != 0) && (
+            <ShoppingCart items={this.props.screenProps} />
+          )}
         </View>
       </View>
     );

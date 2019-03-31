@@ -86,10 +86,27 @@ export default class MainScreen extends React.Component {
       },
       dateEnd: {
         dateString: new Date().toISOString().slice(0, 10)
+      },
+      shoppingCart: {
+        go: [],
+        back: []
       }
     };
   }
-
+  addToCart = (item, type) => {
+    let copyState = Object.assign({}, this.state.shoppingCart);
+    if (type) {
+      copyState.go.push(item);
+      this.setState({
+        shoppingCart: copyState
+      });
+    } else {
+      copyState.back.push(item);
+      this.setState({
+        shoppingCart: copyState
+      });
+    }
+  };
   setStation = (station, type) => {
     if (type === "from") {
       this.setState({ from: station });
@@ -122,7 +139,8 @@ export default class MainScreen extends React.Component {
           ...this.state,
           setStation: this.setStation,
           swapStation: this.swapStation,
-          setDate: this.setDate
+          setDate: this.setDate,
+          addToCart: this.addToCart
         }}
       />
     );

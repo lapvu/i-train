@@ -1,11 +1,16 @@
 import React from "React";
 import { Text } from "native-base";
 import colors from "../../../../styles/colors";
-import { View, StyleSheet, Dimensions, ScrollView } from "react-native";
+import {
+  View,
+  StyleSheet,
+  Dimensions,
+  ScrollView,
+  ToastAndroid
+} from "react-native";
 import firebase from "react-native-firebase";
-import Modal from "react-native-modal";
 import Loader from "../../../../components/loader";
-
+import ShoppingCart from "../../../../components/shoppingCart";
 const styles = StyleSheet.create({
   container: {
     flex: 1,
@@ -45,7 +50,6 @@ export default class SeatListScreen extends React.Component {
     super(props);
     this.state = {
       seats: [],
-      isModalVisible: false,
       isLoading: false
     };
     this.ref = firebase
@@ -53,29 +57,42 @@ export default class SeatListScreen extends React.Component {
       .ref()
       .child("seats");
   }
-  toggleModal = index => {
-    const data = this.props.navigation.state.params;
-    let stateCopy = this.state.seats;
-    stateCopy.forEach((e, i) => {
-      if (i === index) {
-        e.Status = 2;
+  addToShoppingCart = (index, status) => {
+    if (status === 0 || status === 3) {
+      const { data, way, info } = this.props.navigation.state.params;
+      let stateCopy = this.state.seats;
+      stateCopy.forEach((e, i) => {
+        if (i === index) {
+          e.Status = 2;
+          let item = Object.assign(
+            {},
+            {
+              trainName: info.MacTau,
+              timeGo: info.GioDi,
+              timeArr: info.GioDen,
+              dateGo: info.NgayDi,
+              dateArr: info.NgayDen
+            },
+            e
+          );
+          this.props.screenProps.addToCart(item, way);
+        }
+      });
+      if (stateCopy) {
+        this.ref
+          .child(data.DMTauVatLyId)
+          .child(data.Id)
+          .set(stateCopy);
       }
-    });
-    if (stateCopy) {
-      this.ref
-        .child(data.DMTauVatLyId)
-        .child(data.Id)
-        .set(stateCopy);
-      this.setState({ isModalVisible: !this.state.isModalVisible });
+      ToastAndroid.show("Đã thêm vào giỏ !", ToastAndroid.SHORT);
     }
   };
-  hideModal = () =>
-    this.setState({ isModalVisible: !this.state.isModalVisible });
+
   componentDidMount() {
     this.setState({
       isLoading: true
     });
-    const data = this.props.navigation.state.params;
+    const data = this.props.navigation.state.params.data;
     this.ref
       .child(data.DMTauVatLyId)
       .child(data.Id)
@@ -92,8 +109,8 @@ export default class SeatListScreen extends React.Component {
     this.ref.off();
   }
   render() {
-    const { height, width } = Dimensions.get("window");
-    const loaiToa = this.props.navigation.getParam("ToaXeDienGiai");
+    const { width } = Dimensions.get("window");
+    const loaiToa = this.props.navigation.getParam("data").ToaXeDienGiai;
     return (
       <View style={{ flex: 1, backgroundColor: "#dddddd" }}>
         <View style={styles.container}>
@@ -221,7 +238,11 @@ export default class SeatListScreen extends React.Component {
                 {this.state.seats.map((data, index) => {
                   return (
                     <Text
-                      onPress={this.toggleModal.bind(this, index)}
+                      onPress={this.addToShoppingCart.bind(
+                        this,
+                        index,
+                        data.Status
+                      )}
                       style={{
                         height: 30,
                         width:
@@ -261,37 +282,8 @@ export default class SeatListScreen extends React.Component {
               </ScrollView>
             </View>
           )}
-
-          <View style={{ flex: 3 }}>
-            <Modal isVisible={this.state.isModalVisible}>
-              <View
-                style={{
-                  width: width - 40,
-                  height: 300,
-                  backgroundColor: colors.white
-                }}
-              >
-                <View style={{ flex: 4 }}>
-                  <Text>Hello!</Text>
-                </View>
-                <View
-                  style={{
-                    alignItems: "center",
-                    justifyContent: "center",
-
-                    flex: 1
-                  }}
-                >
-                  <Text
-                    onPress={this.hideModal}
-                    style={{ padding: 6, backgroundColor: colors.green }}
-                  >
-                    Tiếp tục
-                  </Text>
-                </View>
-              </View>
-            </Modal>
-          </View>
+          <ShoppingCart items={this.props.screenProps} />
+          <View style={{ flex: 3 }} />
         </View>
       </View>
     );

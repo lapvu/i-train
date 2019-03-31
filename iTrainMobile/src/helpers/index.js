@@ -15,14 +15,11 @@ module.exports = {
     let a;
     let totalTimeGO = parseInt(a11[0]) * 60 + parseInt(a11[1]);
     let totalTimeAr = parseInt(a22[0]) * 60 + parseInt(a22[1]);
-    let totalTimeDay = (a44.getDate()-a33.getDate())*24*60; 
+    let totalTimeDay = (a44.getDate() - a33.getDate()) * 24 * 60;
     if (a33.getDate() != a44.getDate()) {
-      a = totalTimeDay - totalTimeGO + totalTimeAr  
-    } 
-    else {
-      a = Math.abs(
-          totalTimeGO - totalTimeAr
-      );
+      a = totalTimeDay - totalTimeGO + totalTimeAr;
+    } else {
+      a = Math.abs(totalTimeGO - totalTimeAr);
     }
     if (a > 0) {
       let b = 1440,
@@ -40,6 +37,8 @@ module.exports = {
       if (d > 0) return e > 0 ? d + " giờ " + e + " phút" : d + " giờ";
       if (e > 0) return e + " phút";
     }
+  },
+  priceDisplay: price => {
+    return price + "." + "000";
   }
 };
-

@@ -4,7 +4,7 @@ import { genSeats } from "./data";
 admin.initializeApp();
 
 exports.createSeats = functions.https.onRequest((req, res) => {
-  const { ToaXes, DMTauVatLyId } = req.body;
+  const { ToaXes, DMTauVatLyId, BangGiaVes } = req.body;
   const ref = admin
     .database()
     .ref("seats")
@@ -12,7 +12,12 @@ exports.createSeats = functions.https.onRequest((req, res) => {
   ref.on("value", (snap: any) => {
     if (!snap.val()) {
       ToaXes.forEach((e: any) => {
-        let data = genSeats(e.ToaXeDienGiai, e.DMTauVatLyId, e.ToaSo);
+        let data = genSeats(
+          e.ToaXeDienGiai,
+          e.DMTauVatLyId,
+          e.ToaSo,
+          BangGiaVes
+        );
         try {
           ref.child(e.Id).set(data);
         } catch (e) {
