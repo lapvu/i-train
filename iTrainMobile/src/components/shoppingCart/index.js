@@ -49,15 +49,51 @@ export default class ShoppingCart extends React.Component {
                     </View>
                     {items.shoppingCart.go.map((e, i) => {
                       return (
-                        <View style={{ flexDirection: "row" }}>
-                          <View style={{ flex: 1 }}>
-                            <Text>Tên tàu : {e.trainName}</Text>
-                            <Text>Toa : {e.ToaSo}</Text>
-                            <Text>Chỗ số : {e.ChoSo}</Text>
-                            <Text>Giá : {e.Gia}</Text>
+                        <View
+                          style={{
+                            flexDirection: "row",
+                            padding: 10,
+                            backgroundColor: "yellow",
+                            borderBottomWidth: 0.5,
+                            borderBottomColor: colors.black
+                          }}
+                          key={i}
+                        >
+                          <View
+                            style={{
+                              flex: 5
+                            }}
+                          >
+                            <Text>
+                              Tên tàu : {e.trainName} - Toa : {e.ToaSo} - Chỗ
+                              số: {e.ChoSo}
+                            </Text>
+                            <Text>Giá : {priceDisplay(e.Gia)}</Text>
                           </View>
-                          <View style={{ flex: 1 }}>
-                            <Text>aaaa</Text>
+                          <View
+                            style={{
+                              flex: 1
+                            }}
+                          >
+                            <Button
+                              small
+                              iconRight
+                              danger
+                              style={{ padding: 3 }}
+                            >
+                              <Text
+                                style={{
+                                  color: colors.white,
+                                  marginHorizontal: 3
+                                }}
+                              >
+                                22
+                              </Text>
+                              <Icon
+                                name="delete"
+                                style={{ color: colors.white, fontSize: 18 }}
+                              />
+                            </Button>
                           </View>
                         </View>
                       );
@@ -85,15 +121,51 @@ export default class ShoppingCart extends React.Component {
                     </View>
                     {items.shoppingCart.back.map((e, i) => {
                       return (
-                        <View style={{ flexDirection: "row" }}>
-                          <View style={{ flex: 1 }}>
-                            <Text>Tên tàu : {e.trainName}</Text>
-                            <Text>Toa : {e.ToaSo}</Text>
-                            <Text>Chỗ số : {e.ChoSo}</Text>
-                            <Text>Giá : {e.Gia}</Text>
+                        <View
+                          style={{
+                            flexDirection: "row",
+                            padding: 10,
+                            backgroundColor: "yellow",
+                            borderBottomWidth: 0.5,
+                            borderBottomColor: colors.black
+                          }}
+                          key={i}
+                        >
+                          <View
+                            style={{
+                              flex: 4
+                            }}
+                          >
+                            <Text>
+                              {e.trainName} - Toa : {e.ToaSo} - Chỗ số:{" "}
+                              {e.ChoSo}
+                            </Text>
+                            <Text>Giá : {priceDisplay(e.Gia)}</Text>
                           </View>
-                          <View style={{ flex: 1 }}>
-                            <Text>aaaa</Text>
+                          <View
+                            style={{
+                              flex: 1
+                            }}
+                          >
+                            <Button
+                              small
+                              iconRight
+                              danger
+                              style={{ padding: 3 }}
+                            >
+                              <Text
+                                style={{
+                                  color: colors.white,
+                                  marginHorizontal: 3
+                                }}
+                              >
+                                22
+                              </Text>
+                              <Icon
+                                name="delete"
+                                style={{ color: colors.white, fontSize: 18 }}
+                              />
+                            </Button>
                           </View>
                         </View>
                       );

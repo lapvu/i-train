@@ -91,12 +91,14 @@ export default class CarriageListScreen extends React.Component {
         body: JSON.stringify(agrs)
       });
       const data = await res.json();
+      console.log(data);
     } catch (e) {
       console.log(e);
     }
   };
   componentDidMount() {
     const data = this.props.navigation.state.params.data;
+    console.log(data);
     this.createData(data);
     this.setState({
       data: data

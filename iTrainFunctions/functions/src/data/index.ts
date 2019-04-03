@@ -7,6 +7,11 @@ export const genSeats = (
 ) => {
   let arr = [];
   if (ToaXeDienGiai === "Ngồi mềm điều hòa") {
+    let price = _.find(
+      BangGiaVes,
+      e => e.TenLoaiCho === "Ngồi mềm điều hòa",
+      0
+    );
     for (let i = 1; i <= 64; i++) {
       arr.push({
         DMTauVatLyId: DMTauVatLyId,
@@ -14,14 +19,17 @@ export const genSeats = (
         LoaiCho: ToaXeDienGiai,
         ToaSo: ToaSo,
         Status: 0,
-        type: null
+        loai: null,
+        Gia: price.GiaVe
       });
     }
   } else if (ToaXeDienGiai === "Giường nằm khoang 4 điều hòa") {
-    let priceT1 = BangGiaVes.find(
+    let priceT1 = _.find(
+      BangGiaVes,
       (e: any) => e.TenLoaiCho === "Nằm khoang 4 điều hòa T1"
     );
-    let priceT2 = BangGiaVes.find(
+    let priceT2 = _.find(
+      BangGiaVes,
       (e: any) => e.TenLoaiCho === "Nằm khoang 4 điều hòa T2"
     );
     arr.push({
@@ -277,13 +285,16 @@ export const genSeats = (
       Gia: priceT2.GiaVe
     });
   } else if (ToaXeDienGiai === "Giường nằm khoang 6 điều hòa") {
-    let priceT1 = BangGiaVes.find(
+    let priceT1 = _.find(
+      BangGiaVes,
       (e: any) => e.TenLoaiCho === "Nằm khoang 6 điều hòa T1"
     );
-    let priceT2 = BangGiaVes.find(
+    let priceT2 = _.find(
+      BangGiaVes,
       (e: any) => e.TenLoaiCho === "Nằm khoang 6 điều hòa T2"
     );
-    let priceT3 = BangGiaVes.find(
+    let priceT3 = _.find(
+      BangGiaVes,
       (e: any) => e.TenLoaiCho === "Nằm khoang 6 điều hòa T3"
     );
     arr.push({
