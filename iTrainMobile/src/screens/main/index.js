@@ -12,8 +12,9 @@ import TrainListScreen from "./home/trainList";
 import CarriageListScreen from "./home/carriageList";
 import SeatListScreen from "./home/seatList";
 import { Icon } from "native-base";
+import { AsyncStorage, ToastAndroid } from "react-native";
 import React from "react";
-
+import firebase from "react-native-firebase";
 const HomeStack = createStackNavigator({
   Home: HomeScreen,
   Search: SearchStationScreen,
@@ -90,10 +91,12 @@ export default class MainScreen extends React.Component {
       shoppingCart: {
         go: [],
         back: []
-      }
+      },
+      user: null
     };
+    this.ref = firebase.firestore().collection("shoppingCarts");
   }
-  addToCart = (item, type) => {
+  addToCart = async (item, type) => {
     let copyState = Object.assign({}, this.state.shoppingCart);
     if (type) {
       copyState.go.push(item);
@@ -102,6 +105,20 @@ export default class MainScreen extends React.Component {
       });
     } else {
       copyState.back.push(item);
+      this.setState({
+        shoppingCart: copyState
+      });
+    }
+  };
+  deleteItem = (index, type) => {
+    let copyState = Object.assign({}, this.state.shoppingCart);
+    if (type) {
+      copyState.go.splice(index, 1);
+      this.setState({
+        shoppingCart: copyState
+      });
+    } else {
+      copyState.back.splice(index, 1);
       this.setState({
         shoppingCart: copyState
       });
@@ -131,7 +148,19 @@ export default class MainScreen extends React.Component {
       });
     }
   };
-
+  loadUser = async () => {
+    try {
+      const user = await AsyncStorage.getItem("user");
+      this.setState({
+        user: JSON.parse(user)
+      });
+    } catch (e) {
+      console.log("Error getting document:", e);
+    }
+  };
+  componentDidMount() {
+    this.loadUser();
+  }
   render() {
     return (
       <MainContaier
@@ -140,7 +169,8 @@ export default class MainScreen extends React.Component {
           setStation: this.setStation,
           swapStation: this.swapStation,
           setDate: this.setDate,
-          addToCart: this.addToCart
+          addToCart: this.addToCart,
+          deleteItem: this.deleteItem
         }}
       />
     );

@@ -11,6 +11,7 @@ import {
 import firebase from "react-native-firebase";
 import Loader from "../../../../components/loader";
 import ShoppingCart from "../../../../components/shoppingCart";
+
 const styles = StyleSheet.create({
   container: {
     flex: 1,
@@ -57,13 +58,25 @@ export default class SeatListScreen extends React.Component {
       .ref()
       .child("seats");
   }
-  addToShoppingCart = (index, status) => {
-    if (status === 0 || status === 3) {
-      const { data, way, info } = this.props.navigation.state.params;
-      let stateCopy = this.state.seats;
-      stateCopy.forEach((e, i) => {
+
+  addToShoppingCart = (index, data) => {
+    const items = this.props.screenProps.shoppingCart;
+    const { way, info } = this.props.navigation.state.params;
+    if (items.go.length >= 4 && way) {
+      ToastAndroid.show(
+        "Bạn đã đặt đủ 4 vé cho chiều đi !",
+        ToastAndroid.SHORT
+      );
+    } else if (items.back.length >= 4 && !way) {
+      ToastAndroid.show(
+        "Bạn đã đặt đủ 4 vé cho chiều về !",
+        ToastAndroid.SHORT
+      );
+    } else if (!data.selected || data.status === 0 || data.status === 3) {
+      let copyState = this.state.seats;
+      copyState.forEach((e, i) => {
         if (i === index) {
-          e.Status = 2;
+          e.selected = true;
           let item = Object.assign(
             {},
             {
@@ -71,19 +84,17 @@ export default class SeatListScreen extends React.Component {
               timeGo: info.GioDi,
               timeArr: info.GioDen,
               dateGo: info.NgayDi,
-              dateArr: info.NgayDen
+              dateArr: info.NgayDen,
+              itemIndex: i
             },
             e
           );
           this.props.screenProps.addToCart(item, way);
         }
       });
-      if (stateCopy) {
-        this.ref
-          .child(data.DMTauVatLyId)
-          .child(data.Id)
-          .set(stateCopy);
-      }
+      this.setState({
+        seats: copyState
+      });
       ToastAndroid.show("Đã thêm vào giỏ !", ToastAndroid.SHORT);
     }
   };
@@ -93,6 +104,7 @@ export default class SeatListScreen extends React.Component {
       isLoading: true
     });
     const data = this.props.navigation.state.params.data;
+    const items = this.props.screenProps.shoppingCart;
     this.ref
       .child(data.DMTauVatLyId)
       .child(data.Id)
@@ -101,13 +113,49 @@ export default class SeatListScreen extends React.Component {
           let seatList = snap.val().filter(el => {
             return el != null;
           });
+          if (items.go.length !== 0) {
+            items.go.forEach((e, i) => {
+              if (
+                seatList[e.itemIndex].Status !== 1 &&
+                seatList[e.itemIndex].ToaSo === e.ToaSo &&
+                seatList[e.itemIndex].DMTauVatLyId === e.DMTauVatLyId
+              ) {
+                seatList[e.itemIndex].selected = true;
+              }
+            });
+          }
+          if (items.back.length !== 0) {
+            items.back.forEach((e, i) => {
+              if (
+                seatList[e.itemIndex].Status !== 1 &&
+                seatList[e.itemIndex].ToaSo === e.ToaSo &&
+                seatList[e.itemIndex].DMTauVatLyId === e.DMTauVatLyId
+              ) {
+                seatList[e.itemIndex].selected = true;
+              }
+            });
+          }
           this.setState({ seats: seatList, isLoading: false });
         }
       });
   }
-  componentWillUnmount() {
-    this.ref.off();
-  }
+  removeItem = item => {
+    if (this.state.seats) {
+      let copyState = this.state.seats;
+      copyState.forEach((e, i) => {
+        if (
+          i === item.itemIndex &&
+          e.ToaSo === item.ToaSo &&
+          e.DMTauVatLyId === item.DMTauVatLyId
+        ) {
+          e.selected = false;
+        }
+      });
+      this.setState({
+        seats: copyState
+      });
+    }
+  };
   render() {
     const { width } = Dimensions.get("window");
     const loaiToa = this.props.navigation.getParam("data").ToaXeDienGiai;
@@ -238,11 +286,7 @@ export default class SeatListScreen extends React.Component {
                 {this.state.seats.map((data, index) => {
                   return (
                     <Text
-                      onPress={this.addToShoppingCart.bind(
-                        this,
-                        index,
-                        data.Status
-                      )}
+                      onPress={this.addToShoppingCart.bind(this, index, data)}
                       style={{
                         height: 30,
                         width:
@@ -260,14 +304,13 @@ export default class SeatListScreen extends React.Component {
                             : data.loai === "T3"
                             ? "blue"
                             : colors.black,
-                        backgroundColor:
-                          data.Status === 0
-                            ? colors.white
-                            : data.Status === 1
-                            ? colors.seatColor1
-                            : data.Status === 2
-                            ? colors.seatColor2
-                            : colors.seatColor3,
+                        backgroundColor: data.selected
+                          ? colors.seatColor2
+                          : data.Status === 0
+                          ? colors.white
+                          : data.Status === 1
+                          ? colors.seatColor1
+                          : colors.seatColor3,
                         textAlign: "center",
                         textAlignVertical: "center",
                         marginHorizontal: 5,
@@ -282,7 +325,10 @@ export default class SeatListScreen extends React.Component {
               </ScrollView>
             </View>
           )}
-          <ShoppingCart items={this.props.screenProps} />
+          <ShoppingCart
+            items={this.props.screenProps}
+            removeItem={this.removeItem}
+          />
           <View style={{ flex: 3 }} />
         </View>
       </View>

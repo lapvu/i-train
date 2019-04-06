@@ -7,7 +7,7 @@ import {
   Image,
   ScrollView
 } from "react-native";
-import { Card, CardItem, Body, Button } from "native-base";
+import { Card, CardItem, Body } from "native-base";
 import colors from "../../../../styles/colors";
 import Icon from "react-native-vector-icons/AntDesign";
 import { getDuration, formatDate } from "../../../../helpers";
@@ -27,7 +27,8 @@ export default class TrainListScreen extends React.Component {
     this.state = {
       go: [],
       back: [],
-      isLoading: false
+      isLoading: false,
+      items: null
     };
   }
 
@@ -79,7 +80,7 @@ export default class TrainListScreen extends React.Component {
     this.loadData();
   }
   render() {
-    const { width, height } = Dimensions.get("window");
+    const { width } = Dimensions.get("window");
     const { isLoading, go, back } = this.state;
     const oneWay = this.props.navigation.getParam("oneWay", "");
     return (

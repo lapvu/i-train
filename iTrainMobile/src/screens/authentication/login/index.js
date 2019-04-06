@@ -1,7 +1,11 @@
 import React from "react";
 import { Content, Form, Text } from "native-base";
 import colors from "../../../styles/colors";
-import { Dimensions, StyleSheet, ToastAndroid } from "react-native";
+import {
+  Dimensions,
+  StyleSheet,
+  ToastAndroid
+} from "react-native";
 import LinearGradient from "react-native-linear-gradient";
 import MyInput from "../../../components/Input";
 import { Formik } from "formik";

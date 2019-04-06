@@ -1,5 +1,5 @@
 import React from "react";
-import { Dimensions, StyleSheet } from "react-native";
+import { Dimensions, StyleSheet, AsyncStorage } from "react-native";
 import { Content, Form } from "native-base";
 import colors from "../../../styles/colors";
 import LinearGradient from "react-native-linear-gradient";

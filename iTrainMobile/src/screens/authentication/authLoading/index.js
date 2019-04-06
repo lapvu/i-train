@@ -1,17 +1,18 @@
 import React from "react";
-import { Image } from "react-native";
+import { Image, AsyncStorage } from "react-native";
 import firebase from "react-native-firebase";
 import LinearGradient from "react-native-linear-gradient";
 import colors from "../../../styles/colors";
+
 export default class AuthLoadingScreen extends React.Component {
   constructor(props) {
     super(props);
     this._bootstrapAsync();
   }
-  // Fetch the token from storage then navigate to our appropriate place
   _bootstrapAsync = () => {
     return firebase.auth().onAuthStateChanged(user => {
       if (user) {
+        AsyncStorage.setItem("user", JSON.stringify(user));
         this.props.navigation.navigate("Main");
       } else {
         this.props.navigation.navigate("Auth");
@@ -19,7 +20,6 @@ export default class AuthLoadingScreen extends React.Component {
     });
   };
 
-  // Render any loading content that you like here
   render() {
     return (
       <LinearGradient

@@ -582,6 +582,10 @@
     lodash "^4.17.10"
     to-fast-properties "^2.0.0"
 
+"@react-native-community/async-storage@^1.2.2":
+  version "1.2.2"
+  resolved "https://registry.yarnpkg.com/@react-native-community/async-storage/-/async-storage-1.2.2.tgz#1f9851a6dd2b0af08ed3ab69b7f7353c4e85ea1d"
+
 "@react-navigation/core@3.1.1":
   version "3.1.1"
   resolved "https://registry.yarnpkg.com/@react-navigation/core/-/core-3.1.1.tgz#badf449ac7d2ae65b0f5aa1bf63a87e7888458d3"
@@ -4290,6 +4294,10 @@ react-native-autocomplete-search@^1.0.8:
   dependencies:
     "@babel/preset-flow" "^7.0.0"
     lodash "^4.17.11"
+
+react-native-background-job@^2.2.0:
+  version "2.2.0"
+  resolved "https://registry.yarnpkg.com/react-native-background-job/-/react-native-background-job-2.2.0.tgz#539b6416303bd06593e8a12fe43c6fe0b198eea8"
 
 react-native-calendars@^1.22.0:
   version "1.22.0"

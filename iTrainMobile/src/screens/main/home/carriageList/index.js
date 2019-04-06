@@ -98,14 +98,13 @@ export default class CarriageListScreen extends React.Component {
   };
   componentDidMount() {
     const data = this.props.navigation.state.params.data;
-    console.log(data);
     this.createData(data);
     this.setState({
       data: data
     });
   }
   render() {
-    const { width, height } = Dimensions.get("window");
+    const { width } = Dimensions.get("window");
     const { data } = this.state;
     return (
       <View style={styles.container}>

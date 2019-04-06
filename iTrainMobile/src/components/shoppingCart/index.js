@@ -5,6 +5,12 @@ import Icon from "react-native-vector-icons/MaterialIcons";
 import { Button } from "native-base";
 import { priceDisplay } from "../../helpers";
 import Modal from "react-native-modal";
+import BackgroundJob from "react-native-background-job";
+
+BackgroundJob.register({
+  jobKey: "myJob",
+  job: () => console.log("Running in background")
+});
 export default class ShoppingCart extends React.Component {
   constructor(props) {
     super(props);
@@ -12,18 +18,19 @@ export default class ShoppingCart extends React.Component {
       isModalVisible: false
     };
   }
+  componentDidMount() {}
   toggleModal = () =>
     this.setState({ isModalVisible: !this.state.isModalVisible });
   render() {
     const { width } = Dimensions.get("window");
-    const { items } = this.props;
+    const { items, removeItem } = this.props;
     return (
       <React.Fragment>
         <Modal isVisible={this.state.isModalVisible}>
           <View
             style={{
               width: width - 40,
-              height: 400,
+              height: 430,
               backgroundColor: colors.white
             }}
           >
@@ -80,15 +87,11 @@ export default class ShoppingCart extends React.Component {
                               iconRight
                               danger
                               style={{ padding: 3 }}
+                              onPress={() => {
+                                items.deleteItem(i, true);
+                                removeItem(e);
+                              }}
                             >
-                              <Text
-                                style={{
-                                  color: colors.white,
-                                  marginHorizontal: 3
-                                }}
-                              >
-                                22
-                              </Text>
                               <Icon
                                 name="delete"
                                 style={{ color: colors.white, fontSize: 18 }}
@@ -137,8 +140,8 @@ export default class ShoppingCart extends React.Component {
                             }}
                           >
                             <Text>
-                              {e.trainName} - Toa : {e.ToaSo} - Chỗ số:{" "}
-                              {e.ChoSo}
+                              Tên tàu : {e.trainName} - Toa : {e.ToaSo} - Chỗ
+                              số: {e.ChoSo}
                             </Text>
                             <Text>Giá : {priceDisplay(e.Gia)}</Text>
                           </View>
@@ -152,15 +155,11 @@ export default class ShoppingCart extends React.Component {
                               iconRight
                               danger
                               style={{ padding: 3 }}
+                              onPress={() => {
+                                items.deleteItem(i, false);
+                                removeItem(e);
+                              }}
                             >
-                              <Text
-                                style={{
-                                  color: colors.white,
-                                  marginHorizontal: 3
-                                }}
-                              >
-                                22
-                              </Text>
                               <Icon
                                 name="delete"
                                 style={{ color: colors.white, fontSize: 18 }}

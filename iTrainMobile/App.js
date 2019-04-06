@@ -36,4 +36,5 @@ const AppContainer = createAppContainer(
     }
   )
 );
+
 export default () => <AppContainer />;

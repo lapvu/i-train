@@ -4,14 +4,13 @@ import {
   View,
   Dimensions,
   StyleSheet,
-  TouchableHighlight,
-  ToastAndroid
+  TouchableHighlight
 } from "react-native";
 import { Card, CheckBox, CardItem, Button } from "native-base";
 import Icon from "react-native-vector-icons/AntDesign";
 import LinearGradient from "react-native-linear-gradient";
 import colors from "../../../styles/colors";
-
+import ShoppingCart from "../../../components/shoppingCart";
 class HomeScreen extends React.Component {
   static navigationOptions = {
     header: null
@@ -287,7 +286,6 @@ class HomeScreen extends React.Component {
               </View>
             </CardItem>
           </Card>
-
           <Button
             block
             style={{
@@ -322,6 +320,10 @@ class HomeScreen extends React.Component {
             </Text>
           </Button>
         </View>
+        {(this.props.screenProps.shoppingCart.go.length != 0 ||
+          this.props.screenProps.shoppingCart.back.length != 0) && (
+          <ShoppingCart items={this.props.screenProps} />
+        )}
       </LinearGradient>
     );
   }
