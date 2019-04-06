@@ -325,10 +325,14 @@ export default class SeatListScreen extends React.Component {
               </ScrollView>
             </View>
           )}
-          <ShoppingCart
-            items={this.props.screenProps}
-            removeItem={this.removeItem}
-          />
+          {(this.props.screenProps.shoppingCart.go.length != 0 ||
+            this.props.screenProps.shoppingCart.back.length != 0) && (
+            <ShoppingCart
+              items={this.props.screenProps}
+              navigation={this.props.navigation}
+              removeItem={this.removeItem}
+            />
+          )}
           <View style={{ flex: 3 }} />
         </View>
       </View>

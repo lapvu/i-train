@@ -12,16 +12,22 @@ import TrainListScreen from "./home/trainList";
 import CarriageListScreen from "./home/carriageList";
 import SeatListScreen from "./home/seatList";
 import { Icon } from "native-base";
-import { AsyncStorage, ToastAndroid } from "react-native";
+import { AsyncStorage } from "react-native";
 import React from "react";
 import firebase from "react-native-firebase";
+import confirmOrderScreen from "./home/confirmOrder";
+import orderDetailScreen from "./home/orderDetail";
+import GuideScreen from "./guide";
+
 const HomeStack = createStackNavigator({
   Home: HomeScreen,
   Search: SearchStationScreen,
   Calendar: CalendarScreen,
   TrainList: TrainListScreen,
   CarriageList: CarriageListScreen,
-  SeatList: SeatListScreen
+  SeatList: SeatListScreen,
+  ConfirmOrder: confirmOrderScreen,
+  OrderDetail: orderDetailScreen
 });
 HomeStack.navigationOptions = ({ navigation }) => {
   let { routeName } = navigation.state.routes[navigation.state.index];
@@ -31,7 +37,9 @@ HomeStack.navigationOptions = ({ navigation }) => {
     routeName === "Calendar" ||
     routeName === "CarriageList" ||
     routeName === "TrainList" ||
-    routeName === "SeatList"
+    routeName === "SeatList" ||
+    routeName === "ConfirmOrder" ||
+    routeName === "orderDetail"
   ) {
     navigationOptions.tabBarVisible = false;
   }
@@ -41,6 +49,7 @@ const Main = createBottomTabNavigator(
   {
     Home: HomeStack,
     History: HistoryScreen,
+    Guide: GuideScreen,
     Settings: SettingsScreen
   },
   {
@@ -54,6 +63,8 @@ const Main = createBottomTabNavigator(
           iconName = "cog";
         } else if (routeName === "History") {
           iconName = "ticket";
+        }else if (routeName === "Guide"){
+          iconName = "bookmark-o";
         }
         return (
           <Icon

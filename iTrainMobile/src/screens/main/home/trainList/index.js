@@ -293,7 +293,10 @@ export default class TrainListScreen extends React.Component {
         >
           {(this.props.screenProps.shoppingCart.go.length != 0 ||
             this.props.screenProps.shoppingCart.back.length != 0) && (
-            <ShoppingCart items={this.props.screenProps} />
+            <ShoppingCart
+              items={this.props.screenProps}
+              navigation={this.props.navigation}
+            />
           )}
         </View>
       </View>

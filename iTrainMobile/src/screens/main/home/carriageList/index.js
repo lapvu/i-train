@@ -185,7 +185,10 @@ export default class CarriageListScreen extends React.Component {
         <View style={{ flex: 1 }} />
         {(this.props.screenProps.shoppingCart.go.length != 0 ||
           this.props.screenProps.shoppingCart.back.length != 0) && (
-          <ShoppingCart items={this.props.screenProps} />
+          <ShoppingCart
+            items={this.props.screenProps}
+            navigation={this.props.navigation}
+          />
         )}
       </View>
     );

@@ -18,19 +18,18 @@ export default class ShoppingCart extends React.Component {
       isModalVisible: false
     };
   }
-  componentDidMount() {}
   toggleModal = () =>
     this.setState({ isModalVisible: !this.state.isModalVisible });
   render() {
     const { width } = Dimensions.get("window");
-    const { items, removeItem } = this.props;
+    const { items, removeItem, navigation } = this.props;
     return (
       <React.Fragment>
         <Modal isVisible={this.state.isModalVisible}>
           <View
             style={{
               width: width - 40,
-              height: 430,
+              height: 400,
               backgroundColor: colors.white
             }}
           >
@@ -89,7 +88,9 @@ export default class ShoppingCart extends React.Component {
                               style={{ padding: 3 }}
                               onPress={() => {
                                 items.deleteItem(i, true);
-                                removeItem(e);
+                                if (navigation.state.routeName === "SeatList") {
+                                  removeItem(e);
+                                }
                               }}
                             >
                               <Icon
@@ -157,7 +158,9 @@ export default class ShoppingCart extends React.Component {
                               style={{ padding: 3 }}
                               onPress={() => {
                                 items.deleteItem(i, false);
-                                removeItem(e);
+                                if (navigation.state.routeName === "SeatList") {
+                                  removeItem(e);
+                                }
                               }}
                             >
                               <Icon
@@ -191,7 +194,10 @@ export default class ShoppingCart extends React.Component {
                 Tiếp tục
               </Text>
               <Text
-                onPress={this.toggleModal}
+                onPress={() => {
+                  navigation.navigate("ConfirmOrder");
+                  this.toggleModal;
+                }}
                 style={{
                   position: "absolute",
                   top: 20,
