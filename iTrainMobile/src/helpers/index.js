@@ -39,6 +39,12 @@ module.exports = {
     }
   },
   priceDisplay: price => {
-    return price + "." + "000";
+    if (String(price).length === 3) {
+      return String(price) + ",000 VND";
+    } else {
+      let thousand = String(price).slice(-3);
+      let million = String(price).slice(0, -3);
+      return million + "," + thousand + ",000 VND";
+    }
   }
 };

@@ -71,7 +71,7 @@ export default class ShoppingCart extends React.Component {
                             }}
                           >
                             <Text>
-                              Tên tàu : {e.trainName} - Toa : {e.ToaSo} - Chỗ
+                              Tên tàu : {e.MacTau} - Toa : {e.ToaSo} - Chỗ
                               số: {e.ChoSo}
                             </Text>
                             <Text>Giá : {priceDisplay(e.Gia)}</Text>
@@ -141,7 +141,7 @@ export default class ShoppingCart extends React.Component {
                             }}
                           >
                             <Text>
-                              Tên tàu : {e.trainName} - Toa : {e.ToaSo} - Chỗ
+                              Tên tàu : {e.MacTau} - Toa : {e.ToaSo} - Chỗ
                               số: {e.ChoSo}
                             </Text>
                             <Text>Giá : {priceDisplay(e.Gia)}</Text>
@@ -196,7 +196,7 @@ export default class ShoppingCart extends React.Component {
               <Text
                 onPress={() => {
                   navigation.navigate("ConfirmOrder");
-                  this.toggleModal;
+                  this.toggleModal()
                 }}
                 style={{
                   position: "absolute",

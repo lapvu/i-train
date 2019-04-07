@@ -309,7 +309,6 @@ const styles = StyleSheet.create({
     backgroundColor: "#dddddd",
     flex: 1
   },
-  topContainer: {},
   img1: {
     width: 25,
     height: 25

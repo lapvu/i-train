@@ -28,3 +28,7 @@ exports.createSeats = functions.https.onRequest(async (req, res) => {
     res.status(500).send(e.code);
   }
 });
+
+exports.createOrder = functions.https.onRequest(async(req,res)=>{
+  
+})

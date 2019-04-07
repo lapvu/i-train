@@ -80,11 +80,11 @@ export default class SeatListScreen extends React.Component {
           let item = Object.assign(
             {},
             {
-              trainName: info.MacTau,
-              timeGo: info.GioDi,
-              timeArr: info.GioDen,
-              dateGo: info.NgayDi,
-              dateArr: info.NgayDen,
+              MacTau: info.MacTau,
+              GioDi: info.GioDi,
+              GioDen: info.GioDen,
+              NgayDi: info.NgayDi,
+              NgayDen: info.NgayDen,
               itemIndex: i
             },
             e
