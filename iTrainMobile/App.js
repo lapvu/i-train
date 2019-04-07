@@ -3,6 +3,8 @@ import {
   createAppContainer,
   createSwitchNavigator
 } from "react-navigation";
+import {View, StatusBar} from "react-native";
+import colors from "./src/styles/colors"
 import LoginScreen from "./src/screens/authentication/login";
 import RegisterScreen from "./src/screens/authentication/register";
 import WellcomeScreen from "./src/screens/authentication/wellcome";
@@ -37,4 +39,8 @@ const AppContainer = createAppContainer(
   )
 );
 
-export default () => <AppContainer />;
+export default () => 
+  <View style={{flex:1}}>
+    <StatusBar backgroundColor = "#800060" />
+    <AppContainer />
+  </View>;

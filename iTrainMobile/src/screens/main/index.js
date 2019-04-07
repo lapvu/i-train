@@ -174,7 +174,7 @@ export default class MainScreen extends React.Component {
   }
   render() {
     return (
-      <MainContaier
+        <MainContaier
         screenProps={{
           ...this.state,
           setStation: this.setStation,

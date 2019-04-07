@@ -59,6 +59,7 @@ export default class ShoppingCart extends React.Component {
                           style={{
                             flexDirection: "row",
                             padding: 10,
+                            marginBottom:1,
                             backgroundColor: "yellow",
                             borderBottomWidth: 0.5,
                             borderBottomColor: colors.black
