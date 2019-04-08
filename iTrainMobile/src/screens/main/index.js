@@ -39,7 +39,7 @@ HomeStack.navigationOptions = ({ navigation }) => {
     routeName === "TrainList" ||
     routeName === "SeatList" ||
     routeName === "ConfirmOrder" ||
-    routeName === "orderDetail"
+    routeName === "OrderDetail"
   ) {
     navigationOptions.tabBarVisible = false;
   }
@@ -63,7 +63,7 @@ const Main = createBottomTabNavigator(
           iconName = "cog";
         } else if (routeName === "History") {
           iconName = "ticket";
-        }else if (routeName === "Guide"){
+        } else if (routeName === "Guide") {
           iconName = "bookmark-o";
         }
         return (
@@ -169,19 +169,28 @@ export default class MainScreen extends React.Component {
       console.log("Error getting document:", e);
     }
   };
+  resetShoppingCart = () => {
+    this.setState({
+      shoppingCart: {
+        go: [],
+        back: []
+      }
+    });
+  };
   componentDidMount() {
     this.loadUser();
   }
   render() {
     return (
-        <MainContaier
+      <MainContaier
         screenProps={{
           ...this.state,
           setStation: this.setStation,
           swapStation: this.swapStation,
           setDate: this.setDate,
           addToCart: this.addToCart,
-          deleteItem: this.deleteItem
+          deleteItem: this.deleteItem,
+          resetShoppingCart:this.resetShoppingCart
         }}
       />
     );

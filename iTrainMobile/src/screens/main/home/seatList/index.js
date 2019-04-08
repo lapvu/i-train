@@ -72,7 +72,10 @@ export default class SeatListScreen extends React.Component {
         "Bạn đã đặt đủ 4 vé cho chiều về !",
         ToastAndroid.SHORT
       );
-    } else if (!data.selected || data.status === 0 || data.status === 3) {
+    } else if (
+      (!data.selected && data.Status === 0) ||
+      (!data.selected && data.Status === 3)
+    ) {
       let copyState = this.state.seats;
       copyState.forEach((e, i) => {
         if (i === index) {

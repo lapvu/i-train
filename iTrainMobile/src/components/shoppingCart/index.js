@@ -131,14 +131,14 @@ export default class ShoppingCart extends React.Component {
                             flexDirection: "row",
                             padding: 10,
                             backgroundColor: "yellow",
-                            borderBottomWidth: 0.5,
+                            borderBottomWidth: 1,
                             borderBottomColor: colors.black
                           }}
                           key={i}
                         >
                           <View
                             style={{
-                              flex: 4
+                              flex: 5
                             }}
                           >
                             <Text>
