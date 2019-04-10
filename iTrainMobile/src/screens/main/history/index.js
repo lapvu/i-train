@@ -23,13 +23,14 @@ class HistoryScreen extends React.Component {
     };
   }
   loadData = async () => {
-    this.setState({ isLoading: true,data:[] });
+    this.setState({ isLoading: true, data: [] });
     try {
       const user = await AsyncStorage.getItem("user");
       const snapshot = await firebase
         .firestore()
         .collection("orders")
         .where("userId", "==", JSON.parse(user).uid)
+        .limit(5)
         .get();
       snapshot.docs.forEach(doc => {
         let state = [...this.state.data, doc.data()];
