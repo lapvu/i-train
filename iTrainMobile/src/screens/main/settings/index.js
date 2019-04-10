@@ -4,10 +4,14 @@ import {
   Content,
   List,
   ListItem,
-  Text
+  Text,
+  Header,
+  Body,
+  Title
 } from "native-base";
-import colors from "../../../styles/colors"
+import colors from "../../../styles/colors";
 import firebase from "react-native-firebase";
+import { Dimensions } from "react-native";
 class SettingsScreen extends React.Component {
   static navigationOptions = {
     title: "Danh sách chiều đi",
@@ -18,18 +22,23 @@ class SettingsScreen extends React.Component {
     headerTintColor: colors.white
   };
   render() {
+    const { width } = Dimensions.get("window");
     return (
       <Container>
-        <Content>
+        <Header style={{ backgroundColor: colors.gradient[0] }}>
+          <Body
+            style={{ flex: 1, justifyContent: "center", alignItems: "center" }}
+          >
+            <Title>Cài đặt</Title>
+          </Body>
+        </Header>
+        <Content contentContainerStyle={{ alignItems: "center" }}>
           <List>
-            <ListItem onPress={() => firebase.auth().signOut()}>
-              <Text>Logout</Text>
-            </ListItem>
-            <ListItem>
-              <Text>Nathaniel Clyne</Text>
-            </ListItem>
-            <ListItem>
-              <Text>hihihi</Text>
+            <ListItem
+              onPress={() => firebase.auth().signOut()}
+              style={{ width: width - 40, marginLeft: 0 }}
+            >
+              <Text>Đăng xuất</Text>
             </ListItem>
           </List>
         </Content>

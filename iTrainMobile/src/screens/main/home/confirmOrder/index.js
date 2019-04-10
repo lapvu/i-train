@@ -32,7 +32,8 @@ export default class confirmOrderScreen extends React.Component {
     this.setState({
       isLoading: true
     });
-    let url = "http://192.168.1.9:80/i-train-8f38c/us-central1/createOrder";
+    let url = "https://us-central1-i-train-8f38c.cloudfunctions.net/createOrder";
+    console.log(url)
     try {
       const res = await fetch(url, {
         method: "POST",

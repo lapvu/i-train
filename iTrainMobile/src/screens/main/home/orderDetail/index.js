@@ -33,7 +33,7 @@ export default class orderDetailScreen extends React.Component {
           style={{ height: 150, width: 150 }}
         />
         <Text style={{ marginTop: 20, marginBottom: 20 }}>
-          Mã đơn hàng của bạn là :<Text style={{color:colors.black}}>{data.code}</Text>
+          Mã đơn hàng của bạn là :<Text style={{color:colors.black}}> {data.code}</Text>
         </Text>
         <Button
           title="TIẾP TỤC"

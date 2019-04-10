@@ -80,7 +80,7 @@ export default class CarriageListScreen extends React.Component {
   }
   createData = async agrs => {
     let url =
-      "http://192.168.1.9:80/i-train-8f38c/us-central1/createSeats";
+      "https://us-central1-i-train-8f38c.cloudfunctions.net/createSeats";
     try {
       const res = await fetch(url, {
         method: "POST",
