@@ -12,7 +12,7 @@ import {
 import { Image, AsyncStorage } from "react-native";
 import colors from "../../../styles/colors";
 import firebase from "react-native-firebase";
-import { Dimensions } from "react-native";
+import { Dimensions ,StatusBar} from "react-native";
 class SettingsScreen extends React.Component {
   static navigationOptions = {
     title: "Danh sách chiều đi",
@@ -47,6 +47,7 @@ class SettingsScreen extends React.Component {
     return (
       <Container>
         <Header style={{ backgroundColor: colors.gradient[0] }}>
+        <StatusBar backgroundColor={colors.gradient[1]} />
           <Body
             style={{ flex: 1, justifyContent: "center", alignItems: "center" }}
           >
@@ -60,6 +61,18 @@ class SettingsScreen extends React.Component {
           />
           <Text>Xin chào {this.state.fullName}</Text>
           <List>
+            <ListItem
+            style={{ width: width - 40, marginLeft: 0 }}>
+              <Text>Thông tin tài khoản</Text>
+            </ListItem>
+            <ListItem
+            style={{ width: width - 40, marginLeft: 0 }}>
+              <Text>Đổi mật khẩu</Text>
+            </ListItem>
+            <ListItem
+            style={{ width: width - 40, marginLeft: 0 }}>
+              <Text>Mã QR</Text>
+            </ListItem>
             <ListItem
               onPress={() => firebase.auth().signOut()}
               style={{ width: width - 40, marginLeft: 0 }}

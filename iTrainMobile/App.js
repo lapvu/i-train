@@ -41,6 +41,6 @@ const AppContainer = createAppContainer(
 
 export default () => 
   <View style={{flex:1}}>
-    <StatusBar backgroundColor = {colors.gradient[0]} />
+    <StatusBar backgroundColor = {colors.gradient[1]} />
     <AppContainer />
   </View>;
