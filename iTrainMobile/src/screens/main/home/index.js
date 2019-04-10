@@ -43,8 +43,8 @@ class HomeScreen extends React.Component {
           <Image
             source={require("../../../assets/imgs/train.png")}
             style={{
-              width: 60,
-              height: 60
+              width: 80,
+              height: 80
             }}
           />
         </View>

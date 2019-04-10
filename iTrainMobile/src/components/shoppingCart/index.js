@@ -5,12 +5,6 @@ import Icon from "react-native-vector-icons/MaterialIcons";
 import { Button } from "native-base";
 import { priceDisplay } from "../../helpers";
 import Modal from "react-native-modal";
-import BackgroundJob from "react-native-background-job";
-
-BackgroundJob.register({
-  jobKey: "myJob",
-  job: () => console.log("Running in background")
-});
 export default class ShoppingCart extends React.Component {
   constructor(props) {
     super(props);
