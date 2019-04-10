@@ -63,15 +63,9 @@ export default class SeatListScreen extends React.Component {
     const items = this.props.screenProps.shoppingCart;
     const { way, info } = this.props.navigation.state.params;
     if (items.go.length >= 4 && way) {
-      ToastAndroid.show(
-        "Bạn đã đặt đủ 4 vé cho chiều đi !",
-        ToastAndroid.SHORT
-      );
+      ToastAndroid.show("Bạn đã đặt đủ 4 vé cho chiều đi !", 1);
     } else if (items.back.length >= 4 && !way) {
-      ToastAndroid.show(
-        "Bạn đã đặt đủ 4 vé cho chiều về !",
-        ToastAndroid.SHORT
-      );
+      ToastAndroid.show("Bạn đã đặt đủ 4 vé cho chiều về !", 1);
     } else if (
       (!data.selected && data.Status === 0) ||
       (!data.selected && data.Status === 3)
@@ -98,7 +92,7 @@ export default class SeatListScreen extends React.Component {
       this.setState({
         seats: copyState
       });
-      ToastAndroid.show("Đã thêm vào giỏ !", ToastAndroid.SHORT);
+      ToastAndroid.show("Đã thêm vào giỏ !", 1);
     }
   };
 

@@ -6,23 +6,14 @@ import { AccessToken, LoginManager } from "react-native-fbsdk";
 export const googleLogin = async () => {
   try {
     // add any configuration settings here:
-    await GoogleSignin.configure({
-      scopes: ["profile", "email"],
-      webClientId:
-        "374157436872-0h5nhp2d3438har4dc4vo24h14m4pe7n.apps.googleusercontent.com"
-    });
-    await GoogleSignin.hasPlayServices();
+    await GoogleSignin.configure();
+
     const data = await GoogleSignin.signIn();
-    console.log(data);
+
     // create a new firebase credential with the token
-    const credential = firebase.auth.GoogleAuthProvider.credential(
-      data.idToken,
-      data.accessToken
-    );
+    const credential = firebase.auth.GoogleAuthProvider.credential(data.idToken, data.accessToken)
     // login with credential
-    const firebaseUserCredential = await firebase
-      .auth()
-      .signInWithCredential(credential);
+    const firebaseUserCredential = await firebase.auth().signInWithCredential(credential);
 
     console.warn(JSON.stringify(firebaseUserCredential.user.toJSON()));
   } catch (e) {
