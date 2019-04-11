@@ -25,6 +25,32 @@ export const genSeats = (
         Id:Id
       });
     }
+  }else if (ToaXeDienGiai === "Ngồi cứng") {
+    for (let i = 1; i <= 64; i++) {
+      arr.push({
+        DMTauVatLyId: DMTauVatLyId,
+        ChoSo: i,
+        LoaiCho: ToaXeDienGiai,
+        ToaSo: ToaSo,
+        Status: 0,
+        loai: null,
+        Gia: 480,
+        Id:Id
+      });
+    }
+  } else if (ToaXeDienGiai === "Ngồi cứng điều hòa") {
+    for (let i = 1; i <= 64; i++) {
+      arr.push({
+        DMTauVatLyId: DMTauVatLyId,
+        ChoSo: i,
+        LoaiCho: ToaXeDienGiai,
+        ToaSo: ToaSo,
+        Status: 0,
+        loai: null,
+        Gia: 540,
+        Id:Id
+      });
+    }
   } else if (ToaXeDienGiai === "Giường nằm khoang 4 điều hòa") {
     let priceT1 = _.find(
       BangGiaVes,
@@ -327,6 +353,7 @@ export const genSeats = (
       BangGiaVes,
       (e: any) => e.TenLoaiCho === "Nằm khoang 6 điều hòa T3"
     );
+
     arr.push({
       ChoSo: 1,
       DMTauVatLyId: DMTauVatLyId,
@@ -334,7 +361,7 @@ export const genSeats = (
       ToaSo: ToaSo,
       Status: 0,
       loai: "T1",
-      Gia: priceT1.GiaVe,
+      Gia: priceT1.GiaVe || 980,
       Id:Id
     });
     arr.push({
@@ -344,7 +371,7 @@ export const genSeats = (
       ToaSo: ToaSo,
       Status: 0,
       loai: "T1",
-      Gia: priceT1.GiaVe,
+      Gia: priceT1.GiaVe || 980,
       Id:Id
     });
     arr.push({
@@ -354,7 +381,7 @@ export const genSeats = (
       ToaSo: ToaSo,
       Status: 0,
       loai: "T1",
-      Gia: priceT1.GiaVe,
+      Gia: priceT1.GiaVe || 980,
       Id:Id
     });
     arr.push({
@@ -364,7 +391,7 @@ export const genSeats = (
       ToaSo: ToaSo,
       Status: 0,
       loai: "T1",
-      Gia: priceT1.GiaVe,
+      Gia: priceT1.GiaVe || 980,
       Id:Id
     });
     arr.push({
@@ -374,7 +401,7 @@ export const genSeats = (
       ToaSo: ToaSo,
       Status: 0,
       loai: "T1",
-      Gia: priceT1.GiaVe,
+      Gia: priceT1.GiaVe || 980,
       Id:Id
     });
     arr.push({
@@ -384,7 +411,7 @@ export const genSeats = (
       ToaSo: ToaSo,
       Status: 0,
       loai: "T1",
-      Gia: priceT1.GiaVe,
+      Gia: priceT1.GiaVe || 980,
       Id:Id
     });
     arr.push({
@@ -394,7 +421,7 @@ export const genSeats = (
       ToaSo: ToaSo,
       Status: 0,
       loai: "T1",
-      Gia: priceT1.GiaVe,
+      Gia: priceT1.GiaVe || 980,
       Id:Id
     });
     arr.push({
@@ -404,7 +431,7 @@ export const genSeats = (
       ToaSo: ToaSo,
       Status: 0,
       loai: "T1",
-      Gia: priceT1.GiaVe,
+      Gia: priceT1.GiaVe || 980,
       Id:Id
     });
     arr.push({
@@ -414,7 +441,7 @@ export const genSeats = (
       ToaSo: ToaSo,
       Status: 0,
       loai: "T1",
-      Gia: priceT1.GiaVe,
+      Gia: priceT1.GiaVe || 980,
       Id:Id
     });
     arr.push({
@@ -424,7 +451,7 @@ export const genSeats = (
       ToaSo: ToaSo,
       Status: 0,
       loai: "T1",
-      Gia: priceT1.GiaVe,
+      Gia: priceT1.GiaVe || 980,
       Id:Id
     });
     arr.push({
@@ -434,7 +461,7 @@ export const genSeats = (
       ToaSo: ToaSo,
       Status: 0,
       loai: "T1",
-      Gia: priceT1.GiaVe,
+      Gia: priceT1.GiaVe || 980,
       Id:Id
     });
     arr.push({
@@ -444,7 +471,7 @@ export const genSeats = (
       ToaSo: ToaSo,
       Status: 0,
       loai: "T1",
-      Gia: priceT1.GiaVe,
+      Gia: priceT1.GiaVe || 980,
       Id:Id
     });
     arr.push({
@@ -454,7 +481,7 @@ export const genSeats = (
       ToaSo: ToaSo,
       Status: 0,
       loai: "T1",
-      Gia: priceT1.GiaVe,
+      Gia: priceT1.GiaVe || 980,
       Id:Id
     });
     arr.push({
@@ -464,7 +491,7 @@ export const genSeats = (
       ToaSo: ToaSo,
       Status: 0,
       loai: "T1",
-      Gia: priceT1.GiaVe,
+      Gia: priceT1.GiaVe || 980,
       Id:Id
     });
     arr.push({
@@ -474,7 +501,7 @@ export const genSeats = (
       ToaSo: ToaSo,
       Status: 0,
       loai: "T2",
-      Gia: priceT2.GiaVe,
+      Gia: priceT2.GiaVe || 910,
       Id:Id
     });
     arr.push({
@@ -484,7 +511,7 @@ export const genSeats = (
       ToaSo: ToaSo,
       Status: 0,
       loai: "T2",
-      Gia: priceT2.GiaVe,
+      Gia: priceT2.GiaVe || 910,
       Id:Id
     });
     arr.push({
@@ -494,7 +521,7 @@ export const genSeats = (
       ToaSo: ToaSo,
       Status: 0,
       loai: "T2",
-      Gia: priceT2.GiaVe,
+      Gia: priceT2.GiaVe || 910,
       Id:Id
     });
     arr.push({
@@ -504,7 +531,7 @@ export const genSeats = (
       ToaSo: ToaSo,
       Status: 0,
       loai: "T2",
-      Gia: priceT2.GiaVe,
+      Gia: priceT2.GiaVe || 910,
       Id:Id
     });
     arr.push({
@@ -514,7 +541,7 @@ export const genSeats = (
       ToaSo: ToaSo,
       Status: 0,
       loai: "T2",
-      Gia: priceT2.GiaVe,
+      Gia: priceT2.GiaVe || 910,
       Id:Id
     });
     arr.push({
@@ -524,7 +551,7 @@ export const genSeats = (
       ToaSo: ToaSo,
       Status: 0,
       loai: "T2",
-      Gia: priceT2.GiaVe,
+      Gia: priceT2.GiaVe || 910,
       Id:Id
     });
     arr.push({
@@ -534,7 +561,7 @@ export const genSeats = (
       ToaSo: ToaSo,
       Status: 0,
       loai: "T2",
-      Gia: priceT2.GiaVe,
+      Gia: priceT2.GiaVe || 910,
       Id:Id
     });
     arr.push({
@@ -544,7 +571,7 @@ export const genSeats = (
       ToaSo: ToaSo,
       Status: 0,
       loai: "T2",
-      Gia: priceT2.GiaVe,
+      Gia: priceT2.GiaVe || 910,
       Id:Id
     });
     arr.push({
@@ -554,7 +581,7 @@ export const genSeats = (
       ToaSo: ToaSo,
       Status: 0,
       loai: "T2",
-      Gia: priceT2.GiaVe,
+      Gia: priceT2.GiaVe || 910,
       Id:Id
     });
     arr.push({
@@ -564,7 +591,7 @@ export const genSeats = (
       ToaSo: ToaSo,
       Status: 0,
       loai: "T2",
-      Gia: priceT2.GiaVe,
+      Gia: priceT2.GiaVe || 910,
       Id:Id
     });
     arr.push({
@@ -574,7 +601,7 @@ export const genSeats = (
       ToaSo: ToaSo,
       Status: 0,
       loai: "T2",
-      Gia: priceT2.GiaVe,
+      Gia: priceT2.GiaVe || 910,
       Id:Id
     });
     arr.push({
@@ -584,7 +611,7 @@ export const genSeats = (
       ToaSo: ToaSo,
       Status: 0,
       loai: "T2",
-      Gia: priceT2.GiaVe,
+      Gia: priceT2.GiaVe || 910,
       Id:Id
     });
     arr.push({
@@ -594,7 +621,7 @@ export const genSeats = (
       ToaSo: ToaSo,
       Status: 0,
       loai: "T2",
-      Gia: priceT2.GiaVe,
+      Gia: priceT2.GiaVe || 910,
       Id:Id
     });
     arr.push({
@@ -604,7 +631,7 @@ export const genSeats = (
       ToaSo: ToaSo,
       Status: 0,
       loai: "T2",
-      Gia: priceT2.GiaVe,
+      Gia: priceT2.GiaVe || 910,
       Id:Id
     });
     arr.push({
@@ -614,7 +641,7 @@ export const genSeats = (
       ToaSo: ToaSo,
       Status: 0,
       loai: "T3",
-      Gia: priceT3.Giave,
+      Gia: priceT3.Giave || 875,
       Id:Id
     });
     arr.push({
@@ -624,7 +651,7 @@ export const genSeats = (
       ToaSo: ToaSo,
       Status: 0,
       loai: "T3",
-      Gia: priceT3.Giave,
+      Gia: priceT3.Giave || 875,
       Id:Id
     });
     arr.push({
@@ -634,7 +661,7 @@ export const genSeats = (
       ToaSo: ToaSo,
       Status: 0,
       loai: "T3",
-      Gia: priceT3.Giave,
+      Gia: priceT3.Giave || 875,
       Id:Id
     });
     arr.push({
@@ -644,7 +671,7 @@ export const genSeats = (
       ToaSo: ToaSo,
       Status: 0,
       loai: "T3",
-      Gia: priceT3.Giave,
+      Gia: priceT3.Giave || 875,
       Id:Id
     });
     arr.push({
@@ -654,7 +681,7 @@ export const genSeats = (
       ToaSo: ToaSo,
       Status: 0,
       loai: "T3",
-      Gia: priceT3.Giave,
+      Gia: priceT3.Giave || 875,
       Id:Id
     });
     arr.push({
@@ -664,7 +691,7 @@ export const genSeats = (
       ToaSo: ToaSo,
       Status: 0,
       loai: "T3",
-      Gia: priceT3.Giave,
+      Gia: priceT3.Giave || 875,
       Id:Id
     });
     arr.push({
@@ -674,7 +701,7 @@ export const genSeats = (
       ToaSo: ToaSo,
       Status: 0,
       loai: "T3",
-      Gia: priceT3.Giave,
+      Gia: priceT3.Giave || 875,
       Id:Id
     });
     arr.push({
@@ -684,7 +711,7 @@ export const genSeats = (
       ToaSo: ToaSo,
       Status: 0,
       loai: "T3",
-      Gia: priceT3.Giave,
+      Gia: priceT3.Giave || 875,
       Id:Id
     });
     arr.push({
@@ -694,7 +721,7 @@ export const genSeats = (
       ToaSo: ToaSo,
       Status: 0,
       loai: "T3",
-      Gia: priceT3.Giave,
+      Gia: priceT3.Giave || 875,
       Id:Id
     });
     arr.push({
@@ -704,7 +731,7 @@ export const genSeats = (
       ToaSo: ToaSo,
       Status: 0,
       loai: "T3",
-      Gia: priceT3.Giave,
+      Gia: priceT3.Giave || 875,
       Id:Id
     });
     arr.push({
@@ -714,7 +741,7 @@ export const genSeats = (
       ToaSo: ToaSo,
       Status: 0,
       loai: "T3",
-      Gia: priceT3.Giave,
+      Gia: priceT3.Giave || 875,
       Id:Id
     });
     arr.push({
@@ -724,7 +751,7 @@ export const genSeats = (
       ToaSo: ToaSo,
       Status: 0,
       loai: "T3",
-      Gia: priceT3.Giave,
+      Gia: priceT3.Giave || 875,
       Id:Id
     });
     arr.push({
@@ -734,7 +761,7 @@ export const genSeats = (
       ToaSo: ToaSo,
       Status: 0,
       loai: "T3",
-      Gia: priceT3.Giave,
+      Gia: priceT3.Giave || 875,
       Id:Id
     });
     arr.push({
@@ -744,7 +771,7 @@ export const genSeats = (
       ToaSo: ToaSo,
       Status: 0,
       loai: "T3",
-      Gia: priceT3.Giave,
+      Gia: priceT3.Giave || 875,
       Id:Id
     });
   }

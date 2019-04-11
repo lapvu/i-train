@@ -1,5 +1,5 @@
 import React from "react";
-import { Text, View, AsyncStorage } from "react-native";
+import { Text, View, AsyncStorage,ScrollView } from "react-native";
 import colors from "../../../styles/colors";
 import firebase from "react-native-firebase";
 import Loader from "../../../components/loader";
@@ -30,7 +30,6 @@ class HistoryScreen extends React.Component {
         .firestore()
         .collection("orders")
         .where("userId", "==", JSON.parse(user).uid)
-        .limit(5)
         .get();
       snapshot.docs.forEach(doc => {
         let state = [...this.state.data, doc.data()];
@@ -94,7 +93,7 @@ class HistoryScreen extends React.Component {
                 <Title>Lịch sử đặt vé</Title>
               </Body>
             </Header>
-            <View style={{ marginTop: 10 }}>
+            <ScrollView style={{ marginTop: 10 }}>
               <List>
                 {this.state.data.map((e, i) => {
                   return (
@@ -132,7 +131,7 @@ class HistoryScreen extends React.Component {
                   );
                 })}
               </List>
-            </View>
+            </ScrollView>
           </View>
         )}
       </React.Fragment>

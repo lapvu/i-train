@@ -18,7 +18,7 @@ export default class GuideScreen extends React.Component {
             </Text>
             <View style={{ alignItems: "center" }}>
               <Image
-                source={require("../../../assets/imgs/guide1.png")}
+                source={{uri:"https://www.upsieutoc.com/images/2019/04/11/Screenshot_2019-04-11-10-03-04.png"}}
                 style={styles.img}
               />
             </View>
@@ -27,7 +27,7 @@ export default class GuideScreen extends React.Component {
             </Text>
             <View style={{ alignItems: "center" }}>
               <Image
-                source={require("../../../assets/imgs/guide2.png")}
+                source={{uri:"https://www.upsieutoc.com/images/2019/04/11/Screenshot_2019-04-11-10-06-06.png"}}
                 style={styles.img}
               />
             </View>
@@ -37,14 +37,14 @@ export default class GuideScreen extends React.Component {
             </Text>
             <View style={{ alignItems: "center" }}>
               <Image
-                source={require("../../../assets/imgs/guide3.png")}
+                source={{uri:"https://www.upsieutoc.com/images/2019/04/11/Screenshot_2019-04-11-10-06-29.png"}}
                 style={styles.img}
               />
             </View>
             <Text style={styles.text}>- Bước 4: Chọn ghế. </Text>
             <View style={{ alignItems: "center" }}>
               <Image
-                source={require("../../../assets/imgs/guide4.png")}
+                source={{uri:"https://www.upsieutoc.com/images/2019/04/11/Screenshot_2019-04-11-10-06-57.png"}}
                 style={styles.img}
               />
             </View>
@@ -53,14 +53,14 @@ export default class GuideScreen extends React.Component {
             </Text>
             <View style={{ alignItems: "center" }}>
               <Image
-                source={require("../../../assets/imgs/guide5.png")}
+                source={{uri:"https://www.upsieutoc.com/images/2019/04/11/Screenshot_2019-04-11-10-07-03.png"}}
                 style={styles.img}
               />
             </View>
             <Text style={styles.text}>- Bước 6: Xác nhận hóa đơn.</Text>
             <View style={{ alignItems: "center" }}>
               <Image
-                source={require("../../../assets/imgs/guide6.png")}
+                source={{uri:"https://www.upsieutoc.com/images/2019/04/11/Screenshot_2019-04-11-10-07-07.png"}}
                 style={styles.img}
               />
             </View>

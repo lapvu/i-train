@@ -288,7 +288,9 @@ export default class SeatListScreen extends React.Component {
                         height: 30,
                         width:
                           loaiToa === "Giường nằm khoang 4 điều hòa" ||
-                          loaiToa === "Ngồi mềm điều hòa"
+                          loaiToa === "Ngồi mềm điều hòa" ||
+                          loaiToa === "Ngồi cứng điều hòa" ||
+                          loaiToa === "Ngồi cứng"
                             ? "20%"
                             : "14%",
                         borderWidth: 0.5,
