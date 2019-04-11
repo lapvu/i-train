@@ -292,7 +292,7 @@ export default class SeatListScreen extends React.Component {
                           loaiToa === "Ngồi cứng điều hòa" ||
                           loaiToa === "Ngồi cứng"
                             ? "20%"
-                            : "14%",
+                            : "12%",
                         borderWidth: 0.5,
                         borderRadius: 5,
                         borderColor:
