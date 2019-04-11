@@ -1,5 +1,5 @@
 import React from "react";
-import { View, Text, Image, StyleSheet, ScrollView } from "react-native";
+import { View, Text, Image, StyleSheet, ScrollView,StatusBar } from "react-native";
 import { Header, Title, Body } from "native-base";
 import colors from "../../../styles/colors";
 export default class GuideScreen extends React.Component {
@@ -7,6 +7,7 @@ export default class GuideScreen extends React.Component {
     return (
       <View style={{ flex: 1 }}>
         <Header style={{ backgroundColor: colors.gradient[0]}}>
+          <StatusBar backgroundColor={colors.gradient[1]} />
           <Body style={{ flex: 1,  justifyContent: 'center', alignItems: 'center' }}>
             <Title >Hướng dẫn sử dụng</Title>
           </Body>
@@ -61,6 +62,20 @@ export default class GuideScreen extends React.Component {
             <View style={{ alignItems: "center" }}>
               <Image
                 source={{uri:"https://www.upsieutoc.com/images/2019/04/11/Screenshot_2019-04-11-10-07-07.png"}}
+                style={styles.img}
+              />
+            </View>
+            <Text style={styles.text}>- Bước 7: Xác nhận đã đặt vé thành công.</Text>
+            <View style={{ alignItems: "center" }}>
+              <Image
+                source={{uri:"https://www.upsieutoc.com/images/2019/04/11/guide7.png"}}
+                style={styles.img}
+              />
+            </View>
+            <Text style={styles.text}>- Bước 7: Xem lại lịch sử đặt vé tại đây.</Text>
+            <View style={{ alignItems: "center" }}>
+              <Image
+                source={{uri:"https://www.upsieutoc.com/images/2019/04/11/guide8.png"}}
                 style={styles.img}
               />
             </View>

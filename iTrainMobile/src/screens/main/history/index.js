@@ -1,5 +1,5 @@
 import React from "react";
-import { Text, View, AsyncStorage,ScrollView } from "react-native";
+import { Text, View, AsyncStorage,ScrollView ,StatusBar} from "react-native";
 import colors from "../../../styles/colors";
 import firebase from "react-native-firebase";
 import Loader from "../../../components/loader";
@@ -83,6 +83,7 @@ class HistoryScreen extends React.Component {
         {!this.state.isLoading && (
           <View style={{ flex: 1 }}>
             <Header style={{ backgroundColor: colors.gradient[0] }}>
+              <StatusBar backgroundColor={colors.gradient[0]} />
               <Body
                 style={{
                   flex: 1,
